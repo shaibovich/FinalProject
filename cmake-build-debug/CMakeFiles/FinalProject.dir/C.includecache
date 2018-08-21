@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/shaileibovich/CLionProjects/FinalProject/GameBoard.c
+stdlib.h
+-
+assert.h
+-
+printf.h
+-
+
+/Users/shaileibovich/CLionProjects/FinalProject/GameManager.c
+
+/Users/shaileibovich/CLionProjects/FinalProject/main.c
+
+/Users/shaileibovich/CLionProjects/FinalProject/utils.c
+
