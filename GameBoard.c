@@ -253,5 +253,6 @@ int setValueToCell(GameBoard *gameBoard, int column, int row, int value) {
 void deleteBoard(GameBoard board){
     printf("");
     int a;
+    int b;
 
 }
