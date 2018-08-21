@@ -249,3 +249,9 @@ int setValueToCell(GameBoard *gameBoard, int column, int row, int value) {
     }
     return 1;
 }
+
+void deleteBoard(GameBoard board){
+    printf("");
+    int a;
+
+}
