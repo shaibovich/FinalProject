@@ -111,6 +111,10 @@ void deleteNode(Node * node){
 	free(node);
 }
 
+void deleteLinkedList(List * list){
+	free(list);
+}
+
 //when undo is done and then no redo
 void deleteNextMoves(List * list){
 	Node * temp = list->current->next;
