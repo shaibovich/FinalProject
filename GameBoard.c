@@ -64,12 +64,12 @@ int getCellIsFixed(Cell *cell) {
 GameBoard *createEmptyBoard(int rows, int columns) {
     GameBoard *gameBoard = (GameBoard *) malloc(sizeof(GameBoard));
     assert(gameBoard);
-    int size = rows * columns;
+    int size = (rows * columns) ^2;
     gameBoard->size = size;
-    gameBoard->numberOfRows = rows;
-    gameBoard->numberOfColumnBlock = rows / 5;
-    gameBoard->numberOfColumns = columns;
-    gameBoard->numberOfRowsBlock = columns / 2;
+    gameBoard->numberOfRows = rows * columns;
+    gameBoard->numberOfColumnBlock = columns;
+    gameBoard->numberOfColumns = rows * columns;
+    gameBoard->numberOfRowsBlock = rows;
     gameBoard->cellList = (Cell *) malloc(sizeof(Cell) * size);
     assert(gameBoard->cellList);
     for (int rowIndex = 0; rowIndex < gameBoard->numberOfRows; ++rowIndex) {
@@ -223,21 +223,16 @@ void printGameBoard(GameBoard *gameBoard, int withStars) {
             } else {
                 printf(" ");
             }
-//            if ((gameBoard->cellList + rowIndex * gameBoard->numberOfColumns + columnIndex)->value == 0) {
-//                printf(" ");
-//            }
-//            else {
-            printf("%d ", abs((gameBoard->cellList + rowIndex * gameBoard->numberOfColumns + columnIndex)->value));
-//            }
+            if ((gameBoard->cellList + rowIndex * gameBoard->numberOfColumns + columnIndex)->value == 0) {
+                printf(" ");
+            } else {
+                printf("%d ", abs((gameBoard->cellList + rowIndex * gameBoard->numberOfColumns + columnIndex)->value));
+            }
         }
         printf("|");
         printf("\n");
     }
     printf("----------------------------------\n");
-}
-
-int main() {
-    printGameBoard(createEmptyBoard(10, 10), 0);
 }
 
 int setValueToCell(GameBoard *gameBoard, int column, int row, int value) {
@@ -250,9 +245,9 @@ int setValueToCell(GameBoard *gameBoard, int column, int row, int value) {
     return 1;
 }
 
-void deleteBoard(GameBoard board){
-    printf("");
-    int a;
-    int b;
+void deleteBoard(GameBoard *gameBoard) {
+    free(gameBoard->cellList);
+    free(gameBoard);
+};
 
-}
+

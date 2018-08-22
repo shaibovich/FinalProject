@@ -13,3 +13,34 @@ typedef struct GameCell Cell;
 
 int checkBoardErrors(GameBoard *gameBoard);
 
+void printGameBoard(GameBoard *gameBoard, int withStars);
+
+GameBoard *createEmptyBoard(int rows, int columns);
+
+int validateCellValue(GameBoard *gameBoard, int column, int row, int value);
+
+int validateCellIndex(GameBoard *gameBoard, int column, int row);
+
+int validateCellFixed(GameBoard *gameBoard, int column, int row);
+
+int setCellValue(GameBoard *gameBoard, int column, int row, int value);
+
+int setCellFixed(GameBoard *gameBoard, int column, int row, int isFixed);
+
+int isCellFixed(GameBoard *gameBoard, int column, int row);
+
+int getCellValue(GameBoard *gameBoard, int column, int row);
+
+int getCellError(GameBoard *gameBoard, int column, int row);
+
+int makrCellError(GameBoard *gameBoard, int column, int row);
+
+int markCellUnError(GameBoard *gameBoard, int column, int row);
+
+int setValueToCell(GameBoard *gameBoard, int column, int row, int value);
+
+void deleteBoard(GameBoard *gameBoard);
+
+
+
+
