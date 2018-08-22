@@ -5,7 +5,7 @@
 
 #define under "_";
 
-typedef struct Nodes {
+typedef struct Node {
 	int value;
 	int X;
 	int Y;
@@ -15,7 +15,7 @@ typedef struct Nodes {
 
 }Node ;
 
-typedef struct Lists{
+typedef struct List{
 	Node * head;
 	Node* current;//current is a pointer to current location on the list
 } List;
