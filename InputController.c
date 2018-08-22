@@ -25,31 +25,32 @@
 #define RESET_OPTION "reset"
 #define REGEX " \n\r\t"
 
+#include "InputController.h"
 
-enum commandsEnum {
-    SET = 1,
-    HINT = 2,
-    VALIDATE = 3,
-    RESET = 4,
-    EXIT = 5,
-    SOLVE = 6,
-    EDIT = 7,
-    MARK_ERROR = 8,
-    PRINT_BOARD = 9,
-    GENERATE = 10,
-    UNDO = 11,
-    REDO = 12,
-    SAVE = 13,
-    NUM_SOLUTIONS = 14,
-    AUTI_FULL = 15
-};
+//enum commandsEnum {
+//    SET = 1,
+//    HINT = 2,
+//    VALIDATE = 3,
+//    RESET = 4,
+//    EXIT = 5,
+//    SOLVE = 6,
+//    EDIT = 7,
+//    MARK_ERROR = 8,
+//    PRINT_BOARD = 9,
+//    GENERATE = 10,
+//    UNDO = 11,
+//    REDO = 12,
+//    SAVE = 13,
+//    NUM_SOLUTIONS = 14,
+//    AUTI_FULL = 15
+//};
 
-int numberOfCells = -1, isValidCommand;
+int isValidCommand;
 
 char *tempInput, *command, *inputString;
 int cnt = 0;
 
-void validateCommand(int isFinish, int gameBoard, int *commandArray) {
+void validateCommand(int isFinish, int gameMode, int *commandArray) {
     if (!strcmp(command, SET_OPTION) && !isFinish && cnt >= 4) {
         isValidCommand = 1;
         commandArray[0] = SET;
@@ -76,16 +77,16 @@ void validateCommand(int isFinish, int gameBoard, int *commandArray) {
         commandArray[0] = MARK_ERROR;
     } else if (!strcmp(command, PRINT_BOARD_OPTION) && cnt >= 1) {
         isValidCommand = 1;
-        commandArray[0] = EDIT;
+        commandArray[0] = PRINT_BOARD;
     } else if (!strcmp(command, GENERATE_OPTION) && cnt >= 3) {
         isValidCommand = 1;
         commandArray[0] = GENERATE;
     } else if (!strcmp(command, UNDO_OPTION) && cnt >= 1) {
         isValidCommand = 1;
-        commandArray[0] = UNDO;
+        commandArray[0] = UNDO; // FINISH
     } else if (!strcmp(command, REDO_OPTION) && cnt >= 1) {
         isValidCommand = 1;
-        commandArray[0] = REDO;
+        commandArray[0] = REDO; // FINISH
     } else if (!strcmp(command, SAVE_OPTION) && cnt >= 1) {
         isValidCommand = 1;
         commandArray[0] = SAVE;
