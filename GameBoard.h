@@ -15,7 +15,7 @@ int checkBoardErrors(GameBoard *gameBoard);
 
 void printGameBoard(GameBoard *gameBoard, int withStars);
 
-GameBoard *createEmptyBoard(int rows, int columns);
+GameBoard * createEmptyBoard(int rows, int columns);
 
 int validateCellValue(GameBoard *gameBoard, int column, int row, int value);
 
@@ -41,6 +41,16 @@ int setValueToCell(GameBoard *gameBoard, int column, int row, int value);
 
 void deleteBoard(GameBoard *gameBoard);
 
+void getNumberOfRowsString(char *string, GameBoard *gameBoard);
 
+void getNumberOfBlocksString(char *string, GameBoard *gameBoard);
 
+void getRowValuesString(char *string, GameBoard *gameBoard, int row);
 
+int getNumberOfColumns(GameBoard * gameBoard);
+
+int getNumberOfRows(GameBoard * gameBoard);
+
+int getNumberOfBlockColumn(GameBoard * gameBoard);
+
+int getNumberOfRowsBlock(GameBoard * gameBoard);

@@ -20,5 +20,5 @@ enum commandsEnum {
     REDO = 12,
     SAVE = 13,
     NUM_SOLUTIONS = 14,
-    AUTI_FULL = 15
+    AUTO_FILL = 15
 };

@@ -117,7 +117,7 @@ void printSetCell(int x, int y, int value){
 }
 
 void printBoardReset(){
-    printf("Board reset\n".);
+    printf("Board reset\n");
 }
 
 void printExit(){

@@ -6,7 +6,8 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <printf.h>
-
+#include <string.h>
+char *tempInput;
 typedef struct GameCell {
     int value;
     int isFixed;
@@ -22,6 +23,41 @@ typedef struct GameBoards {
     int numberOfColumns;
     Cell *cellList;
 } GameBoard;
+
+enum VALIDATION_ERROR {
+    BLOCK = -1,
+    COLUMN = -2,
+    ROW = -3
+};
+
+int validateSet(const GameBoard *gameBoard, int row, int column, int value) {
+    int rowBlock = 0;
+    int columnBlock = 0;
+    for (int rowIndex = 0; rowIndex < gameBoard->numberOfRows; ++rowIndex) {
+        if (rowIndex != row &&
+            (gameBoard->cellList + rowIndex * gameBoard->numberOfRows + column)->value == value) {
+            return COLUMN;
+        }
+    }
+    for (int columnIndex = 0; columnIndex < gameBoard->numberOfColumns; ++columnIndex) {
+        if (columnIndex != column &&
+            abs((gameBoard->cellList + row * gameBoard->numberOfColumns + columnIndex)->value) == value) {
+            return ROW;
+        }
+    };
+    rowBlock = (row / gameBoard->numberOfRowsBlock) * gameBoard->numberOfRowsBlock;
+    columnBlock = (column / gameBoard->numberOfColumnBlock) * gameBoard->numberOfColumnBlock;
+    for (int rowIndex = 0; rowIndex < gameBoard->numberOfRowsBlock; ++rowIndex) {
+        for (int columnIndex = 0; columnIndex < gameBoard->numberOfColumnBlock; ++columnIndex) {
+            if (((gameBoard->cellList + (rowIndex + rowBlock) * gameBoard->numberOfColumns +
+                  (columnIndex + columnBlock))->value) == value && (rowIndex + rowBlock) != row &&
+                (columnBlock + columnIndex) != column) {
+                return BLOCK;
+            }
+        }
+    }
+    return 1;
+}
 
 //
 //int isZeroOrOne(int value) {
@@ -74,9 +110,9 @@ GameBoard *createEmptyBoard(int rows, int columns) {
     assert(gameBoard->cellList);
     for (int rowIndex = 0; rowIndex < gameBoard->numberOfRows; ++rowIndex) {
         for (int columnIndex = 0; columnIndex < gameBoard->numberOfColumns; ++columnIndex) {
-            (gameBoard->cellList + rowIndex * gameBoard->numberOfColumns + gameBoard->numberOfRows)->value = 0;
-            (gameBoard->cellList + rowIndex * gameBoard->numberOfColumns + gameBoard->numberOfRows)->isFixed = 0;
-            (gameBoard->cellList + rowIndex * gameBoard->numberOfColumns + gameBoard->numberOfRows)->isError = 0;
+            (gameBoard->cellList + rowIndex * gameBoard->numberOfColumns + columnIndex)->value = 0;
+            (gameBoard->cellList + rowIndex * gameBoard->numberOfColumns + columnIndex)->isFixed = 0;
+            (gameBoard->cellList + rowIndex * gameBoard->numberOfColumns + columnIndex)->isError = 0;
         }
     }
     return gameBoard;
@@ -134,11 +170,11 @@ int validateCellFixed(GameBoard *gameBoard, int column, int row) {
 
 int setCellValue(GameBoard *gameBoard, int column, int row, int value) {
     if (!validateCellValue(gameBoard, column, row, value)) {
-
+        return ERROR;
     } else if (!validateCellFixed(gameBoard, column, row)) {
-
+        return ERROR;
     } else if (!validateCellIndex(gameBoard, column, row)) {
-
+        return ERROR;
     } else {
         (gameBoard->cellList + row * gameBoard->numberOfColumns + gameBoard->numberOfRows)->value = value;
         return 1;
@@ -235,12 +271,44 @@ void printGameBoard(GameBoard *gameBoard, int withStars) {
     printf("----------------------------------\n");
 }
 
+int isInvalidValue(GameBoard *gameBoard, int column, int row, int value) {
+    for (int rowIndex = 0; rowIndex < gameBoard->numberOfRows; rowIndex++) {
+        if ((gameBoard->cellList + rowIndex * gameBoard->numberOfColumns + column)->value == value) {
+            return 0;
+        }
+    }
+
+    for (int columnIndex = 0; columnIndex < gameBoard->numberOfColumns; columnIndex++) {
+        if ((gameBoard->cellList + row * gameBoard->numberOfColumns + columnIndex)->value == value) {
+            return 0;
+        }
+    }
+
+
+    return 1;
+}
+
 int setValueToCell(GameBoard *gameBoard, int column, int row, int value) {
     if (!validateCellIndex(gameBoard, column, row) || !validateCellFixed(gameBoard, column, row) ||
         !validateCellValue(gameBoard, column, row, value)) {
         return ERROR;
+    } else if (!validateCellFixed(gameBoard, column, row)) {
+        return ERROR;
     } else {
-
+        int res = validateSet(gameBoard, row, column, value);
+        switch (res) {
+            case 1:
+                setCellValue(gameBoard, column, row, value);
+                break;
+            case COLUMN:
+                break;
+            case ROW:
+                break;
+            case BLOCK:
+                break;
+            default:
+                break;
+        }
     }
     return 1;
 }
@@ -251,3 +319,48 @@ void deleteBoard(GameBoard *gameBoard) {
 };
 
 
+void getNumberOfRowsString(char *string, GameBoard *gameBoard) {
+    char *tempInput = (char *) malloc(sizeof(char) * 256);
+    sprintf(tempInput, "%d", gameBoard->numberOfRowsBlock);
+    strcat(string, tempInput);
+    free(tempInput);
+}
+
+void getNumberOfBlocksString(char *string, GameBoard *gameBoard) {
+    tempInput = (char *) malloc(sizeof(char) * 256);
+    sprintf(tempInput, "%d", gameBoard->numberOfColumnBlock);
+    strcat(string, tempInput);
+    free(tempInput);
+}
+
+void getRowValuesString(char *string, GameBoard *gameBoard, int row) {
+    int columnIndex;
+    char *tempInput = (char *) malloc(sizeof(char) * 1024);
+    for (columnIndex = 0; columnIndex < gameBoard->numberOfColumns; columnIndex++) {
+        sprintf(tempInput, "%d", (gameBoard->cellList + row * gameBoard->numberOfColumns + columnIndex));
+        strcat(string, tempInput);
+        if (isCellFixed(gameBoard, columnIndex, row)) {
+            strcat(string, ".");
+        }
+        if (columnIndex != gameBoard->numberOfColumns - 1) {
+            strcat(string, " ");
+        }
+    }
+    free(tempInput);
+}
+
+int getNumberOfColumns(GameBoard * gameBoard){
+    return gameBoard->numberOfColumns;
+}
+
+int getNumberOfRows(GameBoard * gameBoard){
+    return gameBoard->numberOfRows;
+}
+
+int getNumberOfBlockColumn(GameBoard * gameBoard){
+    return gameBoard->numberOfColumnBlock;
+}
+
+int getNumberOfRowsBlock(GameBoard * gameBoard){
+    return gameBoard->numberOfRowsBlock;
+}
