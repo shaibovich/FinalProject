@@ -375,3 +375,8 @@ void setAllFilledFixed(GameBoard *gameBoard) {
 int getGameBoardSize(GameBoard *gameBoard) {
     return gameBoard->size;
 }
+
+Cell * getCell(GameBoard * gameBoard, int column, int row){
+    return (gameBoard->cellList + column *gameBoard->numberOfRows + row);
+}
+

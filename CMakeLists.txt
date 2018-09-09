@@ -14,4 +14,4 @@ add_executable(FinalProject
         InputController.h
         main.c
         utils.c
-        utils.h LinkedList.c LinkedList.h Stack.c Stack.h )
+        utils.h LinkedList.c LinkedList.h Stack.c Stack.h exhaustive.c exhaustive.h)

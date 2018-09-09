@@ -15,6 +15,8 @@ void printGameBoard(GameBoard *gameBoard, int withStars);
 
 GameBoard *createEmptyBoard(int rows, int columns);
 
+GameBoard *copyGameBoard(GameBoard *oldGameBoard);
+
 int validateCellValue(GameBoard *gameBoard, int value);
 
 int validateCellIndex(GameBoard *gameBoard, int column, int row);
@@ -59,3 +61,4 @@ int isBoardFull(GameBoard *gameBoard);
 
 void setAllFilledFixed(GameBoard *gameBoard);
 
+Cell *getCell(GameBoard *gameBoard, int column, int row);

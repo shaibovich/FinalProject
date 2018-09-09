@@ -10,6 +10,7 @@
 #include "InputController.h"
 #include "GameManager.h"
 #include "FileController.h"
+#include "exhaustive.h"
 //#include "sudokuSolver.h"
 
 int gameMode;
@@ -134,11 +135,18 @@ void save(char *path) {
 }
 
 void autoFill() {
-
+    fillGameBoard(gameBoard);
+    printGameBoard(gameBoard, isMark);
 }
 
 void numSolutions() {
-
+    int numberOfSols = numberOfSolves(gameBoard);
+    printNumberOfsolutions(numberOfSols);
+    if (numberOfSols == 1){
+        printGoodBoard();
+    } else {
+        printBadPuzzle();
+    }
 }
 
 void resetBoard() {
@@ -158,7 +166,6 @@ void startGame() {
     printStartGame();
     initiliateGame();
     while (1) {
-
         getTurnCommand(0, gameMode, commandArray, filePath);
         switch (commandArray[0]) {
             case SET:
