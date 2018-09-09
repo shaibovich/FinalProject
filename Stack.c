@@ -71,6 +71,17 @@ void DeleteStack(Stack * stack){
 
 };
 
+int getColumn(StackCell * cell){
+    return cell->column;
+};
+
+int getRow(StackCell * cell){
+    return cell->row;
+};
+
+
+
+
 
 
 

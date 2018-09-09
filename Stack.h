@@ -22,9 +22,9 @@ void DeleteStack(Stack * stack);
 
 void push(Stack * stack, int row, int column);
 
+int getColumn(StackCell * cell);
 
-
-
+int getRow(StackCell * cell);
 
 
 
