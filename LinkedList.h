@@ -18,5 +18,4 @@ Node * undo(List * list);
 Node * redo(List * list);
 void addMove(GameBoard * gameboard , List * list, int row, int column, int value);
 void deleteNextMoves(List * list);
-
 #endif /* LINKEDLIST_H_ */

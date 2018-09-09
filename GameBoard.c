@@ -178,7 +178,7 @@ int getCellError(GameBoard *gameBoard, int column, int row) {
     }
 }
 
-int makrCellError(GameBoard *gameBoard, int column, int row) {
+int makeCellError(GameBoard *gameBoard, int column, int row) {
     if (!validateCellIndex(gameBoard, column, row)) {
         return ERROR;
     } else {
