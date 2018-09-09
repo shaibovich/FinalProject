@@ -1,130 +1,169 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 #include "utils.h"
-#include "Gameboard.h"
+#include "LinkedList.h"
 
-#define under "_";
+struct Nodes {
+    int value;
+    int x;
+    int y;
+    int prevValue;
+    struct Nodes *next;
+    struct Nodes *prev;
 
-typedef struct Nodes {
-	int value;
-	int X;
-	int Y;
-	int prevValue;
-	struct Nodes* next;
-	struct Nodes* prev;
+};
 
-}Node ;
+struct Lists {
+    Node *head;
+    Node *current;
+};
 
-typedef struct Lists{
-	Node * head;
-	Node* current;//current is a pointer to current location on the list
-} List;
+Node *node, *temp;
+List *newList;
 
-Node *createNode(int X, int Y,int value, int prevValue, Node *next, Node *prev) {
-    Node *node = (Node*) malloc(sizeof(Node));
+int getNodeValue(Node *node) {
+    return node->value;
+}
+
+int getNodeX(Node *node) {
+    return node->x;
+}
+
+int getNodeY(Node *node) {
+    return node->y;
+}
+
+int getNodePrevValue(Node *node) {
+    return node->prevValue;
+}
+
+Node *createNode(int x, int y, int value, int prevValue, Node *next, Node *prev) {
+    node = (Node *) malloc(sizeof(Node));
     assert(node);
-    node->X=X;
-    node->Y=Y;
+    node->x = x;
+    node->y = y;
     node->value = value;
-    node->prevValue= prevValue;
+    node->prevValue = prevValue;
     node->next = next;
     node->prev = prev;
-    assert(node->next);
-    assert(node->prev);
     return node;
 }
 
-List *createLinkedList(){
-	List *list = (Node*) malloc(sizeof(List));
-	assert(list);
-	list->head = NULL;
-	list->current=list->head;
-	return list;
+List *createLinkedList() {
+    newList = (List *) malloc(sizeof(List));
+    assert(newList);
+    newList->head = NULL;
+    newList->current = newList->head;
+    return newList;
 }
 
 
-Node * getNext(List * list){
-	return list->current->next;
+Node *getNext(List *list) {
+    return list->current->next;
 }
 
-//if current move is the first move - returns NULL, else returns the previous Node. note: need to take the value from node
-Node * getPrev(List * list){
-	if (list->current == list->head){
-		return NULL;
-	}
-	else{
-		return list-> current->prev;
-	}
+Node *getPrev(List *list) {
+    if (list->current == list->head) {
+        return NULL;
+    } else {
+        return list->current->prev;
+    }
 }
 
- //changes the value and prevValue of current and THEN changes current into previous.
-Node * undo(List * list){
-	if (list->current->prev == NULL){ //is head
-		printf("Error: no moves to undo\n");
-		exit();
-	}
-	Node * temp = list-> current; //copy of current
-	list->current->value = temp->prevValue;
-	list->current->prevValue =temp->value;
-	list-> current = getPrev(list);
-	//need to use print the board function
-	if (temp->X==0){
-		temp->X=under;
-	}
-	if (temp->Y==0){
-		temp->Y=under;
-	}
-
-	printf("Undo %d,%d: from %d to %d\n", temp->X,temp->Y,temp->value,temp->prevValue);
-	return list->current;
+Node *copyNode(Node *node) {
+    return createNode(node->x, node->y, node->value, node->prevValue, node->next, node->prev);
 }
 
-Node * redo(List * list){
-	//last move (no redo)
-	if (list->current->next==NULL){
-		printf("Error: no moves to redo\n");
-		exit();
-		}
-	list->current = getNext(list);
-	Node * temp = list->current; //copy of current
-	list->current->value = temp->prevValue;
-	list->current->prevValue =temp->value;
-	//need to use print the board function
-	if (temp->X==0){
-		temp->X=under;
-	}
-	if (temp->Y==0){
-		temp->Y=under;
-	}
-
-	printf("Redo %d,%d: from %d to %d\n", temp->X,temp->Y,temp->value,temp->prevValue);
-	return list->current;
+void deleteNode(Node *node) {
+    free(node);
 }
 
-void addMove(GameBoard * gameboard , List * list, int row, int column, int value){
-	deleteNextMoves(list);
-	list->current->next = createNode(row, column,value, getCellValue(gameboard, row, column), NULL, list->current);
-	list->current->next->prev = list->current;
+Node *undoMove(List *list, int isReset) {
+    if (list->head == NULL) {
+        if (!isReset) {
+            printNoMovesToUndo();
+        }
+        return NULL;
+    }
+    temp = list->current;
+    if (list->current == list->head) {
+        list->current = NULL;
+    } else {
+        list->current = list->current->prev;
+    }
+    printUndoValue(temp->y + 1, temp->x + 1, temp->value, temp->prevValue);
+    return temp;
 }
 
-void deleteNode(Node * node){
-	free(node);
+Node *redoMove(List *list) {
+    if (list->head == NULL) {
+        printNoMovesToRedo();
+        return NULL;
+    }
+    if (list->current == NULL) {
+        list->current = list->head;
+        printRedoValue(list->current->x + 1, list->current->y + 1, list->current->prevValue, list->current->value);
+        return list->current;
+    } else if (list->current->next == NULL) {
+        printNoMovesToRedo();
+        return NULL;
+    }
+    temp = list->current;
+    list->current = list->current->next;
+    printRedoValue(temp->y + 1, temp->x + 1, temp->prevValue, temp->value);
+    return temp;
 }
 
-void deleteLinkedList(List * list){
-	free(list);
+
+void deleteNextMoves(List *list) {
+    temp = NULL;
+    if (list->head == NULL) {
+        return;
+    } else if (list->current == NULL) {
+        temp = list->head->next;
+        while (temp != NULL) {
+            free(temp->prev);
+            temp = temp->next;
+        }
+        list->head = NULL;
+    } else {
+        if (list->current->next == NULL) {
+            return;
+        }
+        temp = list->current->next;
+        while (temp != NULL) {
+            list->current->next = list->current->next->next;
+            deleteNode(temp);
+            temp = list->current->next;
+        }
+    }
 }
 
-//when undo is done and then no redo
-void deleteNextMoves(List * list){
-	Node * temp = list->current->next;
-	while (temp!=NULL){
-		deleteNode(list->current->next);
-		list->current->next = list->current->next->next;
-		list->current->next->prev = list->current;
-		temp = list->current->next;
-	}
+
+void addMove(GameBoard *gameBoard, List *list, int row, int column, int value) {
+    deleteNextMoves(list);
+    if (list->head == NULL) {
+        list->head = createNode(row, column, getCellValue(gameBoard, column, row), 0, NULL, NULL);
+        list->current = list->head;
+    } else {
+        list->current->next = createNode(row, column, getCellValue(gameBoard, column, row), value, NULL, list->current);
+        list->current->next->prev = list->current;
+        list->current = list->current->next;
+    }
 }
+
+void deleteLinkedList(List *list) {
+    if (list->current != NULL) {
+        while (list->current != list->head) {
+            list->current = list->current->prev;
+            free(list->current->next);
+        }
+        free(list->current);
+    }
+    free(list);
+}
+
 
 
 

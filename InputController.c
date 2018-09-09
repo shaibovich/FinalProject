@@ -97,7 +97,7 @@ void validateCommand(int isFinish, int gameMode, int *commandArray) {
 }
 
 void getTurnCommand(int isFinish, int gameMode, int *commandArray, char *pathString) {
-    printf("isSolved: %d, GameMode %d, CommandArray0 %d, CommandArray1 %d, CommandArray2 %d, FilePath %s", isFinish, gameMode, commandArray[0], commandArray[1], commandArray[2], pathString);
+//    printf("isSolved: %d, GameMode %d, CommandArray0 %d, CommandArray1 %d, CommandArray2 %d, FilePath %s", isFinish, gameMode, commandArray[0], commandArray[1], commandArray[2], pathString);
     command = (char *) malloc(NUMBER_OF_CHARS_INPUT * sizeof(char));
     tempInput = (char*) malloc(NUMBER_OF_CHARS_INPUT * sizeof(char));
     inputString = (char *) malloc(NUMBER_OF_CHARS_INPUT * sizeof(char));
@@ -114,21 +114,21 @@ void getTurnCommand(int isFinish, int gameMode, int *commandArray, char *pathStr
             return;
         }
         cnt = 0;
-        printf("here");
+//        printf("here");
         fgets(inputString, NUMBER_OF_CHARS_INPUT, stdin);
         printf("InputString: %s", inputString);
         if (tempInput != NULL){
             printf("%s", tempInput);
         }
         tempInput = strtok(inputString, REGEX);
-        printf("TempInput: %s", tempInput);
+//        printf("TempInput: %s", tempInput);
         if (tempInput == NULL) {
             continue;
         } else {
             while (tempInput != NULL) {
                 switch (cnt) {
                     case 0:
-                        printf("TempInput in switch: %s", tempInput);
+//                        printf("TempInput in switch: %s", tempInput);
                         strcpy(command, tempInput);
                         break;
                     case 1:

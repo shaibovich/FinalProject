@@ -33,33 +33,6 @@ int getCellIsFixed(Cell *cell) {
     return cell->isFixed;
 }
 
-//int getCellIsError(Cell *cell) {
-//    return cell->isError;
-//}
-//
-//void setCellIsFixed(Cell *cell, int isFixed) {
-//    if (isZeroOrOne(isFixed)) {
-//        cell->isFixed = isFixed;
-//    } else {
-//        printf("Error -> cell can be set only 0 or 1");
-//    }
-//}
-//
-//void setCellIsError(Cell *cell, int isError) {
-//    if (isZeroOrOne(isError)) {
-//        cell->isError = isError;
-//    } else {
-//        printf("Error -> cell can be set only 0 or 1");
-//    }
-//}
-//
-//void setCellValue(Cell *cell, int value) {
-//    cell->value = value;
-//}
-//
-//int getCellValue(Cell *cell) {
-//    return cell->value;
-//}
 
 GameBoard *createEmptyBoard(int rows, int columns) {
     GameBoard *gameBoard = (GameBoard *) malloc(sizeof(GameBoard));
