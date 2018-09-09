@@ -26,13 +26,13 @@ Cell *getNextEmptyCell(GameBoard *gameBoard, int *currentRow, int *currentColumn
 }
 
 void finishAlg() {
-    free(emptyCell);
+    free(currentCell);
 }
 
 
 int numberOfSolves(GameBoard *gameBoard) {
     counter = 0, rowIndex = 0, columnIndex = 0;
-    stack = createEmptyStack();
+    stack = createNewStack();
     emptyCell = getNextEmptyCell(gameBoard, &rowIndex, &columnIndex);
     push(stack, rowIndex, columnIndex);
     while (!isEmpty(stack)) {
@@ -43,6 +43,9 @@ int numberOfSolves(GameBoard *gameBoard) {
         } else if (getCellValue(gameBoard, columnIndex, rowIndex) > getNumberOfColumns(gameBoard)) {
             setCellValue(gameBoard, columnIndex, rowIndex, 0);
             currentCell = pop(stack);
+            if (currentCell==NULL){
+                break;
+            }
             emptyCell = getCell(gameBoard, getColumn(currentCell), getRow(currentCell));
         }
     }
@@ -56,7 +59,7 @@ void fillGameBoard(GameBoard *gameBoard) {
         for (columnIndex = 0; columnIndex < getNumberOfColumns(gameBoard); columnIndex++) {
             if (!getCellValue(tempBoard, columnIndex, rowIndex)) {
                 counter = 0;
-                for (value = 1; value < getNumberOfColumns(gameBoard); value) {
+                for (value = 1; value < getNumberOfColumns(gameBoard); value++) {
                     setCellValue(tempBoard, columnIndex, rowIndex, value);
                     if (!checkBoardErrors(tempBoard)) {
                         counter += 1;

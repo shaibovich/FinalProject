@@ -85,7 +85,7 @@ void validateCommand(int isFinish, int gameMode, int *commandArray) {
     } else if (!strcmp(command, SAVE_OPTION) && cnt >= 1 && isSolveOrEditMode(gameMode)) {
         isValidCommand = 1;
         commandArray[0] = SAVE;
-    } else if (!strcmp(command, NUM_SOLUTIONS_OPTION) && cnt >= 2 && isSolveOrEditMode(gameMode)) {
+    } else if (!strcmp(command, NUM_SOLUTIONS_OPTION) && cnt >= 1 && isSolveOrEditMode(gameMode)) {
         isValidCommand = 1;
         commandArray[0] = NUM_SOLUTIONS;
     } else if (!strcmp(command, AUTOFILL_OPTION) && cnt >= 1 && isSolveMode(gameMode)) {
@@ -118,7 +118,7 @@ void getTurnCommand(int isFinish, int gameMode, int *commandArray, char *pathStr
         fgets(inputString, NUMBER_OF_CHARS_INPUT, stdin);
 //        printf("InputString: %s", inputString);
         if (tempInput != NULL){
-            printf("%s", tempInput);
+       //     printf("%s", tempInput);
         }
         tempInput = strtok(inputString, REGEX);
 //        printf("TempInput: %s", tempInput);
