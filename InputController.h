@@ -1,9 +1,5 @@
-//
-// Created by Shai Leibovich on 22/08/2018.
-//
 
-
-void getTurnCommand(int isFinish, int gameMode, int *commandArray);
+void getTurnCommand(int isFinish, int gameMode, int *commandArray, char *pathString);
 
 enum commandsEnum {
     SET = 1,
@@ -20,5 +16,5 @@ enum commandsEnum {
     REDO = 12,
     SAVE = 13,
     NUM_SOLUTIONS = 14,
-    AUTI_FULL = 15
+    AUTO_FILL = 15
 };
