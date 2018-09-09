@@ -9,19 +9,18 @@ typedef struct Stacks Stack;
 #endif
 
 
-Stack * createEmptyStack();
+Stack * createNewStack();
 
-int isEmpty(Stack * stack);
+int isEmpty(Stack * s   tack);
 
-int getPreviuseValue(StackCell * stackCell);
+StackCell * pop(Stack * stack);
 
-int getValue(StackCell * stackCell);
+void DeleteStack(Stack * stack);
 
-int push(Stack * stack, int row, int column, int value);
+void push(Stack * stack, int row, int column);
 
-int getRow(StackCell * stackCell);
 
-int getColumn(StackCell * stackCell);
+
 
 
 
