@@ -1,23 +1,21 @@
-//
-// Created by Shai Leibovich on 20/08/2018.
-//
+#define ERROR -1
 
-#ifndef FINALPROJECT_GAMEBOARD_H
-#define FINALPROJECT_GAMEBOARD_H
-
-#endif //FINALPROJECT_GAMEBOARD_H
-
-
+#ifndef GAME_BOARD_H
+#define GAME_BOARD_H 1
 typedef struct GameBoards GameBoard;
+
 typedef struct GameCell Cell;
+#endif
+
+int getGameBoardSize(GameBoard *gameBoard);
 
 int checkBoardErrors(GameBoard *gameBoard);
 
 void printGameBoard(GameBoard *gameBoard, int withStars);
 
-GameBoard * createEmptyBoard(int rows, int columns);
+GameBoard *createEmptyBoard(int rows, int columns);
 
-int validateCellValue(GameBoard *gameBoard, int column, int row, int value);
+int validateCellValue(GameBoard *gameBoard, int value);
 
 int validateCellIndex(GameBoard *gameBoard, int column, int row);
 
@@ -37,6 +35,8 @@ int makrCellError(GameBoard *gameBoard, int column, int row);
 
 int markCellUnError(GameBoard *gameBoard, int column, int row);
 
+int markCellError(GameBoard *gameBoard, int column, int row);
+
 int setValueToCell(GameBoard *gameBoard, int column, int row, int value);
 
 void deleteBoard(GameBoard *gameBoard);
@@ -45,12 +45,17 @@ void getNumberOfRowsString(char *string, GameBoard *gameBoard);
 
 void getNumberOfBlocksString(char *string, GameBoard *gameBoard);
 
-void getRowValuesString(char *string, GameBoard *gameBoard, int row);
+void getRowValuesString(char *string, GameBoard *gameBoard, int row, int gameMode);
 
-int getNumberOfColumns(GameBoard * gameBoard);
+int getNumberOfColumns(GameBoard *gameBoard);
 
-int getNumberOfRows(GameBoard * gameBoard);
+int getNumberOfRows(GameBoard *gameBoard);
 
-int getNumberOfBlockColumn(GameBoard * gameBoard);
+int getNumberOfBlockColumn(GameBoard *gameBoard);
 
-int getNumberOfRowsBlock(GameBoard * gameBoard);
+int getNumberOfRowsBlock(GameBoard *gameBoard);
+
+int isBoardFull(GameBoard *gameBoard);
+
+void setAllFilledFixed(GameBoard *gameBoard);
+

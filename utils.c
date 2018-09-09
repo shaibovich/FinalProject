@@ -1,11 +1,4 @@
-////
-//// Created by Shai Leibovich on 19/08/2018.
-////
-//
-
-
-
-#include <printf.h>
+#include <stdio.h>
 
 void printEnterCommand() {
     printf("Enter your command:\n");
@@ -36,8 +29,8 @@ void printErrorValidation() {
     printf("Error: the value should be 0 or 1\n");
 }
 
-void printValueOutOfRange() {
-    printf("Error: value not in range 0-N\n");
+void printValueOutOfRange(int n) {
+    printf("Error: value not in range 0-%d\n", n);
 }
 
 void printSolutionErroneous() {
@@ -73,58 +66,73 @@ void printNoMovesToUndo() {
 }
 
 void printUndoValue(int x, int y, int oldValue, int newValue) {
-    printf("Undo %d,%d: from %d to %d\n", x, y, oldValue, newValue);
+    if (oldValue == 0 && newValue == 0) {
+        printf("Undo %d,%d: from _ to _\n", x, y);
+    } else if (oldValue == 0) {
+        printf("Undo %d,%d: from _ to %d\n", x, y, newValue);
+    } else if (newValue == 0) {
+        printf("Undo %d,%d: from %d to _\n", x, y, oldValue);
+    } else {
+        printf("Undo %d,%d: from %d to %d\n", x, y, oldValue, newValue);
+    }
+
 }
 
 void printNoMovesToRedo() {
     printf("Error: no moves to redo\n");
 }
 
-void printredoValue(int x, int y, int oldValue, int newValue) {
-    printf("Redo %d,%d: from %d to %d\n", x, y, oldValue, newValue);
+void printRedoValue(int x, int y, int oldValue, int newValue) {
+    if (oldValue == 0 && newValue == 0) {
+        printf("Redo %d,%d: from _ to _\n", x, y);
+    } else if (oldValue == 0) {
+        printf("Redo %d,%d: from _ to %d\n", x, y, newValue);
+    } else if (newValue == 0) {
+        printf("Redo %d,%d: from %d to _\n", x, y, oldValue);
+    } else {
+        printf("Redo %d,%d: from %d to %d\n", x, y, oldValue, newValue);
+    }
+
 }
 
 void printFileCannotBeCreated() {
     printf("Error: File cannot be created or modified\n");
 }
 
-void printSaveTo(int x){
-    printf("Saved to: %d\n", x);
+void printSaveTo(char *filePath) {
+    printf("Saved to: %s\n", filePath);
 }
 
-void printCellAlreadyContains(){
+void printCellAlreadyContains() {
     printf("Error: cell already contains a value\n");
 }
 
-void hintCell(int value){
+void hintCell(int value) {
     printf("Hint: set cell to %d\n", value);
 }
 
-void printNumberOfsolutions(int num){
+void printNumberOfsolutions(int num) {
     printf("Number of solutions: %d\n", num);
 }
 
-void printGoodBoard(){
+void printGoodBoard() {
     printf("This is a good board!\n");
 }
 
-void printBadPuzzle(){
+void printBadPuzzle() {
     printf("The puzzle has more than 1 solution, try to edit it further\n");
 }
 
-void printSetCell(int x, int y, int value){
+void printSetCell(int x, int y, int value) {
     printf("Cell <%d,%d> set to %d\n", x, y, value);
 }
 
-void printBoardReset(){
+void printBoardReset() {
     printf("Board reset\n");
 }
 
-void printExit(){
+void printExit() {
     printf("Exiting...\n");
 }
-
-
-
 
 

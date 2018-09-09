@@ -1,11 +1,7 @@
-//
-// Created by Shai Leibovich on 25/08/2018.
-//
 
-#ifndef FINALPROJECT_FILECONTROLLER_H
-#define FINALPROJECT_FILECONTROLLER_H
+#include "GameBoardClass.h"
 
-#endif //FINALPROJECT_FILECONTROLLER_H
-#include "GameBoard.h"
+int saveFile(char *filePath, GameBoard *gameBoard, int gameMode);
 
-int saveFile(char *filePath, GameBoard *gameBoard);
+GameBoard *openGameBoardFromFile(char *filePath, int isSolve);
+

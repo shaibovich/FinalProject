@@ -22,6 +22,7 @@ enum commands {
 
 void createSolutionBoard(){
     solutionBoard = (int *) malloc(NUMBER_OF_COLUMNS * NUMBER_OF_ROWS * sizeof(int));
+    assert(solutionBoard);
     if (solutionBoard == NULL) {
         printMallocError();
     }

@@ -1,11 +1,4 @@
-//
-// Created by Shai Leibovich on 22/08/2018.
-//
 
-#ifndef FINALPROJECT_UTILS_H
-#define FINALPROJECT_UTILS_H
-
-#endif //FINALPROJECT_UTILS_H
 void printEnterCommand();
 
 void printCellIsFixed();
@@ -18,7 +11,7 @@ void printFilNotOpened(int isSolved);
 
 void printErrorValidation();
 
-void printValueOutOfRange();
+void printValueOutOfRange(int n);
 
 void printSolutionErroneous();
 
@@ -40,11 +33,11 @@ void printUndoValue(int x, int y, int oldValue, int newValue);
 
 void printNoMovesToRedo();
 
-void printredoValue(int x, int y, int oldValue, int newValue);
+void printRedoValue(int x, int y, int oldValue, int newValue);
 
 void printFileCannotBeCreated();
 
-void printSaveTo(int x);
+void printSaveTo(char *filePath);
 
 void printCellAlreadyContains();
 
@@ -61,3 +54,4 @@ void printSetCell(int x, int y, int value);
 void printBoardReset();
 
 void printExit();
+
