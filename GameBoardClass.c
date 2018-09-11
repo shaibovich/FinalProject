@@ -139,9 +139,8 @@ int validateCellIndex(GameBoard *gameBoard, int column, int row) {
     return 1;
 }
 
-int validateCellFixed(GameBoard *gameBoard, int column, int row) {
+int validateCellFixed(GameBoard *gameBoard, int column, int row, int gameMode) {
     if ((getCellIsFixed((gameBoard->cellList + row * gameBoard->numberOfColumns + column)))) {
-        printCellIsFixed();
         return 0;
     }
     return 1;
@@ -167,8 +166,11 @@ int setCellFixed(GameBoard *gameBoard, int column, int row, int isFixed) {
     }
 }
 
-int isCellFixed(GameBoard *gameBoard, int column, int row) {
-    if (!validateCellFixed(gameBoard, column, row)) {
+int isCellFixed(GameBoard *gameBoard, int column, int row, int gameMode, int isSave) {
+    if (!validateCellFixed(gameBoard, column, row, gameMode)) {
+        if (!isSave){
+            printCellIsFixed();
+        }
         return ERROR;
     } else {
         return (gameBoard->cellList + row * gameBoard->numberOfColumns + column)->isFixed;
@@ -276,10 +278,10 @@ int isInvalidValue(GameBoard *gameBoard, int column, int row, int value) {
 }
 
 int setValueToCell(GameBoard *gameBoard, int column, int row, int value) {
-    if (!validateCellIndex(gameBoard, column, row) || !validateCellFixed(gameBoard, column, row) ||
+    if (!validateCellIndex(gameBoard, column, row) || !validateCellFixed(gameBoard, column, row,1) ||
         !validateCellValue(gameBoard, value)) {
         return ERROR;
-    } else if (!validateCellFixed(gameBoard, column, row)) {
+    } else if (!validateCellFixed(gameBoard, column, row,1)) {
         return ERROR;
     } else {
         int res = validateSet(gameBoard, row, column, value);
@@ -319,13 +321,13 @@ void getNumberOfBlocksString(char *string, GameBoard *gameBoard) {
     free(gameInput);
 }
 
-void getRowValuesString(char *string, GameBoard *gameBoard, int row, int gameMode) {
+void getRowValuesString(char *string, GameBoard *gameBoard, int row, int gameMode, int isSave) {
     gameInput = (char *) malloc(sizeof(char) * gameBoard->size);
     assert(gameInput);
     for (columnIndex = 0; columnIndex < gameBoard->numberOfColumns; columnIndex++) {
         sprintf(gameInput, "%d", (gameBoard->cellList + row * gameBoard->numberOfColumns + columnIndex)->value);
         strcat(string, gameInput);
-        if (isCellFixed(gameBoard, columnIndex, row) || gameMode == 1) {
+        if (isCellFixed(gameBoard, columnIndex, row,gameMode,isSave) || gameMode == 1) {
             strcat(string, ".");
         }
         if (columnIndex != gameBoard->numberOfColumns - 1) {
@@ -365,8 +367,8 @@ int isBoardFull(GameBoard *gameBoard) {
 void setAllFilledFixed(GameBoard *gameBoard) {
     for (rowIndex = 0; rowIndex < gameBoard->numberOfRows; rowIndex++) {
         for (columnIndex = 0; columnIndex < gameBoard->numberOfColumns; columnIndex++) {
-            if (!getCellValue(gameBoard, columnIndex, rowIndex)) {
-                setCellFixed(gameBoard, columnIndex, rowIndex, 1);
+            if (getCellValue(gameBoard, columnIndex, rowIndex)) {
+                setCellFixed(gameBoard, columnIndex, rowIndex, 3);
             }
         }
     }

@@ -21,13 +21,13 @@ int validateCellValue(GameBoard *gameBoard, int value);
 
 int validateCellIndex(GameBoard *gameBoard, int column, int row);
 
-int validateCellFixed(GameBoard *gameBoard, int column, int row);
+int validateCellFixed(GameBoard *gameBoard, int column, int row, int gameMode);
 
 int setCellValue(GameBoard *gameBoard, int column, int row, int value);
 
 int setCellFixed(GameBoard *gameBoard, int column, int row, int isFixed);
 
-int isCellFixed(GameBoard *gameBoard, int column, int row);
+int isCellFixed(GameBoard *gameBoard, int column, int row, int gameMode, int isSave);
 
 int getCellValue(GameBoard *gameBoard, int column, int row);
 
@@ -47,7 +47,7 @@ void getNumberOfRowsString(char *string, GameBoard *gameBoard);
 
 void getNumberOfBlocksString(char *string, GameBoard *gameBoard);
 
-void getRowValuesString(char *string, GameBoard *gameBoard, int row, int gameMode);
+void getRowValuesString(char *string, GameBoard *gameBoard, int row, int gameMode, int isSave);
 
 int getNumberOfColumns(GameBoard *gameBoard);
 

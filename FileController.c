@@ -11,13 +11,13 @@ FILE * fp;
 int rows, column, value, columnIndex , rowIndex;
 GameBoard * newBoard;
 
-void makeFileString(char *fileString, GameBoard *gameBoard, int gameMode) {
+void makeFileString(char *fileString, GameBoard *gameBoard, int gameMode, int isSave) {
     getNumberOfBlocksString(fileString, gameBoard);
     strcat(fileString, " ");
     getNumberOfRowsString(fileString, gameBoard);
     strcat(fileString, "\n");
     for (rowIndex = 0; rowIndex < getNumberOfRows(gameBoard); rowIndex++) {
-        getRowValuesString(fileString, gameBoard, rowIndex, gameMode);
+        getRowValuesString(fileString, gameBoard, rowIndex, gameMode, isSave);
         if (rowIndex != getNumberOfRows(gameBoard) - 1) {
             strcat(fileString, "\n");
         }
@@ -25,10 +25,12 @@ void makeFileString(char *fileString, GameBoard *gameBoard, int gameMode) {
 
 }
 
-int saveFile(char *filePath, GameBoard *gameBoard, int gameMode) {
-    fileString = (char *) malloc(sizeof(char) * 1024);
+int saveFile(char *filePath, GameBoard *gameBoard, int gameMode,int isSave) {
+
+    fileString = (char *) malloc(1024);
     assert(fileString);
-    makeFileString(fileString, gameBoard, gameMode);
+    strcpy(fileString,"");
+    makeFileString(fileString, gameBoard, gameMode, isSave);
     fp = fopen(filePath, "w");
     if (fp == NULL) {
         printFileCannotBeCreated();

@@ -117,6 +117,7 @@ void doRedo() {
 }
 
 void save(char *path) {
+    int isSave=1;
     if (gameMode == EDIT_MODE) {
         if (checkBoardErrors(gameBoard)) {
             printBoardContainsError();
@@ -129,7 +130,7 @@ void save(char *path) {
         }
         setAllFilledFixed(gameBoard);
     }
-    if (saveFile(filePath, gameBoard, gameMode)) {
+    if (saveFile(filePath, gameBoard, gameMode, isSave)) {
         printSaveTo(path);
     }
 

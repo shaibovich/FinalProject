@@ -97,9 +97,9 @@ int validateCellIndex(GameBoard *gameBoard, int column, int row) {
     return 1;
 }
 
-int validateCellFixed(GameBoard *gameBoard, int column, int row) {
-    if ((getCellIsFixed((gameBoard->cellList + row * gameBoard->numberOfColumns + gameBoard->numberOfRows)))) {
-        printf("Error: cell is fixed\n");
+int validateCellFixed(GameBoard *gameBoard, int column, int row. int gameMode) {
+    if ((getCellIsFixed((gameBoard->cellList + row * gameBoard->numberOfColumns + gameBoard->numberOfRows)))&&(gameMode==1||gameMode==2) {
+        printf("Error: cell is fixed \n");
         return ERROR;
     }
     return 1;
@@ -108,7 +108,7 @@ int validateCellFixed(GameBoard *gameBoard, int column, int row) {
 int setCellValue(GameBoard *gameBoard, int column, int row, int value) {
     if (!validateCellValue(gameBoard, column, row, value)) {
 
-    } else if (!validateCellFixed(gameBoard, column, row)) {
+    } else if (!validateCellFixed(gameBoard, column, row,1)) {
 
     } else if (!validateCellIndex(gameBoard, column, row)) {
 
@@ -119,7 +119,7 @@ int setCellValue(GameBoard *gameBoard, int column, int row, int value) {
 }
 
 int setCellFixed(GameBoard *gameBoard, int column, int row, int isFixed) {
-    if (!validateCellFixed(gameBoard, column, row)) {
+    if (!validateCellFixed(gameBoard, column, row,1)) {
         return ERROR;
     } else {
         (gameBoard->cellList + row * gameBoard->numberOfColumns + gameBoard->numberOfRows)->isFixed = isFixed;
@@ -127,8 +127,8 @@ int setCellFixed(GameBoard *gameBoard, int column, int row, int isFixed) {
     }
 }
 
-int isCellFixed(GameBoard *gameBoard, int column, int row) {
-    if (!validateCellFixed(gameBoard, column, row)) {
+int isCellFixed(GameBoard *gameBoard, int column, int row, int gameMode) {
+    if (!validateCellFixed(gameBoard, column, row,gameMode)) {
         return ERROR;
     } else {
         return (gameBoard->cellList + row * gameBoard->numberOfColumns + gameBoard->numberOfRows)->isFixed;
@@ -209,7 +209,7 @@ void printGameBoard(GameBoard *gameBoard, int withStars) {
 }
 
 int setValueToCell(GameBoard *gameBoard, int column, int row, int value) {
-    if (!validateCellIndex(gameBoard, column, row) || !validateCellFixed(gameBoard, column, row) ||
+    if (!validateCellIndex(gameBoard, column, row) || !validateCellFixed(gameBoard, column, row,1) ||
         !validateCellValue(gameBoard, column, row, value)) {
         return ERROR;
     } else {

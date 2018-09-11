@@ -80,7 +80,7 @@ void deleteNode(Node *node) {
 }
 
 Node *undoMove(List *list, int isReset) {
-    if (list->head == NULL) {
+    if (list->head == NULL||list->current==NULL) {
         if (!isReset) {
             printNoMovesToUndo();
         }
