@@ -27,8 +27,11 @@ Cell *getNextEmptyCell(GameBoard *gameBoard, int *currentRow, int *currentColumn
 }
 
 void finishAlg() {
+<<<<<<< HEAD
     DeleteStack(stack);
     free(emptyCell);
+=======
+>>>>>>> 31ae159e868cb05b9ad4d031349cc993742c667c
 }
 
 

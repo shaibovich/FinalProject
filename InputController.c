@@ -117,7 +117,13 @@ void getTurnCommand(int isFinish, int gameMode, int *commandArray, char *pathStr
         printf("2");
         cnt = 0;
         fgets(inputString, NUMBER_OF_CHARS_INPUT, stdin);
+<<<<<<< HEAD
         printf("3");
+=======
+//        printf("InputString: %s", inputString);
+       //     printf("%s", tempInput);
+        }
+>>>>>>> 31ae159e868cb05b9ad4d031349cc993742c667c
         tempInput = strtok(inputString, REGEX);
         printf("4");
         if (tempInput == NULL) {
