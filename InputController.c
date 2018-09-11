@@ -18,7 +18,7 @@
 #define REDO_OPTION "redo"
 #define SAVE_OPTION "save"
 #define NUM_SOLUTIONS_OPTION "num_solutions"
-#define AUTOFILL_OPTION "autofill"
+#define AUTOFILL_OPTION "auto_fill"
 #define SOLVE_OPTION "solve"
 #define RESET_OPTION "reset"
 #define REGEX " \n\r\t"
@@ -85,7 +85,7 @@ void validateCommand(int isFinish, int gameMode, int *commandArray) {
     } else if (!strcmp(command, SAVE_OPTION) && cnt >= 1 && isSolveOrEditMode(gameMode)) {
         isValidCommand = 1;
         commandArray[0] = SAVE;
-    } else if (!strcmp(command, NUM_SOLUTIONS_OPTION) && cnt >= 2 && isSolveOrEditMode(gameMode)) {
+    } else if (!strcmp(command, NUM_SOLUTIONS_OPTION) && cnt >= 1 && isSolveOrEditMode(gameMode)) {
         isValidCommand = 1;
         commandArray[0] = NUM_SOLUTIONS;
     } else if (!strcmp(command, AUTOFILL_OPTION) && cnt >= 1 && isSolveMode(gameMode)) {
@@ -97,7 +97,7 @@ void validateCommand(int isFinish, int gameMode, int *commandArray) {
 }
 
 void getTurnCommand(int isFinish, int gameMode, int *commandArray, char *pathString) {
-//    printf("isSolved: %d, GameMode %d, CommandArray0 %d, CommandArray1 %d, CommandArray2 %d, FilePath %s", isFinish, gameMode, commandArray[0], commandArray[1], commandArray[2], pathString);
+    strcpy(pathString, "");
     command = (char *) malloc(NUMBER_OF_CHARS_INPUT * sizeof(char));
     tempInput = (char*) malloc(NUMBER_OF_CHARS_INPUT * sizeof(char));
     inputString = (char *) malloc(NUMBER_OF_CHARS_INPUT * sizeof(char));
@@ -107,28 +107,26 @@ void getTurnCommand(int isFinish, int gameMode, int *commandArray, char *pathStr
     if (command == NULL || inputString == NULL || tempInput == NULL) {
         exit(1);
     }
+    printf("1");
     isValidCommand = 0;
     printEnterCommand();
     while (!isValidCommand) {
         if (feof(stdin)) {
             return;
         }
+        printf("2");
         cnt = 0;
-//        printf("here");
         fgets(inputString, NUMBER_OF_CHARS_INPUT, stdin);
-//        printf("InputString: %s", inputString);
-        if (tempInput != NULL){
-            printf("%s", tempInput);
-        }
+        printf("3");
         tempInput = strtok(inputString, REGEX);
-//        printf("TempInput: %s", tempInput);
+        printf("4");
         if (tempInput == NULL) {
             continue;
         } else {
             while (tempInput != NULL) {
                 switch (cnt) {
                     case 0:
-//                        printf("TempInput in switch: %s", tempInput);
+                        printf("5");
                         strcpy(command, tempInput);
                         break;
                     case 1:

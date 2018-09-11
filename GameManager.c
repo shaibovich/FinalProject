@@ -5,6 +5,7 @@
 #include <stdlib.h>
 
 #include <stdio.h>
+#include <string.h>
 #include "utils.h"
 #include "LinkedList.h"
 #include "InputController.h"
@@ -41,7 +42,7 @@ void solve(char *path) {
 }
 
 void edit(char *path) {
-    if (path == NULL) {
+    if (!strcmp(path, "")) {
         gameBoard = createEmptyBoard(3, 3);
     } else {
         gameBoard = openGameBoardFromFile(path, EDIT_MODE);
@@ -121,7 +122,7 @@ void save(char *path) {
             printBoardContainsError();
             return;
         } else {
-            if (!validate()) {
+            if (checkBoardErrors(gameBoard)) {
                 printFilNotOpened(1);
                 return;
             }

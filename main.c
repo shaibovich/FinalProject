@@ -1,6 +1,6 @@
-//#include <stdio.h>
-//
-//int main() {
-//    printf("Hello, World!\n");
-//    return 0;
-//}
+#include "GameManager.h"
+
+int main() {
+    startGame();
+    return 1;
+}

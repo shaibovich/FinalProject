@@ -159,7 +159,7 @@ int setCellValue(GameBoard *gameBoard, int column, int row, int value) {
 }
 
 int setCellFixed(GameBoard *gameBoard, int column, int row, int isFixed) {
-    if (!validateCellFixed(gameBoard, column, row)) {
+    if (!validateCellIndex(gameBoard, column, row)) {
         return ERROR;
     } else {
         (gameBoard->cellList + row * gameBoard->numberOfColumns + column)->isFixed = isFixed;

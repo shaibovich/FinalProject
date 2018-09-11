@@ -1,4 +1,5 @@
 
+
 #include "GameBoardClass.h"
 #include "Stack.h"
 #include <stdlib.h>
@@ -26,13 +27,14 @@ Cell *getNextEmptyCell(GameBoard *gameBoard, int *currentRow, int *currentColumn
 }
 
 void finishAlg() {
+    DeleteStack(stack);
     free(emptyCell);
 }
 
 
 int numberOfSolves(GameBoard *gameBoard) {
     counter = 0, rowIndex = 0, columnIndex = 0;
-    stack = createEmptyStack();
+    stack = createNewStack();
     emptyCell = getNextEmptyCell(gameBoard, &rowIndex, &columnIndex);
     push(stack, rowIndex, columnIndex);
     while (!isEmpty(stack)) {
@@ -56,7 +58,7 @@ void fillGameBoard(GameBoard *gameBoard) {
         for (columnIndex = 0; columnIndex < getNumberOfColumns(gameBoard); columnIndex++) {
             if (!getCellValue(tempBoard, columnIndex, rowIndex)) {
                 counter = 0;
-                for (value = 1; value < getNumberOfColumns(gameBoard); value) {
+                for (value = 1; value < getNumberOfColumns(gameBoard); value++) {
                     setCellValue(tempBoard, columnIndex, rowIndex, value);
                     if (!checkBoardErrors(tempBoard)) {
                         counter += 1;

@@ -1,5 +1,5 @@
 CC = gcc
-OBJS = utils.o GameBoardClass.o InputController.o sudokuSolver.o LinkedList.o Stack.o FileController.o GameManager.o main.o
+OBJS = utils.o Stack.o GameBoardClass.o InputController.o sudokuSolver.o LinkedList.o FileController.o GameManager.o main.o exhaustive.o
 EXEC = sudoku
 
 
@@ -12,6 +12,8 @@ COMP_FLAG = -ansi -Wall -Wextra -Werror -pedantic-errors
 $(EXEC): $(OBJS)
 	$(CC) $(OBJS) $(GUROBI_LIB) -o $@ -lm
 utils.o: utils.c utils.h
+	$(CC) $(COMP_FLAG) $(GUROBI_COMP) -c $*.c
+Stack.o: Stack.c Stack.h
 	$(CC) $(COMP_FLAG) $(GUROBI_COMP) -c $*.c
 GameManager.o: GameManager.c GameManager.h LinkedList.h InputController.h FileController.h sudokuSolver.h
 	$(CC) $(COMP_FLAG) $(GUROBI_COMP) -c $*.c
@@ -27,5 +29,8 @@ InputController.o: InputController.c InputController.h utils.h GameManager.h
 	$(CC) $(COMP_FLAG) $(GUROBI_COMP) -c $*.c
 sudokuSolver.o: sudokuSolver.c sudokuSolver.h GameBoardClass.h
 	$(CC) $(COMP_FLAG) $(GUROBI_COMP) -c $*.c
+exhaustive.o: exhaustive.c exhaustive.h GameBoardClass.h Stack.h
+	$(CC) $(COMP_FLAG) $(GUROBI_COMP) -c $*.c
+
 clean:
 	rm -f *.o $(EXEC)
