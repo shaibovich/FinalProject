@@ -18,7 +18,6 @@ struct StackCells {
 struct Stacks {
     int StackSize;
     int isEmpty;
-<<<<<<< HEAD
     struct StackCells *StackHead;
 };
 
@@ -28,28 +27,19 @@ Stack *newStack;
 
 StackCell *newCell;
 
-=======
-    StackCell *StackHead;
-};
-Stack *newStack;
 
->>>>>>> 31ae159e868cb05b9ad4d031349cc993742c667c
 Stack *createNewStack() {
     newStack = (Stack *) malloc(sizeof(Stack));
     assert(newStack);
     newStack->isEmpty = 1;
     newStack->StackHead = NULL;
     newStack->StackSize = 0;
-<<<<<<< HEAD
     return newStack;
 }
 
-=======
-}
 
 StackCell *newCell;
 
->>>>>>> 31ae159e868cb05b9ad4d031349cc993742c667c
 StackCell *createNewCell(int row, int column, StackCell *prev) {
     newCell = (StackCell *) malloc(sizeof(StackCell));
     newCell->row = row;
@@ -59,19 +49,13 @@ StackCell *createNewCell(int row, int column, StackCell *prev) {
     return newCell;
 }
 
-<<<<<<< HEAD
-=======
 //1 if empty 0 else
->>>>>>> 31ae159e868cb05b9ad4d031349cc993742c667c
 int isEmpty(Stack *stack) {
     return stack->isEmpty;
 }
 
 StackCell *pop(Stack *stack) {
-<<<<<<< HEAD
-=======
     // if stack has 1 or less objects - ret null
->>>>>>> 31ae159e868cb05b9ad4d031349cc993742c667c
     if (isEmpty(stack) || stack->StackSize == 1) {
         stack->isEmpty = 1;
         return NULL;
@@ -85,27 +69,21 @@ StackCell *pop(Stack *stack) {
 
 void push(Stack *stack, int row, int column) {
     StackCell *newCell = createNewCell(row, column, stack->StackHead);
-<<<<<<< HEAD
     stack->StackHead->next = newCell;
     stack->StackHead = newCell;
     stack->isEmpty = 0;
     stack->StackSize += 1;
-}
-=======
-    if(stack->StackHead!=NULL){
+    if (stack->StackHead != NULL) {
         stack->StackHead->next = newCell;
         stack->StackHead = newCell;
         stack->isEmpty = 0;
         stack->StackSize += 1;
+    } else {
+        stack->StackHead = newCell;
+        stack->StackSize = 1;
+        stack->isEmpty = 0;
     }
-    else{
-        stack->StackHead=newCell;
-        stack->StackSize=1;
-        stack->isEmpty=0;
-    }
-
 };
->>>>>>> 31ae159e868cb05b9ad4d031349cc993742c667c
 
 void DeleteStack(Stack *stack) {
     while (stack->isEmpty == 0) {

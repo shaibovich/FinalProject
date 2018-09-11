@@ -107,32 +107,30 @@ void getTurnCommand(int isFinish, int gameMode, int *commandArray, char *pathStr
     if (command == NULL || inputString == NULL || tempInput == NULL) {
         exit(1);
     }
-    printf("1");
+//    printf("1");
     isValidCommand = 0;
     printEnterCommand();
     while (!isValidCommand) {
         if (feof(stdin)) {
             return;
         }
-        printf("2");
+//        printf("2");
         cnt = 0;
         fgets(inputString, NUMBER_OF_CHARS_INPUT, stdin);
-<<<<<<< HEAD
-        printf("3");
-=======
+//        printf("3");
 //        printf("InputString: %s", inputString);
+        if (tempInput != NULL){
        //     printf("%s", tempInput);
         }
->>>>>>> 31ae159e868cb05b9ad4d031349cc993742c667c
         tempInput = strtok(inputString, REGEX);
-        printf("4");
+//        printf("4");
         if (tempInput == NULL) {
             continue;
         } else {
             while (tempInput != NULL) {
                 switch (cnt) {
                     case 0:
-                        printf("5");
+//                        printf("5");
                         strcpy(command, tempInput);
                         break;
                     case 1:
