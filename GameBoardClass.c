@@ -34,25 +34,22 @@ enum VALIDATION_ERROR {
     ROW = -3
 };
 
-int rowIndex, columnIndex, rowBlock, columnBlock, size;
+int rowIndex, columnIndex, rowBlock, columnBlock, size, randValue, columnRandom, rowRandom, generateCounter;
 char *gameInput;
 
 
 int validateSet(const GameBoard *gameBoard, int row, int column, int value) {
-    if (!value) {
+    if (value == 0) {
         return 1;
     }
-    rowBlock = 0;
-    columnBlock = 0;
     for (rowIndex = 0; rowIndex < gameBoard->numberOfRows; ++rowIndex) {
-        if (rowIndex != row &&
-            (gameBoard->cellList + rowIndex * gameBoard->numberOfRows + column)->value == value) {
+        if (rowIndex != row && (gameBoard->cellList + rowIndex * gameBoard->numberOfRows + column)->value == value) {
             return COLUMN;
         }
     }
     for (columnIndex = 0; columnIndex < gameBoard->numberOfColumns; ++columnIndex) {
         if (columnIndex != column &&
-            abs((gameBoard->cellList + row * gameBoard->numberOfColumns + columnIndex)->value) == value) {
+            (gameBoard->cellList + row * gameBoard->numberOfColumns + columnIndex)->value == value) {
             return ROW;
         }
     };
@@ -60,8 +57,8 @@ int validateSet(const GameBoard *gameBoard, int row, int column, int value) {
     columnBlock = (column / gameBoard->numberOfColumnBlock) * gameBoard->numberOfColumnBlock;
     for (rowIndex = 0; rowIndex < gameBoard->numberOfRowsBlock; ++rowIndex) {
         for (columnIndex = 0; columnIndex < gameBoard->numberOfColumnBlock; ++columnIndex) {
-            if (((gameBoard->cellList + (rowIndex + rowBlock) * gameBoard->numberOfColumns +
-                  (columnIndex + columnBlock))->value) == value && (rowIndex + rowBlock) != row &&
+            if ((gameBoard->cellList + (rowIndex + rowBlock) * gameBoard->numberOfColumns +
+                 (columnIndex + columnBlock))->value == value && (rowIndex + rowBlock) != row &&
                 (columnBlock + columnIndex) != column) {
                 return BLOCK;
             }
@@ -124,7 +121,7 @@ GameBoard *copyGameBoard(GameBoard *oldGameBoard) {
 }
 
 int validateCellValue(GameBoard *gameBoard, int value) {
-    if (value > gameBoard->size) {
+    if (value > gameBoard->numberOfRows) {
         printValueOutOfRange(gameBoard->numberOfRows);
         return 0;
     }
@@ -362,6 +359,17 @@ int isBoardFull(GameBoard *gameBoard) {
     return 1;
 }
 
+int isBoardEmpty(GameBoard *gameBoard) {
+    for (rowIndex = 0; rowIndex < gameBoard->numberOfRows; rowIndex++) {
+        for (columnIndex = 0; columnIndex < gameBoard->numberOfColumns; columnIndex++) {
+            if (getCell(gameBoard, columnIndex, rowIndex) == 0) {
+                return 0;
+            }
+        }
+    }
+    return 1;
+}
+
 void setAllFilledFixed(GameBoard *gameBoard) {
     for (rowIndex = 0; rowIndex < gameBoard->numberOfRows; rowIndex++) {
         for (columnIndex = 0; columnIndex < gameBoard->numberOfColumns; columnIndex++) {
@@ -376,7 +384,47 @@ int getGameBoardSize(GameBoard *gameBoard) {
     return gameBoard->size;
 }
 
-Cell * getCell(GameBoard * gameBoard, int column, int row){
-    return (gameBoard->cellList + column *gameBoard->numberOfRows + row);
+void makeBoardEmpty(GameBoard *gameBoard) {
+    for (rowIndex = 0; rowIndex < gameBoard->numberOfRows; rowIndex++) {
+        for (columnIndex = 0; columnIndex < gameBoard->numberOfColumns; columnIndex++) {
+            setCellValue(gameBoard, columnIndex, rowIndex, 0);
+        }
+    }
 }
 
+Cell *getCell(GameBoard *gameBoard, int column, int row) {
+    return (gameBoard->cellList + column * gameBoard->numberOfRows + row);
+}
+
+int fillRandom(GameBoard *gameBoard, int x) {
+    generateCounter = 0, rowRandom = 0, columnRandom = 0, randValue = 0;
+    while (x > 0 && generateCounter < 1000) {
+        rowRandom = (rand() % (gameBoard->numberOfRows));
+        columnRandom = (rand() % (gameBoard->numberOfColumns));
+        randValue = (rand() % (gameBoard->numberOfColumns));
+        if (randValue != 0) {
+            if (validateSet(gameBoard, rowRandom, columnRandom, randValue) == 1 &&
+                getCellValue(gameBoard, columnRandom, rowRandom) == 0) {
+                if (setCellValue(gameBoard, columnRandom, rowRandom, randValue) != ERROR) {
+                    x--;
+                }
+            }
+        }
+        generateCounter++;
+    }
+    if (x == 0) {
+        return 1;
+    }
+    return 0;
+}
+
+
+void clearRandom(GameBoard *gameBoard, int y) {
+    while (y > 0) {
+        rowIndex = (rand() % (gameBoard->numberOfRows));
+        columnIndex = (rand() % (gameBoard->numberOfColumns));
+        if (setCellValue(gameBoard, columnIndex, rowIndex, 0) != ERROR) {
+            y--;
+        }
+    }
+}

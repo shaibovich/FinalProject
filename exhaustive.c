@@ -9,6 +9,7 @@ GameBoard *tempBoard;
 Stack *stack;
 StackCell *currentCell;
 Cell *emptyCell;
+int *sit_mat, *innerCounterLst;
 
 
 Cell *getNextEmptyCell(GameBoard *gameBoard, int *currentRow, int *currentColumn) {
@@ -46,7 +47,7 @@ int numberOfSolves(GameBoard *gameBoard) {
         } else if (getCellValue(gameBoard, columnIndex, rowIndex) > getNumberOfColumns(gameBoard)) {
             setCellValue(gameBoard, columnIndex, rowIndex, 0);
             currentCell = pop(stack);
-            if (currentCell==NULL){
+            if (currentCell == NULL) {
                 break;
             }
             emptyCell = getCell(gameBoard, getColumn(currentCell), getRow(currentCell));
@@ -78,5 +79,5 @@ void fillGameBoard(GameBoard *gameBoard) {
             }
         }
     }
-    deleteBoard(gameBoard);
+    deleteBoard(tempBoard);
 }

@@ -19,6 +19,8 @@ void printPuzzleSolved();
 
 void printBoardContainsError();
 
+void printBoardUnsolvedable();
+
 void printValidationPassed();
 
 void printValidationFailed();

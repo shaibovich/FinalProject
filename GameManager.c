@@ -12,10 +12,10 @@
 #include "GameManager.h"
 #include "FileController.h"
 #include "exhaustive.h"
-//#include "sudokuSolver.h"
+#include "sudokuSolver.h"
 
-int gameMode;
-GameBoard *gameBoard;
+int gameMode, counter, check;
+GameBoard *gameBoard, *tempBoard;
 int *commandArray;
 int isMark, oldValue;
 char *filePath;
@@ -60,13 +60,33 @@ void markError(int mark) {
 }
 
 int validate() {
-    printf("start sudoku solver");
-//    solveSudoko(gameBoard);
-    return 1;
+    check = 0;
+    tempBoard = copyGameBoard(gameBoard);
+    check = solveSudoko(gameBoard, tempBoard);
+    deleteBoard(tempBoard);
+    return check;
 }
 
-void generate(int column, int row) {
-    printf("%d %d", column, row);
+void generate(int x, int y) {
+    counter = 0;
+    if (!isBoardEmpty(gameBoard)) {
+        printBoardNotEmpty();
+    } else {
+        for (counter = 0; counter < 1000; counter++) {
+            if (!fillRandom(gameBoard, x)) {
+                makeBoardEmpty(gameBoard);
+
+            } else if (validate()) {
+                printGameBoard(gameBoard, 1);
+                clearRandom(gameBoard, y);
+                printGameBoard(gameBoard, 1);
+                return;
+            } else {
+                makeBoardEmpty(gameBoard);
+            }
+        }
+        printGeneratorFailed();
+    }
 }
 
 void startNewGame() {
@@ -143,7 +163,7 @@ void autoFill() {
 void numSolutions() {
     int numberOfSols = numberOfSolves(gameBoard);
     printNumberOfsolutions(numberOfSols);
-    if (numberOfSols == 1){
+    if (numberOfSols == 1) {
         printGoodBoard();
     } else {
         printBadPuzzle();
@@ -159,9 +179,23 @@ void resetBoard() {
 }
 
 void hint(int column, int row) {
-    printf("%d %d", column, row);
-
+    if (checkBoardErrors(gameBoard)) {
+        printBoardContainsError();
+    } else if (isCellFixed(gameBoard, column, row)) {
+        printCellIsFixed();
+    } else if (getCellValue(gameBoard, column, row)) {
+        printCellAlreadyContains();
+    } else {
+        tempBoard = copyGameBoard(gameBoard);
+        if (solveSudoko(gameBoard, tempBoard)) {
+            hintCell(getCellValue(tempBoard, column, row));
+        } else {
+            printBoardUnsolvedable();
+        }
+        deleteBoard(tempBoard);
+    }
 }
+
 
 void startGame() {
     printStartGame();
@@ -216,17 +250,10 @@ void startGame() {
                 exitGame();
                 break;
             default:
-                printCellAlreadyContains();
-                hintCell(1);
-                printNumberOfsolutions(1);
-                printGoodBoard();
-                printBadPuzzle();
-                printSetCell(1,1,1);
+                printSetCell(1, 1, 1);
                 printSolutionErroneous();
                 printValidationPassed();
                 printValidationFailed();
-                printBoardNotEmpty();
-                printGeneratorFailed();
                 break;
         }
 

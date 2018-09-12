@@ -4,7 +4,7 @@ typedef struct StackCells StackCell;
 
 typedef struct Stacks Stack;
 
-
+#endif
 Stack *createNewStack();
 
 int isEmpty(Stack *stack);
@@ -18,4 +18,3 @@ void push(Stack *stack, int row, int column);
 int getColumn(StackCell *cell);
 
 int getRow(StackCell *cell);
-#endif

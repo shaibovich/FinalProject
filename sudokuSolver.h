@@ -1,4 +1,4 @@
 
 #include "GameBoardClass.h"
 
-int solveSudoko(GameBoard *gameBoard);
+int solveSudoko(GameBoard *gameBoard, GameBoard * solBoard);

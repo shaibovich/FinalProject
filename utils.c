@@ -61,6 +61,10 @@ void printGeneratorFailed() {
     printf("Error: puzzle generator failed\n");
 }
 
+void printBoardUnsolvedable(){
+    printf("Error: board is unsolvable\n");
+}
+
 void printNoMovesToUndo() {
     printf("Error: no moves to undo\n");
 }
@@ -124,7 +128,7 @@ void printBadPuzzle() {
 }
 
 void printSetCell(int x, int y, int value) {
-    printf("Cell <%d,%d> set to %d\n", x, y, value);
+    printf("Cell %d,%d set to %d\n", x, y, value);
 }
 
 void printBoardReset() {

@@ -49,13 +49,11 @@ StackCell *createNewCell(int row, int column, StackCell *prev) {
     return newCell;
 }
 
-//1 if empty 0 else
 int isEmpty(Stack *stack) {
     return stack->isEmpty;
 }
 
 StackCell *pop(Stack *stack) {
-    // if stack has 1 or less objects - ret null
     if (isEmpty(stack) || stack->StackSize == 1) {
         stack->isEmpty = 1;
         return NULL;
@@ -83,7 +81,7 @@ void push(Stack *stack, int row, int column) {
         stack->StackSize = 1;
         stack->isEmpty = 0;
     }
-};
+}
 
 void DeleteStack(Stack *stack) {
     while (stack->isEmpty == 0) {

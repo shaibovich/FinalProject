@@ -9,6 +9,14 @@ typedef struct GameCell Cell;
 
 int getGameBoardSize(GameBoard *gameBoard);
 
+int isBoardEmpty(GameBoard * gameBoard);
+
+void clearRandom(GameBoard *gameBoard, int y);
+
+int fillRandom(GameBoard *gameBoard, int x);
+
+void makeBoardEmpty(GameBoard * gameBoard);
+
 int checkBoardErrors(GameBoard *gameBoard);
 
 void printGameBoard(GameBoard *gameBoard, int withStars);
