@@ -77,9 +77,7 @@ void generate(int x, int y) {
                 makeBoardEmpty(gameBoard);
 
             } else if (validate()) {
-                printGameBoard(gameBoard, 1);
                 clearRandom(gameBoard, y);
-                printGameBoard(gameBoard, 1);
                 return;
             } else {
                 makeBoardEmpty(gameBoard);
@@ -182,7 +180,7 @@ void resetBoard() {
 void hint(int column, int row) {
     if (checkBoardErrors(gameBoard)) {
         printBoardContainsError();
-    } else if (isCellFixed(gameBoard, column, row)) {
+    } else if (isCellFixed(gameBoard, column, row, 0)) {
         printCellIsFixed();
     } else if (getCellValue(gameBoard, column, row)) {
         printCellAlreadyContains();

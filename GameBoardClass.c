@@ -136,7 +136,7 @@ int validateCellIndex(GameBoard *gameBoard, int column, int row) {
     return 1;
 }
 
-int validateCellFixed(GameBoard *gameBoard, int column, int row, int gameMode) {
+int validateCellFixed(GameBoard *gameBoard, int column, int row) {
     if ((getCellIsFixed((gameBoard->cellList + row * gameBoard->numberOfColumns + column)))) {
         return 0;
     }
@@ -163,9 +163,9 @@ int setCellFixed(GameBoard *gameBoard, int column, int row, int isFixed) {
     }
 }
 
-int isCellFixed(GameBoard *gameBoard, int column, int row, int gameMode, int isSave) {
-    if (!validateCellFixed(gameBoard, column, row, gameMode)) {
-        if (!isSave){
+int isCellFixed(GameBoard *gameBoard, int column, int row, int isSave) {
+    if (!validateCellFixed(gameBoard, column, row)) {
+        if (!isSave) {
             printCellIsFixed();
         }
         return ERROR;
@@ -275,10 +275,10 @@ int isInvalidValue(GameBoard *gameBoard, int column, int row, int value) {
 }
 
 int setValueToCell(GameBoard *gameBoard, int column, int row, int value) {
-    if (!validateCellIndex(gameBoard, column, row) || !validateCellFixed(gameBoard, column, row,1) ||
+    if (!validateCellIndex(gameBoard, column, row) || !validateCellFixed(gameBoard, column, row) ||
         !validateCellValue(gameBoard, value)) {
         return ERROR;
-    } else if (!validateCellFixed(gameBoard, column, row,1)) {
+    } else if (!validateCellFixed(gameBoard, column, row)) {
         return ERROR;
     } else {
         int res = validateSet(gameBoard, row, column, value);
@@ -324,7 +324,7 @@ void getRowValuesString(char *string, GameBoard *gameBoard, int row, int gameMod
     for (columnIndex = 0; columnIndex < gameBoard->numberOfColumns; columnIndex++) {
         sprintf(gameInput, "%d", (gameBoard->cellList + row * gameBoard->numberOfColumns + columnIndex)->value);
         strcat(string, gameInput);
-        if (isCellFixed(gameBoard, columnIndex, row,gameMode,isSave) || gameMode == 1) {
+        if (isCellFixed(gameBoard, columnIndex, row, isSave) || gameMode == 1) {
             strcat(string, ".");
         }
         if (columnIndex != gameBoard->numberOfColumns - 1) {
