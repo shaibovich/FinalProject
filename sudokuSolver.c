@@ -1,7 +1,7 @@
 
 
 
-#include "sudokuSolver.h"
+//#include "sudokuSolver.h"
 #include "gurobi1_c.h"
 #include <stdlib.h>
 #include <string.h>
@@ -129,7 +129,7 @@ int oneEachGrind() {
     return 1;
 }
 
-int solveSudoko(GameBoard *gameBoard, GameBoard * solBoard) {
+/* int solveSudoko(GameBoard *gameBoard, GameBoard * solBoard) {
     env = NULL;
     model = NULL;
     DIM = getNumberOfRows(gameBoard);
@@ -138,13 +138,13 @@ int solveSudoko(GameBoard *gameBoard, GameBoard * solBoard) {
     init();
     error = 0;
 
-    /* Create an empty model */
+    /* Create an empty model
     createEmptyModel(gameBoard);
 
-    /* Create environment */
+    /* Create environment
     error = GRBloadenv(&env, "sudoku.log");
     if (error) goto QUIT;
-    /* Create new model */
+    /* Create new model
     error = GRBnewmodel(env, &model, "sudoku", DIM * DIM * DIM, NULL, lb, NULL, vtype, NULL);
     if (error) goto QUIT;
 
@@ -156,13 +156,13 @@ int solveSudoko(GameBoard *gameBoard, GameBoard * solBoard) {
 
     if (!oneEachGrind()) goto QUIT;
 
-    /* Optimize model */
+    /* Optimize model
     error = GRBoptimize(model);
     if (error) goto QUIT;
-    /* Write model to ’sudoku.lp ’ */
+    /* Write model to ’sudoku.lp ’
     error = GRBwrite(model, "sudoku.lp");
     if (error) goto QUIT;
-    /* Capture solution information */
+    /* Capture solution information
     error = GRBgetintattr(model, GRB_INT_ATTR_STATUS, &optimstatus);
     if (error) goto QUIT;
 
@@ -188,3 +188,4 @@ int solveSudoko(GameBoard *gameBoard, GameBoard * solBoard) {
     return 1;
 }
 
+*/

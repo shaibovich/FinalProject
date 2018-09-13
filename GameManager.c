@@ -3,7 +3,6 @@
 
 #include <assert.h>
 #include <stdlib.h>
-
 #include <stdio.h>
 #include <string.h>
 #include "utils.h"
@@ -12,7 +11,7 @@
 #include "GameManager.h"
 #include "FileController.h"
 #include "exhaustive.h"
-#include "sudokuSolver.h"
+//#include "sudokuSolver.h"
 
 int gameMode, counter, check;
 GameBoard *gameBoard, *tempBoard;
@@ -59,7 +58,7 @@ void markError(int mark) {
     }
 }
 
-int validate() {
+/*int validate() {
     check = 0;
     tempBoard = copyGameBoard(gameBoard);
     check = solveSudoko(gameBoard, tempBoard);
@@ -86,7 +85,7 @@ void generate(int x, int y) {
         printGeneratorFailed();
     }
 }
-
+*/
 void startNewGame() {
     gameMode = INIT_MODE;
 }
@@ -95,7 +94,7 @@ void set(int column, int row, int value) {
     column -= 1;
     row -= 1;
     oldValue = getCellValue(gameBoard, column, row);
-    if (setValueToCell(gameBoard, column, row, value)) {
+    if (setValueToCell(gameBoard, column, row, value)!=ERROR) {
         addMove(gameBoard, gameMoves, row, column, oldValue);
         if (checkBoardErrors(gameBoard)) {
             printBoardContainsError();
@@ -177,7 +176,7 @@ void resetBoard() {
     printBoardReset();
 }
 
-void hint(int column, int row) {
+/*void hint(int column, int row) {
     if (checkBoardErrors(gameBoard)) {
         printBoardContainsError();
     } else if (isCellFixed(gameBoard, column, row, 0)) {
@@ -194,7 +193,7 @@ void hint(int column, int row) {
         deleteBoard(tempBoard);
     }
 }
-
+*/
 
 void startGame() {
     printStartGame();
@@ -205,9 +204,9 @@ void startGame() {
             case SET:
                 set(commandArray[1], commandArray[2], commandArray[3]);
                 break;
-            case HINT:
+        /*    case HINT:
                 hint(commandArray[1], commandArray[2]);
-                break;
+                break;*/
             case RESET:
                 resetBoard();
                 break;
@@ -223,9 +222,9 @@ void startGame() {
             case PRINT_BOARD:
                 printGameBoard(gameBoard, commandArray[1]);
                 break;
-            case GENERATE:
+         /*   case GENERATE:
                 generate(commandArray[1], commandArray[2]);
-                break;
+                break;*/
             case UNDO:
                 doUndo(0);
                 break;
@@ -241,10 +240,10 @@ void startGame() {
             case AUTO_FILL:
                 autoFill();
                 break;
-            case VALIDATE:
+         /*   case VALIDATE:
                 printf("case validate");
                 validate();
-                break;
+                break;*/
             case EXIT:
                 exitGame();
                 break;
