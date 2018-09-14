@@ -132,11 +132,15 @@ int validateCellValue(GameBoard *gameBoard, int value) {
 
 int validateCellIndex(GameBoard *gameBoard, int column, int row) {
     if (column > gameBoard->numberOfColumns || row > gameBoard->numberOfRows) {
-        /* printValueOutOfRange(gameBoard->numberOfRows); */
+        printValueOutOfRange(gameBoard->numberOfRows);
+        return 0;
+    }
+    if (column >= gameBoard->numberOfColumns || column < 0 || row < 0 || row >= gameBoard->numberOfRows) {
         return 0;
     }
     return 1;
 }
+
 
 int validateCellFixed(GameBoard *gameBoard, int column, int row) {
     if ((getCellIsFixed((gameBoard->cellList + row * gameBoard->numberOfColumns + column)))) {
@@ -193,7 +197,7 @@ int getCellError(GameBoard *gameBoard, int column, int row) {
     }
 }
 
-int makrCellError(GameBoard *gameBoard, int column, int row) {
+int markCellError(GameBoard *gameBoard, int column, int row) {
     if (!validateCellIndex(gameBoard, column, row)) {
         return ERROR;
     } else {
@@ -211,14 +215,6 @@ int markCellUnError(GameBoard *gameBoard, int column, int row) {
     }
 }
 
-int markCellError(GameBoard *gameBoard, int column, int row) {
-    if (!validateCellIndex(gameBoard, column, row)) {
-        return ERROR;
-    } else {
-        (gameBoard->cellList + row * gameBoard->numberOfColumns + column)->isError = 1;
-        return 1;
-    }
-}
 
 int checkBoardErrors(GameBoard *gameBoard) {
     for (rowIndex = 0; rowIndex < gameBoard->numberOfRowsBlock; rowIndex++) {
@@ -243,7 +239,8 @@ void printGameBoard(GameBoard *gameBoard, int withStars) {
             if ((gameBoard->cellList + rowIndex * gameBoard->numberOfColumns + columnIndex)->value == 0) {
                 printf(" ");
             } else {
-                printf("%d", abs((gameBoard->cellList + rowIndex * gameBoard->numberOfColumns + columnIndex)->value));
+                printf("%d",
+                       abs((gameBoard->cellList + rowIndex * gameBoard->numberOfColumns + columnIndex)->value));
             }
             if ((gameBoard->cellList + rowIndex * gameBoard->numberOfColumns + columnIndex)->isFixed) {
                 printf(". ");
@@ -266,14 +263,11 @@ int isInvalidValue(GameBoard *gameBoard, int column, int row, int value) {
             return 0;
         }
     }
-
     for (columnIndex = 0; columnIndex < gameBoard->numberOfColumns; columnIndex++) {
         if ((gameBoard->cellList + row * gameBoard->numberOfColumns + columnIndex)->value == value) {
             return 0;
         }
     }
-
-
     return 1;
 }
 
@@ -282,7 +276,10 @@ int setValueToCell(GameBoard *gameBoard, int column, int row, int value) {
         printValueOutOfRange(gameBoard->numberOfRows);
         return ERROR;
     } else if (!validateCellFixed(gameBoard, column, row)) {
-
+        printCellIsFixed();
+        return ERROR;
+    } else if (!validateCellIndex(gameBoard, column, row) || !validateCellValue(gameBoard, value)) {
+        printValueOutOfRange(gameBoard->numberOfRows);
         return ERROR;
     } else {
         int res = validateSet(gameBoard, row, column, value);

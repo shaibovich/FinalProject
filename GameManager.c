@@ -16,7 +16,7 @@
 int gameMode, counter, check;
 GameBoard *gameBoard, *tempBoard;
 int *commandArray, columnsLst[1], rowsLst[1], valueLst[1];
-int isMark, oldValue, isFinish;
+int isMark, oldValue, isFinish, withStar;
 char *filePath;
 Node *node;
 ListofLists *gameMoves;
@@ -25,7 +25,7 @@ void startNewGame() {
     gameMode = INIT_MODE;
 }
 
-void initiliateGame() {
+void initiateGame() {
     gameMode = INIT_MODE;
     isMark = FALSE;
     isFinish = 0;
@@ -104,14 +104,20 @@ void generate(int x, int y) {
 
 
 void set(int column, int row, int value) {
+    withStar = 0;
     column -= 1;
     row -= 1;
     oldValue = getCellValue(gameBoard, column, row);
+
     columnsLst[0] = column;
     rowsLst[0] = row;
     valueLst[0] = value;
     if (setValueToCell(gameBoard, column, row, value) != ERROR) {
         addMoves(gameBoard, gameMoves, rowsLst, columnsLst, valueLst, 1);
+        if (isMark == 1 || gameMode == EDIT_MODE) {
+            withStar = 1;
+        }
+        printGameBoard(gameBoard, withStar);
         if (checkBoardErrors(gameBoard) && gameMode == SOLVE_MODE) {
             printSolutionErroneous();
         } else {
@@ -138,6 +144,8 @@ int doUndo(int isReset) {
 
 void doRedo() {
     redoMoves(gameBoard, gameMoves);
+    printGameBoard(gameBoard, (isMark || gameMode == EDIT_MODE));
+
 }
 
 void save(char *path) {
@@ -205,7 +213,7 @@ void hint(int column, int row) {
 
 void startGame() {
     printStartGame();
-    initiliateGame();
+    initiateGame();
     while (1) {
         getTurnCommand(isFinish, gameMode, commandArray, filePath);
         switch (commandArray[0]) {
