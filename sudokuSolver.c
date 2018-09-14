@@ -15,7 +15,6 @@ GRBmodel *model;
 GRBenv *env;
 
 void init() {
-
     ind = (int *) malloc(sizeof(int) * DIM);
     assert(ind);
     val = (double *) malloc(sizeof(double) * DIM);
@@ -26,6 +25,16 @@ void init() {
     assert(vtype);
     sol = (double *) malloc(DIM * DIM * DIM * sizeof(double));
     assert(sol);
+    for (rowIndex = 0; rowIndex < DIM; rowIndex++) {
+        for (columnIndex = 0; columnIndex < DIM; columnIndex++) {
+            for (value = 0; value < DIM; value++) {
+                lb[DIM * DIM * rowIndex + DIM * columnIndex + value] = 0.0;
+                sol[DIM * DIM * rowIndex + DIM * columnIndex + value] = 0.0;
+            }
+        }
+        val[rowIndex] = 0.0;
+        ind[rowIndex] = 0;
+    }
 }
 
 void finish() {
@@ -36,6 +45,7 @@ void finish() {
     free(lb);
     free(vtype);
     free(sol);
+    ind = NULL, val = NULL, lb = NULL, vtype = NULL, sol = NULL;
 }
 
 void copySolToGameBoard(GameBoard *gameBoard) {
@@ -64,14 +74,12 @@ void createEmptyModel(GameBoard *gameBoard) {
     }
 }
 
-int eachCellGetsValue(GameBoard *gameBoard) {
+int eachCellGetsValue() {
     for (rowIndex = 0; rowIndex < DIM; rowIndex++) {
         for (columnIndex = 0; columnIndex < DIM; columnIndex++) {
             for (value = 0; value < DIM; value++) {
-                if (getCellValue(gameBoard, columnIndex, rowIndex) == 0) {
-                    ind[value] = rowIndex * DIM * DIM + columnIndex * DIM + value;
-                    val[value] = 1.0;
-                }
+                ind[value] = rowIndex * DIM * DIM + columnIndex * DIM + value;
+                val[value] = 1.0;
             }
             error = GRBaddconstr(model, DIM, ind, val, GRB_EQUAL, 1.0, NULL);
             if (error) return 0;
@@ -130,7 +138,7 @@ int oneEachGrind() {
 }
 
 
-int solveSudoko(GameBoard *gameBoard, GameBoard * solBoard) {
+int solveSudoko(GameBoard *gameBoard, GameBoard *solBoard) {
     env = NULL;
     model = NULL;
     DIM = getNumberOfRows(gameBoard);
@@ -150,7 +158,7 @@ int solveSudoko(GameBoard *gameBoard, GameBoard * solBoard) {
 
     if (error) goto QUIT;
 
-    if (!eachCellGetsValue(gameBoard)) goto QUIT;
+    if (!eachCellGetsValue()) goto QUIT;
 
     if (!oneEachRow()) goto QUIT;
 
