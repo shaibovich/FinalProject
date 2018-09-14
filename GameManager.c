@@ -11,7 +11,7 @@
 #include "GameManager.h"
 #include "FileController.h"
 #include "exhaustive.h"
-#include "sudokuSolver.h"
+//#include "sudokuSolver.h"
 
 int gameMode, counter, check;
 GameBoard *gameBoard, *tempBoard;
@@ -21,7 +21,7 @@ char *filePath;
 Node *node;
 List *gameMoves;
 
-void initiliateGame() {
+void initiateGame() {
     gameMode = INIT_MODE;
     isMark = FALSE;
     commandArray = (int *) malloc(sizeof(int) * 4);
@@ -61,7 +61,7 @@ void markError(int mark) {
 int validate() {
     check = 0;
     tempBoard = copyGameBoard(gameBoard);
-    check = solveSudoko(gameBoard, tempBoard);
+//    check = solveSudoko(gameBoard, tempBoard);
     deleteBoard(tempBoard);
     return check;
 }
@@ -90,11 +90,16 @@ void startNewGame() {
 }
 
 void set(int column, int row, int value) {
+    int withStar;
     column -= 1;
     row -= 1;
     oldValue = getCellValue(gameBoard, column, row);
     if (setValueToCell(gameBoard, column, row, value)!=ERROR) {
         addMove(gameBoard, gameMoves, row, column, oldValue);
+        if (isMark==1||gameMode==EDIT_MODE){
+            withStar=1;
+        }
+        printGameBoard(gameBoard,withStar);
         if (checkBoardErrors(gameBoard) && gameMode == SOLVE_MODE) {
             printSolutionErroneous();
         } else {
@@ -129,6 +134,7 @@ void doRedo() {
     node = redoMove(gameMoves);
     if (node != NULL) {
         setValueToCell(gameBoard, getNodeY(node), getNodeX(node), getNodeValue(node));
+        printGameBoard(gameBoard,(isMark||gameMode==EDIT_MODE));
     }
 
 }
@@ -184,11 +190,11 @@ void hint(int column, int row) {
         printCellAlreadyContains();
     } else {
         tempBoard = copyGameBoard(gameBoard);
-        if (solveSudoko(gameBoard, tempBoard)) {
-            hintCell(getCellValue(tempBoard, column, row));
-        } else {
-            printBoardUnsolvedable();
-        }
+//        if (solveSudoko(gameBoard, tempBoard)) {
+//            hintCell(getCellValue(tempBoard, column, row));
+//        } else {
+//            printBoardUnsolvedable();
+//        }
         deleteBoard(tempBoard);
     }
 }
@@ -196,7 +202,7 @@ void hint(int column, int row) {
 
 void startGame() {
     printStartGame();
-    initiliateGame();
+    initiateGame();
     while (1) {
         getTurnCommand(0, gameMode, commandArray, filePath);
         switch (commandArray[0]) {

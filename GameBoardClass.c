@@ -124,15 +124,13 @@ GameBoard *copyGameBoard(GameBoard *oldGameBoard) {
 
 int validateCellValue(GameBoard *gameBoard, int value) {
     if (value > gameBoard->numberOfRows) {
-        //printValueOutOfRange(gameBoard->numberOfRows);
         return 0;
     }
     return 1;
 }
 
 int validateCellIndex(GameBoard *gameBoard, int column, int row) {
-    if (column > gameBoard->numberOfColumns || row > gameBoard->numberOfRows) {
-       // printValueOutOfRange(gameBoard->numberOfRows);
+    if (column >= gameBoard->numberOfColumns || column < 0|| row<0|| row >= gameBoard->numberOfRows) {
         return 0;
     }
     return 1;
@@ -193,7 +191,7 @@ int getCellError(GameBoard *gameBoard, int column, int row) {
     }
 }
 
-int makrCellError(GameBoard *gameBoard, int column, int row) {
+int markCellError(GameBoard *gameBoard, int column, int row) {
     if (!validateCellIndex(gameBoard, column, row)) {
         return ERROR;
     } else {
@@ -211,14 +209,6 @@ int markCellUnError(GameBoard *gameBoard, int column, int row) {
     }
 }
 
-int markCellError(GameBoard *gameBoard, int column, int row) {
-    if (!validateCellIndex(gameBoard, column, row)) {
-        return ERROR;
-    } else {
-        (gameBoard->cellList + row * gameBoard->numberOfColumns + column)->isError = 1;
-        return 1;
-    }
-}
 
 int checkBoardErrors(GameBoard *gameBoard) {
     for (rowIndex = 0; rowIndex < gameBoard->numberOfRowsBlock; rowIndex++) {
@@ -278,13 +268,12 @@ int isInvalidValue(GameBoard *gameBoard, int column, int row, int value) {
 }
 
 int setValueToCell(GameBoard *gameBoard, int column, int row, int value) {
-    if (!validateCellIndex(gameBoard, column, row)|| !validateCellValue(gameBoard,value)) {
-        printValueOutOfRange(gameBoard->numberOfRows);
+    if (!validateCellFixed(gameBoard, column, row)) {
+        printCellIsFixed();
         return ERROR;
     }
-
-    else if (!validateCellFixed(gameBoard, column, row)) {
-
+    else if (!validateCellIndex(gameBoard, column, row)|| !validateCellValue(gameBoard,value)) {
+        printValueOutOfRange(gameBoard->numberOfRows);
         return ERROR;
     }
     else {

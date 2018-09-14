@@ -41,7 +41,7 @@ int getCellValue(GameBoard *gameBoard, int column, int row);
 
 int getCellError(GameBoard *gameBoard, int column, int row);
 
-int makrCellError(GameBoard *gameBoard, int column, int row);
+int markCellError(GameBoard *gameBoard, int column, int row);
 
 int markCellUnError(GameBoard *gameBoard, int column, int row);
 
