@@ -144,7 +144,7 @@ int doUndo(int isReset) {
 
 void doRedo() {
     redoMoves(gameBoard, gameMoves);
-    printGameBoard(gameBoard, (isMark || gameMode == EDIT_MODE));
+//    printGameBoard(gameBoard, (isMark || gameMode == EDIT_MODE));
 
 }
 

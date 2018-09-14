@@ -131,15 +131,15 @@ void redoMoves(GameBoard *gameBoard, ListofLists *listArray) {
 
 
 int undoMoves(GameBoard *gameBoard, ListofLists *listArray, int isReset) {
-    if (listArray->headLst == NULL || listArray->currentLst == NULL) {
+    if (listArray->headLst == NULL) {
         if (!isReset) {
             printNoMovesToUndo();
         }
         return 0;
     }
-    tempLst = listArray->currentLst;
+    tempLst = listArray->headLst;
     if (listArray->currentLst == listArray->headLst) {
-        listArray->currentLst = NULL;
+        listArray->headLst = NULL;
     } else {
         listArray->currentLst = listArray->currentLst->prevLst;
     }
@@ -199,7 +199,8 @@ void deleteLinkedListArray(ListofLists *listArray) {
     tempLst = NULL;
     if (listArray->headLst == NULL) {
         return;
-    } else if (listArray->currentLst == NULL) {
+    }
+    else if (listArray->currentLst == NULL) {
         tempLst = listArray->headLst->nextLst;
         while (tempLst != NULL) {
             deleteNextMoves(tempLst->prevLst);
