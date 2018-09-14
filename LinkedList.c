@@ -154,6 +154,7 @@ void addMove(GameBoard *gameBoard, List *list, int row, int column, int value) {
 }
 
 void deleteLinkedList(List *list) {
+    deleteNextMoves(list);
     if (list->current != NULL) {
         while (list->current != list->head) {
             list->current = list->current->prev;

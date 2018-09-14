@@ -55,7 +55,7 @@ void getNumberOfRowsString(char *string, GameBoard *gameBoard);
 
 void getNumberOfBlocksString(char *string, GameBoard *gameBoard);
 
-void getRowValuesString(char *string, GameBoard *gameBoard, int row, int gameMode, int isSave);
+void getRowValuesString(char *string, GameBoard *gameBoard, int row, int isSave);
 
 int getNumberOfColumns(GameBoard *gameBoard);
 

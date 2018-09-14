@@ -318,13 +318,13 @@ void getNumberOfBlocksString(char *string, GameBoard *gameBoard) {
     free(gameInput);
 }
 
-void getRowValuesString(char *string, GameBoard *gameBoard, int row, int gameMode, int isSave) {
+void getRowValuesString(char *string, GameBoard *gameBoard, int row, int isSave) {
     gameInput = (char *) malloc(sizeof(char) * gameBoard->size);
     assert(gameInput);
     for (columnIndex = 0; columnIndex < gameBoard->numberOfColumns; columnIndex++) {
         sprintf(gameInput, "%d", (gameBoard->cellList + row * gameBoard->numberOfColumns + columnIndex)->value);
         strcat(string, gameInput);
-        if (isCellFixed(gameBoard, columnIndex, row, isSave) || gameMode == 1) {
+        if (isCellFixed(gameBoard, columnIndex, row, isSave)) {
             strcat(string, ".");
         }
         if (columnIndex != gameBoard->numberOfColumns - 1) {
@@ -364,7 +364,7 @@ int isBoardFull(GameBoard *gameBoard) {
 int isBoardEmpty(GameBoard *gameBoard) {
     for (rowIndex = 0; rowIndex < gameBoard->numberOfRows; rowIndex++) {
         for (columnIndex = 0; columnIndex < gameBoard->numberOfColumns; columnIndex++) {
-            if (getCell(gameBoard, columnIndex, rowIndex) == 0) {
+            if (getCellValue(gameBoard, columnIndex, rowIndex) != 0) {
                 return 0;
             }
         }
@@ -375,8 +375,8 @@ int isBoardEmpty(GameBoard *gameBoard) {
 void setAllFilledFixed(GameBoard *gameBoard) {
     for (rowIndex = 0; rowIndex < gameBoard->numberOfRows; rowIndex++) {
         for (columnIndex = 0; columnIndex < gameBoard->numberOfColumns; columnIndex++) {
-            if (getCellValue(gameBoard, columnIndex, rowIndex)) {
-                setCellFixed(gameBoard, columnIndex, rowIndex, 3);
+            if (getCellValue(gameBoard, columnIndex, rowIndex) != 0) {
+                setCellFixed(gameBoard, columnIndex, rowIndex, 1);
             }
         }
     }

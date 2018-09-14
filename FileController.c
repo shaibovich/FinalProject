@@ -8,29 +8,29 @@
 
 char *fileString, *inputString;
 FILE * fp;
-int rows, column, value, columnIndex , rowIndex;
+int rows, column, value, rowIndexFile , columnIndexFile;
 GameBoard * newBoard;
 
-void makeFileString(char *fileString, GameBoard *gameBoard, int gameMode, int isSave) {
+void makeFileString(char *fileString, GameBoard *gameBoard, int gameMode) {
     getNumberOfBlocksString(fileString, gameBoard);
     strcat(fileString, " ");
     getNumberOfRowsString(fileString, gameBoard);
     strcat(fileString, "\n");
-    for (rowIndex = 0; rowIndex < getNumberOfRows(gameBoard); rowIndex++) {
-        getRowValuesString(fileString, gameBoard, rowIndex, gameMode, isSave);
-        if (rowIndex != getNumberOfRows(gameBoard) - 1) {
+    for (rowIndexFile = 0; rowIndexFile < getNumberOfRows(gameBoard); rowIndexFile++) {
+        getRowValuesString(fileString, gameBoard, rowIndexFile, gameMode);
+        if (rowIndexFile != getNumberOfRows(gameBoard) - 1) {
             strcat(fileString, "\n");
         }
     }
 
 }
 
-int saveFile(char *filePath, GameBoard *gameBoard, int gameMode,int isSave) {
+int saveFile(char *filePath, GameBoard *gameBoard, int gameMode) {
 
     fileString = (char *) malloc(1024);
     assert(fileString);
     strcpy(fileString,"");
-    makeFileString(fileString, gameBoard, gameMode, isSave);
+    makeFileString(fileString, gameBoard, gameMode);
     fp = fopen(filePath, "w");
     if (fp == NULL) {
         printFileCannotBeCreated();
@@ -42,7 +42,6 @@ int saveFile(char *filePath, GameBoard *gameBoard, int gameMode,int isSave) {
     fclose(fp);
     free(fileString);
     return 1;
-
 }
 
 GameBoard *openGameBoardFromFile(char *filePath, int isSolve) {
@@ -56,17 +55,16 @@ GameBoard *openGameBoardFromFile(char *filePath, int isSolve) {
     inputString = (char *) malloc(sizeof(char) * (column * rows));
     assert(inputString);
     newBoard = createEmptyBoard(rows, column);
-    for (rowIndex = 0; rowIndex < getNumberOfRows(newBoard); rowIndex++) {
-        for (columnIndex = 0; columnIndex < getNumberOfColumns(newBoard); columnIndex++) {
+    for (rowIndexFile = 0; rowIndexFile < getNumberOfRows(newBoard); rowIndexFile ++) {
+        for (columnIndexFile = 0; columnIndexFile< getNumberOfColumns(newBoard); columnIndexFile++) {
             fscanf(fp, "%s", inputString);
             sscanf(inputString, "%d", &value);
-            setValueToCell(newBoard, columnIndex, rowIndex, value);
+            setValueToCell(newBoard, columnIndexFile , rowIndexFile , value);
             if (strchr(inputString, '.') != NULL) {
-                setCellFixed(newBoard, columnIndex, rowIndex, 1);
+                setCellFixed(newBoard, columnIndexFile , rowIndexFile , 1);
             } else {
-                setCellFixed(newBoard, columnIndex, rowIndex, 0);
+                setCellFixed(newBoard, columnIndexFile, rowIndexFile , 0);
             }
-
         }
     }
     checkBoardErrors(newBoard);

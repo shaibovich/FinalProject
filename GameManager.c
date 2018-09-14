@@ -1,10 +1,9 @@
-#define TRUE 1
 #define FALSE 0
+#define TRUE 1
 
 #include <assert.h>
 #include <stdlib.h>
 
-#include <stdio.h>
 #include <string.h>
 #include "utils.h"
 #include "LinkedList.h"
@@ -75,7 +74,6 @@ void generate(int x, int y) {
         for (counter = 0; counter < 1000; counter++) {
             if (!fillRandom(gameBoard, x)) {
                 makeBoardEmpty(gameBoard);
-
             } else if (validate()) {
                 clearRandom(gameBoard, y);
                 return;
@@ -97,8 +95,8 @@ void set(int column, int row, int value) {
     oldValue = getCellValue(gameBoard, column, row);
     if (setValueToCell(gameBoard, column, row, value)) {
         addMove(gameBoard, gameMoves, row, column, oldValue);
-        if (checkBoardErrors(gameBoard)) {
-            printBoardContainsError();
+        if (checkBoardErrors(gameBoard) && gameMode == SOLVE_MODE) {
+            printSolutionErroneous();
         } else {
             if (isBoardFull(gameBoard)) {
                 printPuzzleSolved();
@@ -112,6 +110,7 @@ void exitGame() {
     deleteBoard(gameBoard);
     deleteLinkedList(gameMoves);
     free(filePath);
+    free(commandArray);
     printExit();
     exit(1);
 }
@@ -135,7 +134,6 @@ void doRedo() {
 }
 
 void save(char *path) {
-    int isSave=1;
     if (gameMode == EDIT_MODE) {
         if (checkBoardErrors(gameBoard)) {
             printBoardContainsError();
@@ -148,7 +146,7 @@ void save(char *path) {
         }
         setAllFilledFixed(gameBoard);
     }
-    if (saveFile(filePath, gameBoard, gameMode, isSave)) {
+    if (saveFile(filePath, gameBoard, gameMode)) {
         printSaveTo(path);
     }
 
@@ -242,17 +240,16 @@ void startGame() {
                 autoFill();
                 break;
             case VALIDATE:
-                printf("case validate");
-                validate();
+                if (validate()){
+                    printValidationPassed();
+                } else {
+                    printValidationFailed();
+                }
                 break;
             case EXIT:
                 exitGame();
                 break;
             default:
-                printSetCell(1, 1, 1);
-                printSolutionErroneous();
-                printValidationPassed();
-                printValidationFailed();
                 break;
         }
 

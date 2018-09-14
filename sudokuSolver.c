@@ -10,8 +10,8 @@
 int *ind, error, optimstatus, DIM, rowIndex, columnIndex, value, ig, jg, count, gameColumnBlock, gameRowsBlock;
 char *vtype;
 double *val, *lb, *sol, objval;
-
 GRBmodel *model;
+
 GRBenv *env;
 
 void init() {
@@ -29,13 +29,13 @@ void init() {
 }
 
 void finish() {
+    GRBfreemodel(model);
+    GRBfreeenv(env);
     free(ind);
     free(val);
     free(lb);
     free(vtype);
     free(sol);
-    GRBfreemodel(model);
-    GRBfreeenv(env);
 }
 
 void copySolToGameBoard(GameBoard *gameBoard) {
@@ -129,7 +129,7 @@ int oneEachGrind() {
     return 1;
 }
 
-int solveSudoko(GameBoard *gameBoard, GameBoard * solBoard) {
+int solveSudoko(GameBoard *gameBoard, GameBoard *solBoard) {
     env = NULL;
     model = NULL;
     DIM = getNumberOfRows(gameBoard);
@@ -146,6 +146,11 @@ int solveSudoko(GameBoard *gameBoard, GameBoard * solBoard) {
     if (error) goto QUIT;
     /* Create new model */
     error = GRBnewmodel(env, &model, "sudoku", DIM * DIM * DIM, NULL, lb, NULL, vtype, NULL);
+
+    if (error) goto QUIT;
+    /* remove stdout */
+/*    error = GRBsetdblparam(GRBgetenv(model), GRB_INT_PAR_OUTPUTFLAG, 0); */
+
     if (error) goto QUIT;
 
     if (!eachCellGetsValue(gameBoard)) goto QUIT;
