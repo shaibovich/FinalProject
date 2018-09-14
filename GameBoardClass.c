@@ -131,10 +131,6 @@ int validateCellValue(GameBoard *gameBoard, int value) {
 }
 
 int validateCellIndex(GameBoard *gameBoard, int column, int row) {
-    if (column > gameBoard->numberOfColumns || row > gameBoard->numberOfRows) {
-        printValueOutOfRange(gameBoard->numberOfRows);
-        return 0;
-    }
     if (column >= gameBoard->numberOfColumns || column < 0 || row < 0 || row >= gameBoard->numberOfRows) {
         return 0;
     }
