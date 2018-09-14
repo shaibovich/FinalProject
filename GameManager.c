@@ -179,6 +179,7 @@ void resetBoard() {
         value = doUndo(1);
     } while (value);
     printBoardReset();
+    printGameBoard(gameBoard,0);
 }
 
 void hint(int column, int row) {
