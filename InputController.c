@@ -99,14 +99,9 @@ void validateCommand(int isFinish, int gameMode, int *commandArray) {
 void getTurnCommand(int isFinish, int gameMode, int *commandArray, char *pathString) {
     strcpy(pathString, "");
     command = (char *) malloc(NUMBER_OF_CHARS_INPUT * sizeof(char));
-    tempInput = (char*) malloc(NUMBER_OF_CHARS_INPUT * sizeof(char));
     inputString = (char *) malloc(NUMBER_OF_CHARS_INPUT * sizeof(char));
     assert(command);
     assert(inputString);
-    assert(tempInput);
-    if (command == NULL || inputString == NULL || tempInput == NULL) {
-        exit(1);
-    }
     isValidCommand = 0;
     printEnterCommand();
     while (!isValidCommand) {
@@ -149,6 +144,5 @@ void getTurnCommand(int isFinish, int gameMode, int *commandArray, char *pathStr
     }
     free(command);
     free(inputString);
-    free(tempInput);
 }
 

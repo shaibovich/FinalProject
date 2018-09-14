@@ -11,33 +11,41 @@
 #include "GameManager.h"
 #include "FileController.h"
 #include "exhaustive.h"
-#include "sudokuSolver.h"
+//#include "sudokuSolver.h"
 
 int gameMode, counter, check;
 GameBoard *gameBoard, *tempBoard;
-int *commandArray;
-int isMark, oldValue;
+int *commandArray, columnsLst[1], rowsLst[1], valueLst[1];
+int isMark, oldValue, isFinish;
 char *filePath;
 Node *node;
-List *gameMoves;
+ListofLists *gameMoves;
+
+void startNewGame() {
+    gameMode = INIT_MODE;
+}
 
 void initiliateGame() {
     gameMode = INIT_MODE;
     isMark = FALSE;
+    isFinish = 0;
     commandArray = (int *) malloc(sizeof(int) * 4);
     assert(commandArray);
     filePath = (char *) malloc(sizeof(char) * 1024);
     assert(filePath);
-    gameMoves = createLinkedList();
+    gameMoves = createNewLinkedLists();
 }
 
 void solve(char *path) {
     gameBoard = openGameBoardFromFile(path, SOLVE_MODE);
     if (gameBoard != NULL) {
-        gameMode = SOLVE_MODE;
-        printGameBoard(gameBoard, isMark);
+        if (isBoardFull(gameBoard)) {
+            startNewGame();
+        } else {
+            gameMode = SOLVE_MODE;
+            printGameBoard(gameBoard, isMark);
+        }
     }
-
 }
 
 void edit(char *path) {
@@ -45,6 +53,11 @@ void edit(char *path) {
         gameBoard = createEmptyBoard(3, 3);
     } else {
         gameBoard = openGameBoardFromFile(path, EDIT_MODE);
+        if (gameBoard != NULL && isBoardFull(gameBoard)) {
+            gameMode = INIT_MODE;
+            return;
+
+        }
     }
     gameMode = EDIT_MODE;
     printGameBoard(gameBoard, EDIT_MODE);
@@ -61,7 +74,7 @@ void markError(int mark) {
 int validate() {
     check = 0;
     tempBoard = copyGameBoard(gameBoard);
-    check = solveSudoko(gameBoard, tempBoard);
+//    check = solveSudoko(gameBoard, tempBoard);
     deleteBoard(tempBoard);
     return check;
 }
@@ -70,6 +83,10 @@ void generate(int x, int y) {
     counter = 0;
     if (!isBoardEmpty(gameBoard)) {
         printBoardNotEmpty();
+    } else if (x > y) {
+        printGeneratorFailed();
+    } else if (x == y) {
+        return;
     } else {
         for (counter = 0; counter < 1000; counter++) {
             if (!fillRandom(gameBoard, x)) {
@@ -85,16 +102,16 @@ void generate(int x, int y) {
     }
 }
 
-void startNewGame() {
-    gameMode = INIT_MODE;
-}
 
 void set(int column, int row, int value) {
     column -= 1;
     row -= 1;
     oldValue = getCellValue(gameBoard, column, row);
-    if (setValueToCell(gameBoard, column, row, value)!=ERROR) {
-        addMove(gameBoard, gameMoves, row, column, oldValue);
+    columnsLst[0] = column;
+    rowsLst[0] = row;
+    valueLst[0] = value;
+    if (setValueToCell(gameBoard, column, row, value) != ERROR) {
+        addMoves(gameBoard, gameMoves, rowsLst, columnsLst, valueLst, 1);
         if (checkBoardErrors(gameBoard) && gameMode == SOLVE_MODE) {
             printSolutionErroneous();
         } else {
@@ -108,7 +125,7 @@ void set(int column, int row, int value) {
 
 void exitGame() {
     deleteBoard(gameBoard);
-    deleteLinkedList(gameMoves);
+    deleteArray(gameMoves);
     free(filePath);
     free(commandArray);
     printExit();
@@ -116,21 +133,11 @@ void exitGame() {
 }
 
 int doUndo(int isReset) {
-    node = undoMove(gameMoves, isReset);
-    if (node == NULL) {
-        return 0;
-    } else {
-        setValueToCell(gameBoard, getNodeY(node), getNodeX(node), getNodePrevValue(node));
-        return 1;
-    }
+    return undoMoves(gameBoard, gameMoves, isReset);
 }
 
 void doRedo() {
-    node = redoMove(gameMoves);
-    if (node != NULL) {
-        setValueToCell(gameBoard, getNodeY(node), getNodeX(node), getNodeValue(node));
-    }
-
+    redoMoves(gameBoard, gameMoves);
 }
 
 void save(char *path) {
@@ -153,7 +160,7 @@ void save(char *path) {
 }
 
 void autoFill() {
-    fillGameBoard(gameBoard);
+    fillGameBoard(gameBoard, gameMoves);
     printGameBoard(gameBoard, isMark);
 }
 
@@ -176,6 +183,8 @@ void resetBoard() {
 }
 
 void hint(int column, int row) {
+    column--;
+    row--;
     if (checkBoardErrors(gameBoard)) {
         printBoardContainsError();
     } else if (isCellFixed(gameBoard, column, row, 0)) {
@@ -184,11 +193,11 @@ void hint(int column, int row) {
         printCellAlreadyContains();
     } else {
         tempBoard = copyGameBoard(gameBoard);
-        if (solveSudoko(gameBoard, tempBoard)) {
-            hintCell(getCellValue(tempBoard, column, row));
-        } else {
-            printBoardUnsolvedable();
-        }
+//        if (solveSudoko(gameBoard, tempBoard)) {
+//            hintCell(getCellValue(tempBoard, column, row));
+//        } else {
+//            printBoardUnsolvedable();
+//        }
         deleteBoard(tempBoard);
     }
 }
@@ -198,7 +207,7 @@ void startGame() {
     printStartGame();
     initiliateGame();
     while (1) {
-        getTurnCommand(0, gameMode, commandArray, filePath);
+        getTurnCommand(isFinish, gameMode, commandArray, filePath);
         switch (commandArray[0]) {
             case SET:
                 set(commandArray[1], commandArray[2], commandArray[3]);
@@ -240,7 +249,7 @@ void startGame() {
                 autoFill();
                 break;
             case VALIDATE:
-                if (validate()){
+                if (validate()) {
                     printValidationPassed();
                 } else {
                     printValidationFailed();

@@ -4,24 +4,22 @@
 typedef struct Nodes Node;
 
 typedef struct Lists List;
+
+typedef struct ListsofLists ListofLists;
 #endif
 
 
 Node *createNode(int X, int Y, int value, int prevValue, Node *next, Node *prev);
 
-List *createLinkedList();
+ListofLists *createNewLinkedLists();
 
-void deleteLinkedList(List *list);
+void redoMoves(GameBoard *gameBoard, ListofLists *listArray);
 
-Node *getNext(List *list);
+int undoMoves(GameBoard *gameBoard, ListofLists *listArray, int isReset);
 
-Node *getPrev(List *list);
+void deleteArray(ListofLists *listArray);
 
-Node *undoMove(List *list, int isReset);
-
-Node *redoMove(List *list);
-
-void addMove(GameBoard *gameboard, List *list, int row, int column, int value);
+void addMoves(GameBoard *gameBoard, ListofLists *listArray, int *rows, int *columns, int *values, int length);
 
 void deleteNextMoves(List *list);
 

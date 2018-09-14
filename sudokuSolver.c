@@ -129,7 +129,6 @@ int oneEachGrind() {
     return 1;
 }
 
-//int solveSudoko(GameBoard *gameBoard, GameBoard *solBoard) {
 
 int solveSudoko(GameBoard *gameBoard, GameBoard * solBoard) {
     env = NULL;
@@ -148,10 +147,6 @@ int solveSudoko(GameBoard *gameBoard, GameBoard * solBoard) {
     if (error) goto QUIT;
     /* Create new model */
     error = GRBnewmodel(env, &model, "sudoku", DIM * DIM * DIM, NULL, lb, NULL, vtype, NULL);
-
-    if (error) goto QUIT;
-    /* remove stdout */
-    error = GRBsetdblparam(GRBgetenv(model), GRB_INT_PAR_OUTPUTFLAG, 0);
 
     if (error) goto QUIT;
 

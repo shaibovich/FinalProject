@@ -7,4 +7,4 @@
 
 int numberOfSolves(GameBoard *gameBoard);
 
-int fillGameBoard(GameBoard *gameBoard);
+int fillGameBoard(GameBoard *gameBoard, ListofLists * listArray);
