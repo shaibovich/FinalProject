@@ -80,7 +80,7 @@ void deleteNode(Node *node) {
     node = NULL;
 }
 
-Node *undoMove(List *list) {
+Node *undoMove(List *list, int isReset) {
     if (list->head == NULL || list->current == NULL || list->head->value == -1 || list->current->value == -1) {
         return NULL;
     }
@@ -90,7 +90,9 @@ Node *undoMove(List *list) {
     } else {
         list->current = list->current->prev;
     }
-    printUndoValue(temp->y + 1, temp->x + 1, temp->value, temp->prevValue);
+    if (!isReset){
+        printUndoValue(temp->y + 1, temp->x + 1, temp->value, temp->prevValue);
+    }
     return temp;
 }
 
@@ -130,7 +132,7 @@ void redoMoves(GameBoard *gameBoard, ListofLists *listArray) {
 
 int undoMoves(GameBoard *gameBoard, ListofLists *listArray, int isReset) {
     if (listArray->headLst == NULL || listArray->currentLst == NULL) {
-        if (isReset) {
+        if (!isReset) {
             printNoMovesToUndo();
         }
         return 0;
@@ -142,7 +144,7 @@ int undoMoves(GameBoard *gameBoard, ListofLists *listArray, int isReset) {
         listArray->currentLst = listArray->currentLst->prevLst;
     }
     do {
-        temp = undoMove(tempLst);
+        temp = undoMove(tempLst,isReset);
         if (temp != NULL){
             setValueToCell(gameBoard, getNodeY(temp), getNodeX(temp), getNodePrevValue(temp));
         }
@@ -159,7 +161,6 @@ void deleteNextMoves(List *list) {
     } else if (list->current == NULL) {
         temp = list->head->next;
         while (temp != NULL) {
-
             deleteNode(temp->prev);
             temp = temp->next;
         }
