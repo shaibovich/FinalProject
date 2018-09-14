@@ -2,9 +2,10 @@
 
 #include "GameBoardClass.h"
 #include "Stack.h"
+#include "LinkedList.h"
 #include <stdlib.h>
 
-int rowIndex, columnIndex, value, counter;
+int rowIndex, columnIndex, value, counter, length;
 GameBoard *tempBoard;
 Stack *stack;
 StackCell *currentCell;
@@ -57,7 +58,11 @@ int numberOfSolves(GameBoard *gameBoard) {
     return counter;
 }
 
-void fillGameBoard(GameBoard *gameBoard) {
+void fillGameBoard(GameBoard *gameBoard, ListofLists * listArray) {
+    int * values = (int*) malloc( sizeof(getGameBoardSize(gameBoard)));
+    int * columns = (int*) malloc( sizeof(getGameBoardSize(gameBoard)));
+    int * rows = (int*) malloc( sizeof(getGameBoardSize(gameBoard)));
+    length = 0;
     tempBoard = copyGameBoard(gameBoard);
     for (rowIndex = 0; rowIndex < getNumberOfRows(gameBoard); rowIndex++) {
         for (columnIndex = 0; columnIndex < getNumberOfColumns(gameBoard); columnIndex++) {
@@ -65,6 +70,7 @@ void fillGameBoard(GameBoard *gameBoard) {
                 counter = 0;
                 for (value = 1; value < getNumberOfColumns(gameBoard); value++) {
                     setCellValue(tempBoard, columnIndex, rowIndex, value);
+                    length ++;
                     if (!checkBoardErrors(tempBoard)) {
                         counter += 1;
                     }
@@ -73,11 +79,19 @@ void fillGameBoard(GameBoard *gameBoard) {
                     }
                 }
                 if (counter == 1) {
+                    values[length] = value;
+                    rows[length] = columnIndex;
+                    columns[length] = columnIndex;
+                    length++;
                     setCellValue(gameBoard, columnIndex, rowIndex, value);
                 }
                 setCellValue(tempBoard, columnIndex, rowIndex, 0);
             }
         }
     }
+    addMoves(gameBoard, listArray, rows, columns, values,length);
+    free(values);
+    free(columns);
+    free(rows);
     deleteBoard(tempBoard);
 }

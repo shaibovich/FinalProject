@@ -1,9 +1,9 @@
 #include <stdlib.h>
+#include <time.h>
 #include "GameManager.h"
 
 int main() {
-    srand(1);
+    srand(time(NULL));
     startGame();
-
     return 1;
 }
