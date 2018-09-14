@@ -3,7 +3,7 @@
 
 #include <assert.h>
 #include <stdlib.h>
-
+#include <stdio.h>
 #include <string.h>
 #include "utils.h"
 #include "LinkedList.h"
@@ -93,7 +93,7 @@ void set(int column, int row, int value) {
     column -= 1;
     row -= 1;
     oldValue = getCellValue(gameBoard, column, row);
-    if (setValueToCell(gameBoard, column, row, value)) {
+    if (setValueToCell(gameBoard, column, row, value)!=ERROR) {
         addMove(gameBoard, gameMoves, row, column, oldValue);
         if (checkBoardErrors(gameBoard) && gameMode == SOLVE_MODE) {
             printSolutionErroneous();

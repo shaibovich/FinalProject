@@ -2,6 +2,8 @@
 #ifndef GAMEBOARD_C
 #define GAMEBOARD_C
 
+
+
 struct GameCell {
     int value;
     int isFixed;
@@ -122,7 +124,7 @@ GameBoard *copyGameBoard(GameBoard *oldGameBoard) {
 
 int validateCellValue(GameBoard *gameBoard, int value) {
     if (value > gameBoard->numberOfRows) {
-        printValueOutOfRange(gameBoard->numberOfRows);
+        //printValueOutOfRange(gameBoard->numberOfRows);
         return 0;
     }
     return 1;
@@ -130,8 +132,8 @@ int validateCellValue(GameBoard *gameBoard, int value) {
 
 int validateCellIndex(GameBoard *gameBoard, int column, int row) {
     if (column > gameBoard->numberOfColumns || row > gameBoard->numberOfRows) {
-        printValueOutOfRange(gameBoard->numberOfRows);
-        return ERROR;
+       // printValueOutOfRange(gameBoard->numberOfRows);
+        return 0;
     }
     return 1;
 }
@@ -145,6 +147,7 @@ int validateCellFixed(GameBoard *gameBoard, int column, int row) {
 
 int setCellValue(GameBoard *gameBoard, int column, int row, int value) {
     if (!validateCellValue(gameBoard, value)) {
+        printValueOutOfRange(gameBoard->numberOfRows);
         return ERROR;
     } else if (!validateCellIndex(gameBoard, column, row)) {
         return ERROR;
@@ -275,12 +278,16 @@ int isInvalidValue(GameBoard *gameBoard, int column, int row, int value) {
 }
 
 int setValueToCell(GameBoard *gameBoard, int column, int row, int value) {
-    if (!validateCellIndex(gameBoard, column, row) || !validateCellFixed(gameBoard, column, row) ||
-        !validateCellValue(gameBoard, value)) {
+    if (!validateCellIndex(gameBoard, column, row)|| !validateCellValue(gameBoard,value)) {
+        printValueOutOfRange(gameBoard->numberOfRows);
         return ERROR;
-    } else if (!validateCellFixed(gameBoard, column, row)) {
+    }
+
+    else if (!validateCellFixed(gameBoard, column, row)) {
+
         return ERROR;
-    } else {
+    }
+    else {
         int res = validateSet(gameBoard, row, column, value);
         switch (res) {
             case 1:

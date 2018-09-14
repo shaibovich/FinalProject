@@ -49,7 +49,7 @@ void validateCommand(int isFinish, int gameMode, int *commandArray) {
     if (!strcmp(command, SET_OPTION) && !isFinish && cnt >= 4 && isSolveOrEditMode(gameMode)) {
         isValidCommand = 1;
         commandArray[0] = SET;
-    } else if (!strcmp(command, HINT_OPTION) && !isFinish && cnt >= 3 && isSolveMode(gameMode)) {
+    } else if (!strcmp(command, HINT_OPTION) && !isFinish && cnt >= 2 && isSolveMode(gameMode)) {
         isValidCommand = 1;
         commandArray[0] = HINT;
     } else if (!strcmp(command, VALIDATE_OPTION) && !isFinish && cnt >= 1 && isSolveOrEditMode(gameMode)) {

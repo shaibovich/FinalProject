@@ -129,7 +129,9 @@ int oneEachGrind() {
     return 1;
 }
 
-int solveSudoko(GameBoard *gameBoard, GameBoard *solBoard) {
+//int solveSudoko(GameBoard *gameBoard, GameBoard *solBoard) {
+
+int solveSudoko(GameBoard *gameBoard, GameBoard * solBoard) {
     env = NULL;
     model = NULL;
     DIM = getNumberOfRows(gameBoard);
@@ -149,7 +151,7 @@ int solveSudoko(GameBoard *gameBoard, GameBoard *solBoard) {
 
     if (error) goto QUIT;
     /* remove stdout */
-/*    error = GRBsetdblparam(GRBgetenv(model), GRB_INT_PAR_OUTPUTFLAG, 0); */
+    error = GRBsetdblparam(GRBgetenv(model), GRB_INT_PAR_OUTPUTFLAG, 0);
 
     if (error) goto QUIT;
 
@@ -192,4 +194,3 @@ int solveSudoko(GameBoard *gameBoard, GameBoard *solBoard) {
     finish();
     return 1;
 }
-
