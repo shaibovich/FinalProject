@@ -19,11 +19,15 @@ struct Lists {
     Node *current;
     List *nextLst;
     List *prevLst;
+    int isFirst;
+    int isLast;
 };
 
 struct ListsofLists {
     List *currentLst;
     List *headLst;
+    int isFirst;
+    int isLast;
 };
 
 int i;
@@ -64,6 +68,10 @@ List *createLinkedList() {
     assert(newList);
     newList->head = NULL;
     newList->current = newList->head;
+    newList->prevLst = NULL;
+    newList->nextLst = NULL;
+    newList->isLast = 1;
+    newList->isFirst = 1;
     return newList;
 }
 
@@ -72,6 +80,8 @@ ListofLists *createNewLinkedLists() {
     assert(newGameList);
     newGameList->headLst = NULL;
     newGameList->currentLst = newGameList->headLst;
+    newGameList->isFirst = 1;
+    newGameList->isLast = 1;
     return newGameList;
 }
 
@@ -81,118 +91,144 @@ void deleteNode(Node *node) {
 }
 
 Node *undoMove(List *list, int isReset) {
-    if (list->head == NULL || list->current == NULL || list->head->value == -1 || list->current->value == -1) {
+    if (list->head == NULL || list->isFirst == 1) {
+        /* list only init */
         return NULL;
-    }
-    temp = list->current;
-    if (list->current == list->head) {
-        list->current = NULL;
+    } else if (list->current->prev == NULL) {
+        /* use the first node */
+        temp = list->current;
+        list->isFirst = 1;
     } else {
-        list->current = list->current->prev;
+        /* have move to undo*/
+        temp = list->current;
+        list->current = temp->prev;
     }
-    if (!isReset){
+    list->isLast = 0;
+    if (!isReset) {
         printUndoValue(temp->y + 1, temp->x + 1, temp->value, temp->prevValue);
     }
     return temp;
 }
 
 Node *redoMove(List *list) {
-    if (list->head == NULL) {
+    if (list->head == NULL || list->isLast == 1) {
+        /* list is empty */
         return NULL;
     }
-    if (list->current == NULL) {
-        list->current = list->head;
-        printRedoValue(list->current->x + 1, list->current->y + 1, list->current->prevValue, list->current->value);
-        return list->current;
-    } else if (list->current->next == NULL) {
-        return NULL;
+
+    if (list->current->next == NULL) {
+        list->isLast = 1;
+        temp = list->current;
+        printRedoValue(temp->y + 1, temp->x + 1, temp->prevValue, temp->value);
+        list->isFirst = 0;
+        return temp;
+    } else {
+        /* list have next  */
+        if (list->isFirst == 1){
+            temp = list->current;
+        } else {
+            temp = list->current->next;
+        }
+        printRedoValue(temp->y + 1, temp->x + 1, temp->prevValue, temp->value);
+        list->current = list->current->next;
+        list->isFirst = 0;
+        return temp;
     }
-    temp = list->current;
-    list->current = list->current->next;
-    printRedoValue(temp->y + 1, temp->x + 1, temp->prevValue, temp->value);
-    return temp;
 }
 
-void redoMoves(GameBoard *gameBoard, ListofLists *listArray) {
-    if (listArray->headLst == NULL) {
+void redoMoves(GameBoard *gameBoard, ListofLists *listArray, int withStar) {
+    if (listArray->headLst == NULL || listArray->isLast == 1) {
+        /* list is empty */
         printNoMovesToRedo();
         return;
     }
-    if (listArray->currentLst == NULL) {
-        listArray->currentLst = listArray->headLst;
-        do {
-            temp = redoMove(listArray->headLst);
-            if (temp != NULL){
-                setValueToCell(gameBoard, getNodeY(temp), getNodeX(temp), getNodeValue(temp));
-            }
-        } while (temp != NULL);
-    } else if (listArray->currentLst->nextLst == NULL){
-        return;
+    if (listArray->currentLst->nextLst == NULL) {
+        listArray->isLast = 1;
+        tempLst = listArray->currentLst;
+        temp = redoMove(tempLst);
+    } else {
+        /* there is next, redo to currentLst->nextLst */
+        if (listArray->isFirst == 1){
+            tempLst = listArray->currentLst;
+        } else {
+            tempLst = listArray->currentLst->nextLst;
+        }
+        listArray->currentLst = listArray->currentLst->nextLst;
+        temp = redoMove(tempLst);
     }
-    tempLst = listArray->currentLst;
-    listArray->currentLst = listArray->currentLst->nextLst;
-    redoMove(tempLst);
+    listArray->isFirst = 0;
+    do {
+        if (temp != NULL) {
+            setValueToCell(gameBoard, getNodeY(temp), getNodeX(temp), getNodeValue(temp));
+        }
+        temp = redoMove(tempLst);
+    } while (temp != NULL);
+    printGameBoard(gameBoard, withStar);
+
 }
 
-int undoMoves(GameBoard *gameBoard, ListofLists *listArray, int isReset) {
-    if (listArray->headLst == NULL) {
+int undoMoves(GameBoard *gameBoard, ListofLists *listArray, int isReset, int withStars) {
+    if (listArray->headLst == NULL || listArray->isFirst == 1) {
+        /* list only init || list point to first */
         if (!isReset) {
             printNoMovesToUndo();
         }
         return 0;
     }
-    tempLst = listArray->headLst;
-    if (listArray->currentLst == listArray->headLst) {
-        listArray->currentLst = NULL;
-        listArray->headLst = NULL;
+    if (listArray->currentLst->prevLst == NULL) {
+        /* if list point to first lst */
+        tempLst = listArray->currentLst;
+        listArray->isFirst = 1;
     } else {
+        /* list have prev */
+        tempLst = listArray->currentLst;
         listArray->currentLst = listArray->currentLst->prevLst;
     }
+    listArray->isLast = 0;
     do {
-        temp = undoMove(tempLst,isReset);
-        if (temp != NULL){
+        temp = undoMove(tempLst, isReset);
+        if (temp != NULL) {
             setValueToCell(gameBoard, getNodeY(temp), getNodeX(temp), getNodePrevValue(temp));
         }
-
-
-
     } while (temp != NULL);
+    printGameBoard(gameBoard, withStars);
     return 1;
 
 }
 
 void deleteNextMoves(List *list) {
-    temp = NULL;
-    if (list->head == NULL) {
+    if (list->head == NULL || list->isLast == 1) {
         return;
-    } else if (list->current == NULL) {
-        temp = list->head->next;
-        while (temp != NULL) {
-            deleteNode(temp->prev);
-            temp = temp->next;
-        }
-        list->head = NULL;
     } else {
-        if (list->current->next == NULL) {
-            return;
-        }
-        temp = list->current->next;
-        while (temp != NULL) {
-            list->current->next = list->current->next->next;
-            deleteNode(temp);
+        if (list->isLast == 0 && list->isFirst == 1){
+            deleteNode(list->head);
+            list->head = NULL;
+        } else {
             temp = list->current->next;
+            do {
+                list->current->next = list->current->next->next;
+                deleteNode(temp);
+                temp = list->current->next;
+            } while (temp != NULL);
         }
+
     }
+    list->isLast = 1;
 }
 
 void addMove(GameBoard *gameBoard, List *list, int row, int column, int prevValue) {
     if (list->head == NULL) {
         list->head = createNode(row, column, getCellValue(gameBoard, column, row), 0, NULL, NULL);
         list->current = list->head;
+        list->isLast = 1;
+        list->isFirst = 0;
     } else {
-        list->current->next = createNode(row, column, getCellValue(gameBoard, column, row), prevValue, NULL, list->current);
+        list->current->next = createNode(row, column, getCellValue(gameBoard, column, row), prevValue, NULL,
+                                         list->current);
         list->current->next->prev = list->current;
         list->current = list->current->next;
+        list->isLast = 1;
+        list->isFirst = 0;
     }
 }
 
@@ -203,27 +239,19 @@ void addMoveByEach(GameBoard *gameBoard, List *list, int *rows, int *columns, in
 }
 
 void deleteLinkedListArray(ListofLists *listArray) {
-    tempLst = NULL;
-    if (listArray->headLst == NULL) {
+    if (listArray->headLst == NULL || listArray->isLast == 1) {
         return;
-    }
-    else if (listArray->currentLst == NULL) {
-        tempLst = listArray->headLst->nextLst;
-        while (tempLst != NULL) {
-            deleteNextMoves(tempLst->prevLst);
-            tempLst = tempLst->nextLst;
-        }
-        listArray->headLst = NULL;
     } else {
-        if (listArray->currentLst->nextLst == NULL) {
-            return;
-        }
-        tempLst = listArray->currentLst;
-        while (tempLst != NULL) {
-            listArray->currentLst = listArray->currentLst->prevLst;
-            deleteNextMoves(tempLst);
-            tempLst = listArray->currentLst;
-
+        if (listArray->isFirst == 1 && listArray->isLast == 0){
+            deleteLinkedList(listArray->headLst);
+            listArray->headLst = NULL;
+        } else {
+            tempLst = listArray->currentLst->nextLst;
+            do {
+                listArray->currentLst->nextLst= listArray->currentLst->nextLst->nextLst;
+                deleteLinkedList(tempLst);
+                tempLst = listArray->currentLst->nextLst;
+            } while (tempLst != NULL);
         }
     }
 }
@@ -236,76 +264,82 @@ void addMoves(GameBoard *gameBoard, ListofLists *listArray, int *rows, int *colu
         listArray->currentLst = listArray->headLst;
         listArray->currentLst->nextLst = NULL;
         listArray->currentLst->prevLst = NULL;
+        listArray->isFirst = 0;
+        listArray->isLast = 1;
     } else {
         listArray->currentLst->nextLst = createLinkedList();
         addMoveByEach(gameBoard, listArray->currentLst->nextLst, rows, columns, values, length);
         listArray->currentLst->nextLst->prevLst = listArray->currentLst;
         listArray->currentLst = listArray->currentLst->nextLst;
+        listArray->isFirst = 0;
+        listArray->isLast = 1;
     }
 }
 
-void addMovesFromList(GameBoard * gameBoard, ListofLists * listArray, List * moveLst){
+void addMovesFromList(ListofLists *listArray, List *moveLst) {
     deleteLinkedListArray(listArray);
-    if (listArray->headLst == NULL){
+    if (listArray->headLst == NULL) {
         listArray->headLst = moveLst;
         listArray->currentLst = listArray->headLst;
-        listArray->currentLst->nextLst =  NULL;
+        listArray->currentLst->nextLst = NULL;
         listArray->currentLst->prevLst = NULL;
+        listArray->isFirst = 0;
+        listArray->isLast = 1;
     } else {
         listArray->currentLst->nextLst = moveLst;
         listArray->currentLst->nextLst->prevLst = listArray->currentLst;
         listArray->currentLst = listArray->currentLst->nextLst;
+        listArray->isFirst = 0;
+        listArray->isLast = 1;
     }
 }
 
 void deleteLinkedList(List *list) {
     deleteNextMoves(list);
-    if (list->current != NULL) {
-        while (list->current != list->head) {
-            list->current = list->current->prev;
-            deleteNode(list->current->next);
-        }
-        deleteNode(list->current);
+    if (list->head != NULL) {
+        temp = list->head;
+        do {
+            list->head = list->head->next;
+            deleteNode(temp);
+            temp = list->head;
+        } while (temp != NULL);
     }
-    free(list);
-    list = NULL;
 }
 
 void deleteArray(ListofLists *listArray) {
     deleteLinkedListArray(listArray);
-    if (listArray->currentLst != NULL) {
-        while (listArray->currentLst != listArray->headLst) {
-            listArray->currentLst = listArray->currentLst->prevLst;
-            deleteLinkedList(listArray->currentLst->nextLst);
-        }
-        deleteLinkedList(listArray->currentLst);
+    if (listArray->headLst != NULL){
+        tempLst = listArray->headLst;
+        do {
+            listArray->headLst = listArray->headLst->nextLst;
+            deleteLinkedList(tempLst);
+            tempLst = listArray->headLst;
+        } while (tempLst != NULL);
     }
-    free(listArray);
-    listArray = NULL;
 }
 
-void emptyLst(List * lst){
-    if (lst->current != NULL){
-        while (lst->current != lst->head){
+void emptyLst(List *lst) {
+    if (lst->current != NULL) {
+        while (lst->current != lst->head) {
             lst->current = lst->current->prev;
             deleteNode(lst->current->next);
         }
         deleteNode(lst->current);
     }
-    if (lst->head != NULL){
+    if (lst->head != NULL) {
         free(lst->head);
         lst->head = NULL;
     }
 }
 
-Node * deleteCellFromList(List * lst, int column, int row){
-    if (lst->current == NULL){
+Node *deleteCellFromList(List *lst, int column, int row) {
+    if (lst->current == NULL) {
         return NULL;
     } else {
         temp = lst->current;
-        while (temp != lst->head){
-            if (temp->x == column && temp->y == row){
-                temp->prev->next=temp->next;
+        while (temp != lst->head) {
+            if (temp->x == column && temp->y == row) {
+                temp->prev->next = temp->next;
                 temp->next->prev = temp->prev;
                 return temp;
             }

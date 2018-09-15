@@ -16,9 +16,9 @@ ListofLists *createNewLinkedLists();
 
 void deleteLinkedList(List *list);
 
-void redoMoves(GameBoard *gameBoard, ListofLists *listArray);
+void redoMoves(GameBoard *gameBoard, ListofLists *listArray, int withStar);
 
-int undoMoves(GameBoard *gameBoard, ListofLists *listArray, int isReset);
+int undoMoves(GameBoard *gameBoard, ListofLists *listArray, int isReset, int withStars);
 
 void deleteArray(ListofLists *listArray);
 
@@ -42,4 +42,4 @@ void emptyLst(List * lst);
 
 Node * deleteCellFromList(List * lst, int column, int row);
 
-void addMovesFromList(GameBoard * gameBoard, ListofLists * listArray, List * moveLst);
+void addMovesFromList(ListofLists *listArray, List *moveLst);

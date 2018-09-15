@@ -17,7 +17,7 @@ void makeFileString(char *fileString, GameBoard *gameBoard, int gameMode) {
     getNumberOfRowsString(fileString, gameBoard);
     strcat(fileString, "\n");
     for (rowIndexFile = 0; rowIndexFile < getNumberOfRows(gameBoard); rowIndexFile++) {
-        getRowValuesString(fileString, gameBoard, rowIndexFile, gameMode);
+        getRowValuesString(fileString, gameBoard, rowIndexFile, 1);
         if (rowIndexFile != getNumberOfRows(gameBoard) - 1) {
             strcat(fileString, "\n");
         }

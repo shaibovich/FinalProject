@@ -153,6 +153,9 @@ int solveSudoko(GameBoard *gameBoard, GameBoard *solBoard) {
     /* Create environment */
     error = GRBloadenv(&env, "sudoku.log");
     if (error) goto QUIT;
+
+    error = GRBsetintparam(env, GRB_INT_PAR_LOGTOCONSOLE, 0);
+    if (error) goto QUIT;
     /* Create new model */
     error = GRBnewmodel(env, &model, "sudoku", DIM * DIM * DIM, NULL, lb, NULL, vtype, NULL);
 

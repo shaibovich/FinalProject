@@ -95,7 +95,6 @@ void fillGameBoard(GameBoard *gameBoard, ListofLists *listArray) {
             }
         }
     }
-    addMovesFromList(gameBoard, listArray, movesList);
-    deleteLinkedList(movesList);
+    addMovesFromList(listArray, movesList);
     deleteBoard(tempBoard);
 }

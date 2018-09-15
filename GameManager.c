@@ -97,7 +97,7 @@ void generate(int x, int y) {
                 emptyLst(generateLst);
             } else if (validate()) {
                 clearRandom(gameBoard, y, generateLst);
-                addMovesFromList(gameBoard, gameMoves, generateLst);
+                addMovesFromList(gameMoves, generateLst);
                 return;
             } else {
                 makeBoardEmpty(gameBoard);
@@ -145,11 +145,11 @@ void exitGame() {
 }
 
 int doUndo(int isReset) {
-    return undoMoves(gameBoard, gameMoves, isReset);
+    return undoMoves(gameBoard, gameMoves, isReset, withStar);
 }
 
 void doRedo() {
-    redoMoves(gameBoard, gameMoves);
+    redoMoves(gameBoard, gameMoves, withStar);
 //    printGameBoard(gameBoard, (isMark || gameMode == EDIT_MODE));
 
 }
