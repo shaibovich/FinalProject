@@ -17,6 +17,7 @@ int gameMode, counter, check;
 GameBoard *gameBoard, *tempBoard;
 int *commandArray, columnsLst[1], rowsLst[1], valueLst[1];
 int isMark, oldValue, isFinish, withStar;
+List * generateLst;
 char *filePath;
 Node *node;
 ListofLists *gameMoves;
@@ -73,6 +74,7 @@ void markError(int mark) {
 
 int validate() {
     check = 0;
+
     tempBoard = copyGameBoard(gameBoard);
 //    check = solveSudoko(gameBoard, tempBoard);
     deleteBoard(tempBoard);
@@ -81,18 +83,21 @@ int validate() {
 
 void generate(int x, int y) {
     counter = 0;
+    generateLst = createLinkedList();
     if (!isBoardEmpty(gameBoard)) {
         printBoardNotEmpty();
-    } else if (x > y) {
+    } else if (x < y) {
         printGeneratorFailed();
     } else if (x == y) {
         return;
     } else {
         for (counter = 0; counter < 1000; counter++) {
-            if (!fillRandom(gameBoard, x)) {
+            if (!fillRandom(gameBoard, x, generateLst)) {
                 makeBoardEmpty(gameBoard);
+                emptyLst(generateLst);
             } else if (validate()) {
-                clearRandom(gameBoard, y);
+                clearRandom(gameBoard, y, generateLst);
+                addMovesFromList(gameBoard, gameMoves, generateLst);
                 return;
             } else {
                 makeBoardEmpty(gameBoard);
@@ -100,6 +105,7 @@ void generate(int x, int y) {
         }
         printGeneratorFailed();
     }
+    deleteLinkedList(generateLst);
 }
 
 
@@ -192,18 +198,17 @@ void resetBoard() {
 }
 
 void hint(int column, int row) {
-    column--;
-    row--;
     if (checkBoardErrors(gameBoard)) {
         printBoardContainsError();
-    } else if (isCellFixed(gameBoard, column, row, 0)) {
+    } else if (isCellFixed(gameBoard, column-1, row-1, 0)) {
         printCellIsFixed();
-    } else if (getCellValue(gameBoard, column, row)) {
+    } else if (getCellValue(gameBoard, column-1, row-1)) {
         printCellAlreadyContains();
     } else {
         tempBoard = copyGameBoard(gameBoard);
 //        if (solveSudoko(gameBoard, tempBoard)) {
-//            hintCell(getCellValue(tempBoard, column, row));
+//            printGameBoard(tempBoard, 0);
+//            hintCell(getCellValue(tempBoard, column-1, row-1));
 //        } else {
 //            printBoardUnsolvedable();
 //        }
@@ -258,6 +263,7 @@ void startGame() {
                 autoFill();
                 break;
             case VALIDATE:
+                printGameBoard(tempBoard, isMark);
                 if (validate()) {
                     printValidationPassed();
                 } else {
