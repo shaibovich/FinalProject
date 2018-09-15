@@ -150,7 +150,7 @@ int doUndo(int isReset) {
 
 void doRedo() {
     redoMoves(gameBoard, gameMoves);
-    printGameBoard(gameBoard, (isMark || gameMode == EDIT_MODE));
+//    printGameBoard(gameBoard, (isMark || gameMode == EDIT_MODE));
 
 }
 
@@ -193,8 +193,9 @@ void resetBoard() {
     do {
         value = doUndo(1);
     } while (value);
-    printBoardReset();
     printGameBoard(gameBoard,0);
+    printBoardReset();
+
 }
 
 void hint(int column, int row) {
