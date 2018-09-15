@@ -5,6 +5,7 @@
 
 #include <stdlib.h>
 #include <assert.h>
+#include <printf.h>
 #include "Stack.h"
 
 
@@ -42,10 +43,10 @@ StackCell *newCell;
 
 StackCell *createNewCell(int row, int column, StackCell *prev) {
     newCell = (StackCell *) malloc(sizeof(StackCell));
+    assert(newCell);
     newCell->row = row;
     newCell->column = column;
     newCell->prev = prev;
-
     return newCell;
 }
 
@@ -60,33 +61,31 @@ StackCell *pop(Stack *stack) {
     } else {
         stack->StackSize -= 1;
         stack->StackHead = stack->StackHead->prev;
-        stack->isEmpty = 0;
+        free(stack->StackHead->next);
         return stack->StackHead;
     }
 }
 
 void push(Stack *stack, int row, int column) {
     StackCell *newCell = createNewCell(row, column, stack->StackHead);
-    stack->StackHead->next = newCell;
-    stack->StackHead = newCell;
-    stack->isEmpty = 0;
-    stack->StackSize += 1;
     if (stack->StackHead != NULL) {
         stack->StackHead->next = newCell;
         stack->StackHead = newCell;
-        stack->isEmpty = 0;
         stack->StackSize += 1;
     } else {
         stack->StackHead = newCell;
         stack->StackSize = 1;
-        stack->isEmpty = 0;
     }
+    stack->isEmpty = 0;
+
 }
 
 void DeleteStack(Stack *stack) {
     while (stack->isEmpty == 0) {
         stack->StackHead = stack->StackHead->prev;
         free(stack->StackHead->next);
+        stack->StackHead->next = NULL;
+        stack->StackSize--;
     }
     free(stack);
 

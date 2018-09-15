@@ -1,3 +1,5 @@
+
+
 #define ERROR -1
 
 #ifndef GAME_BOARD_H
@@ -5,15 +7,16 @@
 typedef struct GameBoards GameBoard;
 
 typedef struct GameCell Cell;
+#include "LinkedList.h"
 #endif
 
 int getGameBoardSize(GameBoard *gameBoard);
 
 int isBoardEmpty(GameBoard * gameBoard);
 
-void clearRandom(GameBoard *gameBoard, int y);
+void clearRandom(GameBoard *gameBoard, int y, List * generateLst);
 
-int fillRandom(GameBoard *gameBoard, int x);
+int fillRandom(GameBoard *gameBoard, int x, List * fillLst);
 
 void makeBoardEmpty(GameBoard * gameBoard);
 
@@ -32,6 +35,8 @@ int validateCellIndex(GameBoard *gameBoard, int column, int row);
 int validateCellFixed(GameBoard *gameBoard, int column, int row);
 
 int setCellValue(GameBoard *gameBoard, int column, int row, int value);
+
+int validateSet(const GameBoard * gameBoard, int row, int column, int value);
 
 int setCellFixed(GameBoard *gameBoard, int column, int row, int isFixed);
 

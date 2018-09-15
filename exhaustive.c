@@ -5,12 +5,13 @@
 #include "LinkedList.h"
 #include <stdlib.h>
 
-int rowIndex, columnIndex, value, counter, length;
+int rowAlgoIndex, columnAlgoIndex, value, counter, check, chosenValue;
 GameBoard *tempBoard;
 Stack *stack;
 StackCell *currentCell;
 Cell *emptyCell;
 int *sit_mat, *innerCounterLst;
+List * movesList;
 
 
 Cell *getNextEmptyCell(GameBoard *gameBoard, int *currentRow, int *currentColumn) {
@@ -30,68 +31,71 @@ Cell *getNextEmptyCell(GameBoard *gameBoard, int *currentRow, int *currentColumn
 
 void finishAlg() {
     DeleteStack(stack);
-    free(emptyCell);
     free(currentCell);
 }
 
 
 int numberOfSolves(GameBoard *gameBoard) {
-    counter = 0, rowIndex = 0, columnIndex = 0;
+    counter = 0, rowAlgoIndex = 0, columnAlgoIndex = 0,check =0;
     stack = createNewStack();
-    emptyCell = getNextEmptyCell(gameBoard, &rowIndex, &columnIndex);
-    push(stack, rowIndex, columnIndex);
+    emptyCell = getNextEmptyCell(gameBoard, &rowAlgoIndex, &columnAlgoIndex);
+    push(stack, rowAlgoIndex, columnAlgoIndex);
     while (!isEmpty(stack)) {
-        setCellValue(gameBoard, columnIndex, rowIndex, getCellValue(gameBoard, columnIndex, rowIndex) + 1);
-        if (checkBoardErrors(gameBoard)) {
-            emptyCell = getNextEmptyCell(gameBoard, &columnIndex, &rowIndex);
-            push(stack, rowIndex, columnIndex);
-        } else if (getCellValue(gameBoard, columnIndex, rowIndex) > getNumberOfColumns(gameBoard)) {
-            setCellValue(gameBoard, columnIndex, rowIndex, 0);
+        if (getCellValue(gameBoard, columnAlgoIndex, rowAlgoIndex) != getNumberOfColumns(gameBoard)){
+            setCellValue(gameBoard, columnAlgoIndex, rowAlgoIndex, getCellValue(gameBoard, columnAlgoIndex, rowAlgoIndex)+1);
+        } else {
+            check = 1;
+        }
+        if (validateSet(gameBoard, rowAlgoIndex, columnAlgoIndex, getCellValue(gameBoard, columnAlgoIndex, rowAlgoIndex)) == 1 && !check){
+            emptyCell = getNextEmptyCell(gameBoard, &rowAlgoIndex, &columnAlgoIndex);
+            push(stack, rowAlgoIndex, columnAlgoIndex);
+            if (isBoardFull(gameBoard)){
+                counter++;
+                check = 1;
+            } else {
+                check = 0;
+            }
+        } else if (check) {
+            setCellValue(gameBoard, columnAlgoIndex, rowAlgoIndex, 0);
             currentCell = pop(stack);
             if (currentCell == NULL) {
                 break;
             }
-            emptyCell = getCell(gameBoard, getColumn(currentCell), getRow(currentCell));
+            columnAlgoIndex = getColumn(currentCell);
+            rowAlgoIndex = getRow(currentCell);
+            check = 0;
         }
     }
     finishAlg();
     return counter;
 }
 
-void fillGameBoard(GameBoard *gameBoard, ListofLists * listArray) {
-    int * values = (int*) malloc( sizeof(getGameBoardSize(gameBoard)));
-    int * columns = (int*) malloc( sizeof(getGameBoardSize(gameBoard)));
-    int * rows = (int*) malloc( sizeof(getGameBoardSize(gameBoard)));
-    length = 0;
+void fillGameBoard(GameBoard *gameBoard, ListofLists *listArray) {
+    movesList = createLinkedList();
+    chosenValue = 0;
     tempBoard = copyGameBoard(gameBoard);
-    for (rowIndex = 0; rowIndex < getNumberOfRows(gameBoard); rowIndex++) {
-        for (columnIndex = 0; columnIndex < getNumberOfColumns(gameBoard); columnIndex++) {
-            if (!getCellValue(tempBoard, columnIndex, rowIndex)) {
+    for (rowAlgoIndex = 0; rowAlgoIndex < getNumberOfRows(gameBoard); rowAlgoIndex++) {
+        for (columnAlgoIndex = 0; columnAlgoIndex < getNumberOfColumns(gameBoard); columnAlgoIndex++) {
+            if (!getCellValue(tempBoard, columnAlgoIndex, rowAlgoIndex)) {
                 counter = 0;
                 for (value = 1; value < getNumberOfColumns(gameBoard); value++) {
-                    setCellValue(tempBoard, columnIndex, rowIndex, value);
-                    length ++;
-                    if (!checkBoardErrors(tempBoard)) {
+                    if (validateSet(tempBoard, rowAlgoIndex, columnAlgoIndex, value) == 1) {
                         counter += 1;
+                        chosenValue = value;
                     }
                     if (counter > 1) {
+                        chosenValue = 0;
                         break;
                     }
                 }
                 if (counter == 1) {
-                    values[length] = value;
-                    rows[length] = columnIndex;
-                    columns[length] = columnIndex;
-                    length++;
-                    setCellValue(gameBoard, columnIndex, rowIndex, value);
+                    setCellValue(gameBoard, columnAlgoIndex, rowAlgoIndex, chosenValue);
+                    addMove(gameBoard, movesList, rowAlgoIndex, columnAlgoIndex, 0);
                 }
-                setCellValue(tempBoard, columnIndex, rowIndex, 0);
             }
         }
     }
-    addMoves(gameBoard, listArray, rows, columns, values,length);
-    free(values);
-    free(columns);
-    free(rows);
+    addMovesFromList(gameBoard, listArray, movesList);
+    deleteLinkedList(movesList);
     deleteBoard(tempBoard);
 }

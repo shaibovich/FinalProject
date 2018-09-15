@@ -27,6 +27,7 @@ struct GameBoards {
 #include <string.h>
 #include "GameBoardClass.h"
 #include "utils.h"
+#include "LinkedList.h"
 
 
 enum VALIDATION_ERROR {
@@ -398,7 +399,7 @@ Cell *getCell(GameBoard *gameBoard, int column, int row) {
     return (gameBoard->cellList + column * gameBoard->numberOfRows + row);
 }
 
-int fillRandom(GameBoard *gameBoard, int x) {
+int fillRandom(GameBoard *gameBoard, int x, List * fillLst) {
     generateCounter = 0, rowRandom = 0, columnRandom = 0, randValue = 0;
     while (x > 0 && generateCounter < 1000) {
         rowRandom = (rand() % (gameBoard->numberOfRows));
@@ -408,6 +409,7 @@ int fillRandom(GameBoard *gameBoard, int x) {
             if (validateSet(gameBoard, rowRandom, columnRandom, randValue) == 1 &&
                 getCellValue(gameBoard, columnRandom, rowRandom) == 0) {
                 if (setCellValue(gameBoard, columnRandom, rowRandom, randValue) != ERROR) {
+                    addMove(gameBoard,fillLst, rowRandom, columnRandom,0);
                     x--;
                 }
             }
@@ -421,11 +423,12 @@ int fillRandom(GameBoard *gameBoard, int x) {
 }
 
 
-void clearRandom(GameBoard *gameBoard, int y) {
+void clearRandom(GameBoard *gameBoard, int y, List * lst) {
     while (y > 0) {
         rowIndex = (rand() % (gameBoard->numberOfRows));
         columnIndex = (rand() % (gameBoard->numberOfColumns));
         if (setCellValue(gameBoard, columnIndex, rowIndex, 0) != ERROR) {
+            deleteCellFromList(lst,columnIndex, rowIndex);
             y--;
         }
     }
