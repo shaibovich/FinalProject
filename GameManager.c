@@ -3,7 +3,7 @@
 
 #include <assert.h>
 #include <stdlib.h>
-#include <stdio.h>
+
 #include <string.h>
 #include "utils.h"
 #include "LinkedList.h"
@@ -11,57 +11,113 @@
 #include "GameManager.h"
 #include "FileController.h"
 #include "exhaustive.h"
-//#include "sudokuSolver.h"
+#include "sudokuSolver.h"
 
 int gameMode, counter, check;
 GameBoard *gameBoard, *tempBoard;
 int *commandArray, columnsLst[1], rowsLst[1], valueLst[1];
-int isMark, oldValue, isFinish, withStar;
-List * generateLst;
+int isMark, oldValue, isFinish;
+List *generateLst;
 char *filePath;
 Node *node;
 ListofLists *gameMoves;
 
 void startNewGame() {
     gameMode = INIT_MODE;
+    deleteBoard(gameBoard);
+    deleteArray(gameMoves);
+}
+
+int validate() {
+    check = 0;
+    tempBoard = copyGameBoard(gameBoard);
+    check = solveSudoko(gameBoard, tempBoard);
+    deleteBoard(tempBoard);
+    tempBoard = NULL;
+    return check;
 }
 
 void initiateGame() {
     gameMode = INIT_MODE;
     isMark = FALSE;
-    isFinish = 0;
     commandArray = (int *) malloc(sizeof(int) * 4);
     assert(commandArray);
     filePath = (char *) malloc(sizeof(char) * 1024);
     assert(filePath);
-    gameMoves = createNewLinkedLists();
+    gameMoves = NULL;
+    gameBoard = NULL;
+    tempBoard = NULL;
 }
 
 void solve(char *path) {
-    gameBoard = openGameBoardFromFile(path, SOLVE_MODE);
-    if (gameBoard != NULL) {
+    if (tempBoard != NULL){
+        deleteBoard(tempBoard);
+    }
+    tempBoard = openGameBoardFromFile(path, SOLVE_MODE);
+    if (tempBoard != NULL) {
+        if (gameBoard != NULL) {
+            deleteBoard(gameBoard);
+        }
+        if (gameMoves != NULL){
+            deleteArray(gameMoves);
+        }
+        gameBoard = tempBoard;
         if (isBoardFull(gameBoard)) {
-            startNewGame();
+            if (validate()) {
+                printPuzzleSolved();
+                startNewGame();
+            } else {
+                printSolutionErroneous();
+            }
         } else {
+            isMark = 0;
             gameMode = SOLVE_MODE;
+            gameMoves = createNewLinkedLists();
             printGameBoard(gameBoard, isMark);
         }
+    } else {
+        gameMode = INIT_MODE;
     }
+    tempBoard = NULL;
 }
 
 void edit(char *path) {
     if (!strcmp(path, "")) {
+        if (gameBoard != NULL) {
+            deleteBoard(gameBoard);
+        }
         gameBoard = createEmptyBoard(3, 3);
     } else {
-        gameBoard = openGameBoardFromFile(path, EDIT_MODE);
-        if (gameBoard != NULL && isBoardFull(gameBoard)) {
-            gameMode = INIT_MODE;
+        tempBoard = openGameBoardFromFile(path, EDIT_MODE);
+        if (tempBoard == NULL) {
             return;
+        } else if (isBoardFull(tempBoard)) {
+            if (validate()) {
+                printPuzzleSolved();
+                startNewGame();
+            } else {
+                printSolutionErroneous();
+            }
 
+            gameMode = INIT_MODE;
+            startNewGame();
+            return;
         }
+        if (gameBoard != NULL) {
+            deleteBoard(gameBoard);
+        }
+        gameBoard = tempBoard;
+        deleteBoard(tempBoard);
+        tempBoard = NULL;
+
     }
+    if (gameMoves != NULL){
+        deleteArray(gameMoves);
+    }
+    gameMoves = createNewLinkedLists();
     gameMode = EDIT_MODE;
-    printGameBoard(gameBoard, EDIT_MODE);
+    isMark = 1;
+    printGameBoard(gameBoard, isMark);
 }
 
 void markError(int mark) {
@@ -72,14 +128,7 @@ void markError(int mark) {
     }
 }
 
-int validate() {
-    check = 0;
 
-    tempBoard = copyGameBoard(gameBoard);
-//    check = solveSudoko(gameBoard, tempBoard);
-    deleteBoard(tempBoard);
-    return check;
-}
 
 void generate(int x, int y) {
     counter = 0;
@@ -96,7 +145,7 @@ void generate(int x, int y) {
                 makeBoardEmpty(gameBoard);
                 emptyLst(generateLst);
             } else if (validate()) {
-                clearRandom(gameBoard, y, generateLst);
+                clearRandom(gameBoard, x - y, generateLst);
                 addMovesFromList(gameMoves, generateLst);
                 return;
             } else {
@@ -110,34 +159,39 @@ void generate(int x, int y) {
 
 
 void set(int column, int row, int value) {
-    withStar = 0;
     column -= 1;
     row -= 1;
     oldValue = getCellValue(gameBoard, column, row);
-
     columnsLst[0] = column;
     rowsLst[0] = row;
-    valueLst[0] = value;
-    if (setValueToCell(gameBoard, column, row, value) != ERROR) {
+    valueLst[0] = oldValue;
+    if (getCellValue(gameBoard, column, row) == value) {
+        printGameBoard(gameBoard, isMark);
+    } else if (setValueToCell(gameBoard, column, row, value) != ERROR) {
         addMoves(gameBoard, gameMoves, rowsLst, columnsLst, valueLst, 1);
-        if (isMark == 1 || gameMode == EDIT_MODE) {
-            withStar = 1;
-        }
-        printGameBoard(gameBoard, withStar);
+        printGameBoard(gameBoard, isMark);
         if (checkBoardErrors(gameBoard) && gameMode == SOLVE_MODE) {
             printSolutionErroneous();
         } else {
             if (isBoardFull(gameBoard)) {
-                printPuzzleSolved();
-                startNewGame();
+                if (validate()) {
+                    printPuzzleSolved();
+                    startNewGame();
+                } else {
+                    printSolutionErroneous();
+                }
             }
         }
     }
 }
 
 void exitGame() {
-    deleteBoard(gameBoard);
-    deleteArray(gameMoves);
+    if (gameBoard != NULL) {
+        deleteBoard(gameBoard);
+    }
+    if (gameMoves != NULL){
+        deleteArray(gameMoves);
+    }
     free(filePath);
     free(commandArray);
     printExit();
@@ -145,13 +199,11 @@ void exitGame() {
 }
 
 int doUndo(int isReset) {
-    return undoMoves(gameBoard, gameMoves, isReset, withStar);
+    return undoMoves(gameBoard, gameMoves, isReset, isMark);
 }
 
 void doRedo() {
-    redoMoves(gameBoard, gameMoves, withStar);
-//    printGameBoard(gameBoard, (isMark || gameMode == EDIT_MODE));
-
+    redoMoves(gameBoard, gameMoves, isMark,0);
 }
 
 void save(char *path) {
@@ -159,23 +211,35 @@ void save(char *path) {
         if (checkBoardErrors(gameBoard)) {
             printBoardContainsError();
             return;
-        } else {
-            if (checkBoardErrors(gameBoard)) {
-                printFilNotOpened(1);
-                return;
-            }
+        } else if (!validate()) {
+            printBoardValidationFailed();
+            return;
         }
         setAllFilledFixed(gameBoard);
+        if (saveFile(filePath, gameBoard)) {
+            printSaveTo(path);
+        }
+    } else if (gameMode == SOLVE_MODE && !checkBoardErrors(gameBoard)){
+        if (saveFile(filePath, gameBoard)) {
+            printSaveTo(path);
+        }
     }
-    if (saveFile(filePath, gameBoard, gameMode)) {
-        printSaveTo(path);
-    }
+
 
 }
 
 void autoFill() {
     fillGameBoard(gameBoard, gameMoves);
-    printGameBoard(gameBoard, isMark);
+    if (isBoardFull(gameBoard)){
+        if (validate()) {
+            printPuzzleSolved();
+            startNewGame();
+        } else {
+            printSolutionErroneous();
+        }
+    } else {
+        printGameBoard(gameBoard, isMark);
+    }
 }
 
 void numSolutions() {
@@ -193,7 +257,7 @@ void resetBoard() {
     do {
         value = doUndo(1);
     } while (value);
-    printGameBoard(gameBoard,0);
+    printGameBoard(gameBoard, 0);
     printBoardReset();
 
 }
@@ -201,18 +265,19 @@ void resetBoard() {
 void hint(int column, int row) {
     if (checkBoardErrors(gameBoard)) {
         printBoardContainsError();
-    } else if (isCellFixed(gameBoard, column-1, row-1, 0)) {
+    } else if (column > getNumberOfColumns(gameBoard) || row > getNumberOfColumns(gameBoard)){
+        printValueNotInRange2(getNumberOfColumns(gameBoard));
+    } else if (isCellFixed(gameBoard, column - 1, row - 1, 0)) {
         printCellIsFixed();
-    } else if (getCellValue(gameBoard, column-1, row-1)) {
+    } else if (getCellValue(gameBoard, column - 1, row - 1)) {
         printCellAlreadyContains();
     } else {
         tempBoard = copyGameBoard(gameBoard);
-//        if (solveSudoko(gameBoard, tempBoard)) {
-//            printGameBoard(tempBoard, 0);
-//            hintCell(getCellValue(tempBoard, column-1, row-1));
-//        } else {
-//            printBoardUnsolvedable();
-//        }
+        if (solveSudoko(gameBoard, tempBoard)) {
+            hintCell(getCellValue(tempBoard, column - 1, row - 1));
+        } else {
+            printBoardUnsolvedable();
+        }
         deleteBoard(tempBoard);
     }
 }
@@ -222,7 +287,7 @@ void startGame() {
     printStartGame();
     initiateGame();
     while (1) {
-        getTurnCommand(isFinish, gameMode, commandArray, filePath);
+        getTurnCommand(gameMode, commandArray, filePath);
         switch (commandArray[0]) {
             case SET:
                 set(commandArray[1], commandArray[2], commandArray[3]);
@@ -264,7 +329,6 @@ void startGame() {
                 autoFill();
                 break;
             case VALIDATE:
-                printGameBoard(tempBoard, isMark);
                 if (validate()) {
                     printValidationPassed();
                 } else {

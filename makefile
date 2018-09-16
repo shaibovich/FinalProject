@@ -1,6 +1,6 @@
 CC = gcc
 OBJS = utils.o Stack.o GameBoardClass.o InputController.o sudokuSolver.o LinkedList.o FileController.o GameManager.o main.o exhaustive.o
-EXEC = sudoku
+EXEC = sudoku-console
 
 
 GUROBI_COMP = -I/usr/local/lib/gurobi563/include

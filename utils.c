@@ -54,7 +54,7 @@ void printValidationFailed() {
 }
 
 void printBoardNotEmpty() {
-    printf("Error: board is not empty \n");
+    printf("Error: board is not empty\n");
 }
 
 void printGeneratorFailed() {
@@ -67,6 +67,10 @@ void printBoardUnsolvedable(){
 
 void printNoMovesToUndo() {
     printf("Error: no moves to undo\n");
+}
+
+void printBoardValidationFailed(){
+    printf("Error: board validation failed\n");
 }
 
 void printUndoValue(int x, int y, int oldValue, int newValue) {
@@ -117,6 +121,10 @@ void hintCell(int value) {
 
 void printNumberOfsolutions(int num) {
     printf("Number of solutions: %d\n", num);
+}
+
+void printValueNotInRange2(int num){
+    printf("Error: value not in range 1-%d\n", num);
 }
 
 void printGoodBoard() {

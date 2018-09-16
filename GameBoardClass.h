@@ -54,6 +54,8 @@ int markCellError(GameBoard *gameBoard, int column, int row);
 
 int setValueToCell(GameBoard *gameBoard, int column, int row, int value);
 
+void markCellsIsError(GameBoard *gameBoard, int row, int column, int value, int isError);
+
 void deleteBoard(GameBoard *gameBoard);
 
 void getNumberOfRowsString(char *string, GameBoard *gameBoard);

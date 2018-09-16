@@ -186,7 +186,6 @@ int solveSudoko(GameBoard *gameBoard, GameBoard *solBoard) {
         error = GRBgetdblattrarray(model, GRB_DBL_ATTR_X, 0, DIM * DIM * DIM, sol);
         if (error) goto QUIT;
         copySolToGameBoard(solBoard);
-        printGameBoard(gameBoard, 1);
         error = 0;
     } else {
         error = 1;

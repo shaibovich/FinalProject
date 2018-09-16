@@ -6,3 +6,5 @@ enum gameModes {
 };
 
 void startGame();
+
+void exitGame();

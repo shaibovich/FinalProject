@@ -4,6 +4,7 @@
 #include "Stack.h"
 #include "LinkedList.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 int rowAlgoIndex, columnAlgoIndex, value, counter, check, chosenValue;
 GameBoard *tempBoard;
@@ -25,11 +26,15 @@ Cell *getNextEmptyCell(GameBoard *gameBoard, int *currentRow, int *currentColumn
         } else {
             *currentColumn += 1;
         }
+
     }
     return NULL;
 }
 
 void finishAlg() {
+    if (currentCell != NULL){
+        deleteStackCell(currentCell);
+    }
     DeleteStack(stack);
     free(currentCell);
 }
@@ -37,17 +42,26 @@ void finishAlg() {
 
 int numberOfSolves(GameBoard *gameBoard) {
     counter = 0, rowAlgoIndex = 0, columnAlgoIndex = 0,check =0;
+    currentCell = NULL;
     stack = createNewStack();
     emptyCell = getNextEmptyCell(gameBoard, &rowAlgoIndex, &columnAlgoIndex);
+    if (emptyCell == NULL){
+        return 0;
+    }
     push(stack, rowAlgoIndex, columnAlgoIndex);
     while (!isEmpty(stack)) {
-        if (getCellValue(gameBoard, columnAlgoIndex, rowAlgoIndex) != getNumberOfColumns(gameBoard)){
+        if (rowAlgoIndex >getNumberOfColumns(gameBoard)){
+            check =1;
+        }
+        else if (getCellValue(gameBoard, columnAlgoIndex, rowAlgoIndex) != getNumberOfColumns(gameBoard)){
             setCellValue(gameBoard, columnAlgoIndex, rowAlgoIndex, getCellValue(gameBoard, columnAlgoIndex, rowAlgoIndex)+1);
         } else {
             check = 1;
         }
         if (validateSet(gameBoard, rowAlgoIndex, columnAlgoIndex, getCellValue(gameBoard, columnAlgoIndex, rowAlgoIndex)) == 1 && !check){
-            emptyCell = getNextEmptyCell(gameBoard, &rowAlgoIndex, &columnAlgoIndex);
+            if (getNextEmptyCell(gameBoard, &rowAlgoIndex, &columnAlgoIndex) == NULL){
+                check = 1;
+            }
             push(stack, rowAlgoIndex, columnAlgoIndex);
             if (isBoardFull(gameBoard)){
                 counter++;
@@ -63,6 +77,7 @@ int numberOfSolves(GameBoard *gameBoard) {
             }
             columnAlgoIndex = getColumn(currentCell);
             rowAlgoIndex = getRow(currentCell);
+            deleteStackCell(currentCell);
             check = 0;
         }
     }
@@ -95,6 +110,7 @@ void fillGameBoard(GameBoard *gameBoard, ListofLists *listArray) {
             }
         }
     }
+
     addMovesFromList(listArray, movesList);
     deleteBoard(tempBoard);
 }

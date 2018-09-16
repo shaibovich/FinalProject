@@ -1,7 +1,7 @@
 
-void getTurnCommand(int isFinish, int gameMode, int *commandArray, char *pathString);
+void getTurnCommand(int gameMode, int *commandArray, char *pathString);
 
-enum commandsEnum {
+        enum commandsEnum {
     SET = 1,
     HINT = 2,
     VALIDATE = 3,

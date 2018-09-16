@@ -1,6 +1,8 @@
 
 void printEnterCommand();
 
+void printBoardValidationFailed();
+
 void printCellIsFixed();
 
 void printStartGame();
@@ -38,6 +40,8 @@ void printNoMovesToRedo();
 void printRedoValue(int x, int y, int oldValue, int newValue);
 
 void printFileCannotBeCreated();
+
+void printValueNotInRange2(int num);
 
 void printSaveTo(char *filePath);
 

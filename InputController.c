@@ -18,7 +18,7 @@
 #define REDO_OPTION "redo"
 #define SAVE_OPTION "save"
 #define NUM_SOLUTIONS_OPTION "num_solutions"
-#define AUTOFILL_OPTION "auto_fill"
+#define AUTOFILL_OPTION "autofill"
 #define SOLVE_OPTION "solve"
 #define RESET_OPTION "reset"
 #define REGEX " \n\r\t"
@@ -27,10 +27,11 @@
 #include "GameManager.h"
 
 
+
 int isValidCommand;
 
 char *tempInput, *command, *inputString;
-int cnt = 0;
+int cnt = 0, isLastInput;
 
 
 int isSolveMode(int gameMode) {
@@ -45,14 +46,20 @@ int isEditMode(int gameMode) {
     return gameMode == EDIT_MODE;
 }
 
-void validateCommand(int isFinish, int gameMode, int *commandArray) {
-    if (!strcmp(command, SET_OPTION) && !isFinish && cnt >= 4 && isSolveOrEditMode(gameMode)) {
+void emptyBuffer() {
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF) {
+    }
+}
+
+void validateCommand(int gameMode, int *commandArray) {
+    if (!strcmp(command, SET_OPTION) && cnt >= 4 && isSolveOrEditMode(gameMode)) {
         isValidCommand = 1;
         commandArray[0] = SET;
-    } else if (!strcmp(command, HINT_OPTION) && !isFinish && cnt >= 2 && isSolveMode(gameMode)) {
+    } else if (!strcmp(command, HINT_OPTION) && cnt >= 3 && isSolveMode(gameMode)) {
         isValidCommand = 1;
         commandArray[0] = HINT;
-    } else if (!strcmp(command, VALIDATE_OPTION) && !isFinish && cnt >= 1 && isSolveOrEditMode(gameMode)) {
+    } else if (!strcmp(command, VALIDATE_OPTION) && cnt >= 1 && isSolveOrEditMode(gameMode)) {
         isValidCommand = 1;
         commandArray[0] = VALIDATE;
     } else if (!strcmp(command, RESET_OPTION) && cnt >= 1 && isSolveOrEditMode(gameMode)) {
@@ -96,25 +103,30 @@ void validateCommand(int isFinish, int gameMode, int *commandArray) {
     }
 }
 
-void getTurnCommand(int isFinish, int gameMode, int *commandArray, char *pathString) {
+void getTurnCommand(int gameMode, int *commandArray, char *pathString) {
+    isLastInput = 0;
     strcpy(pathString, "");
     command = (char *) malloc(NUMBER_OF_CHARS_INPUT * sizeof(char));
     inputString = (char *) malloc(NUMBER_OF_CHARS_INPUT * sizeof(char));
     assert(command);
     assert(inputString);
     isValidCommand = 0;
-    printEnterCommand();
     while (!isValidCommand) {
+        printEnterCommand();
         if (feof(stdin)) {
-            return;
+            free(command);
+            free(inputString);
+            exitGame();
         }
         cnt = 0;
         fgets(inputString, NUMBER_OF_CHARS_INPUT, stdin);
+        if (strlen(inputString) > 256)
+            emptyBuffer();
         tempInput = strtok(inputString, REGEX);
         if (tempInput == NULL) {
             continue;
         } else {
-            while (tempInput != NULL) {
+            while (tempInput != NULL && !isLastInput) {
                 switch (cnt) {
                     case 0:
                         strcpy(command, tempInput);
@@ -138,8 +150,7 @@ void getTurnCommand(int isFinish, int gameMode, int *commandArray, char *pathStr
                 tempInput = strtok(NULL, REGEX);
                 ++cnt;
             }
-
-            validateCommand(isFinish, gameMode, commandArray);
+            validateCommand(gameMode, commandArray);
         }
     }
     free(command);

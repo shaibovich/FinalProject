@@ -55,13 +55,18 @@ int isEmpty(Stack *stack) {
 }
 
 StackCell *pop(Stack *stack) {
-    if (isEmpty(stack) || stack->StackSize == 1) {
+    if (isEmpty(stack) || stack->StackSize == 0) {
         stack->isEmpty = 1;
         return NULL;
     } else {
         stack->StackSize -= 1;
+
         stack->StackHead = stack->StackHead->prev;
-        free(stack->StackHead->next);
+        if (stack->StackHead == NULL){
+            stack->isEmpty = 1;
+        } else {
+            free(stack->StackHead->next);
+        }
         return stack->StackHead;
     }
 }
@@ -89,6 +94,13 @@ void DeleteStack(Stack *stack) {
     }
     free(stack);
 
+}
+
+void deleteStackCell(StackCell * stackCell){
+    stackCell->prev = NULL;
+    stackCell->next = NULL;
+    free(stackCell);
+    stackCell = NULL;
 }
 
 int getColumn(StackCell *cell) {
