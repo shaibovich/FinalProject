@@ -2,7 +2,6 @@
 #ifndef GAMEBOARD_C
 #define GAMEBOARD_C
 
-
 struct GameCell {
     int value;
     int isFixed;
@@ -36,7 +35,7 @@ enum VALIDATION_ERROR {
     ROW = -3
 };
 
-int rowIndex, columnIndex, rowBlock, columnBlock, size, randValue, columnRandom, rowRandom, generateCounter, updateRow, updateColumn;
+int rowIndex, columnIndex, rowBlock, columnBlock, size, randValue, columnRandom, rowRandom, generateCounter, updateRow, updateColumn, counter;
 char *gameInput;
 Node *tempNode;
 
@@ -72,8 +71,8 @@ int validateSet(const GameBoard *gameBoard, int row, int column, int value) {
             return ROW;
         }
     };
-    rowBlock = (row / gameBoard->numberOfRowsBlock) * gameBoard->numberOfRowsBlock;
-    columnBlock = (column / gameBoard->numberOfColumnBlock) * gameBoard->numberOfColumnBlock;
+    columnBlock = (row / gameBoard->numberOfColumnBlock) * gameBoard->numberOfColumnBlock;
+    rowBlock = (column / gameBoard->numberOfRowsBlock) * gameBoard->numberOfRowsBlock;
     for (rowIndex = 0; rowIndex < gameBoard->numberOfRowsBlock; ++rowIndex) {
         for (columnIndex = 0; columnIndex < gameBoard->numberOfColumnBlock; ++columnIndex) {
             if ((gameBoard->cellList + (rowIndex + rowBlock) * gameBoard->numberOfColumns +
@@ -159,6 +158,19 @@ GameBoard *createEmptyBoard(int rows, int columns) {
         }
     }
     return newBoard;
+}
+
+int getNumberOfEmptyCells(GameBoard * gameBoard){
+    counter =0 ;
+    for (rowIndex = 0; rowIndex < gameBoard->numberOfRows; rowIndex++){
+        for (columnIndex =0 ; columnIndex< gameBoard->numberOfColumns; columnIndex++){
+            if (getCellValue(gameBoard,columnIndex, rowIndex) == 0){
+                counter ++;
+            }
+
+        }
+    }
+    return counter;
 }
 
 GameBoard *copyGameBoard(GameBoard *oldGameBoard) {
@@ -471,7 +483,7 @@ void makeBoardEmpty(GameBoard *gameBoard) {
 }
 
 Cell *getCell(GameBoard *gameBoard, int column, int row) {
-    return (gameBoard->cellList + column * gameBoard->numberOfRows + row);
+    return (gameBoard->cellList + row * gameBoard->numberOfRows + column);
 }
 
 int fillRandom(GameBoard *gameBoard, int x, List *fillLst) {
@@ -507,7 +519,7 @@ void clearRandom(GameBoard *gameBoard, int y, List *lst) {
         } else if (setCellValue(gameBoard, columnRandom, rowRandom, 0) != ERROR) {
             tempNode = deleteCellFromList(lst, columnRandom, rowRandom);
             if (tempNode == NULL) {
-                printf("shit: column %d row %d\n", columnRandom + 1, rowRandom + 1);
+                printf(" column %d row %d\n", columnRandom + 1, rowRandom + 1);
             } else {
                 deleteNode(tempNode);
             }

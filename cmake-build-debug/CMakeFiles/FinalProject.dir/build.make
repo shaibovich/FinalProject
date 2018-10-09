@@ -57,81 +57,57 @@ include CMakeFiles/FinalProject.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/FinalProject.dir/flags.make
 
-CMakeFiles/FinalProject.dir/main.c.o: CMakeFiles/FinalProject.dir/flags.make
-CMakeFiles/FinalProject.dir/main.c.o: ../main.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/shaileibovich/CLionProjects/FinalProject/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/FinalProject.dir/main.c.o"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/FinalProject.dir/main.c.o   -c /Users/shaileibovich/CLionProjects/FinalProject/main.c
+CMakeFiles/FinalProject.dir/FileController.c.o: CMakeFiles/FinalProject.dir/flags.make
+CMakeFiles/FinalProject.dir/FileController.c.o: ../FileController.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/shaileibovich/CLionProjects/FinalProject/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/FinalProject.dir/FileController.c.o"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/FinalProject.dir/FileController.c.o   -c /Users/shaileibovich/CLionProjects/FinalProject/FileController.c
 
-CMakeFiles/FinalProject.dir/main.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/FinalProject.dir/main.c.i"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/shaileibovich/CLionProjects/FinalProject/main.c > CMakeFiles/FinalProject.dir/main.c.i
+CMakeFiles/FinalProject.dir/FileController.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/FinalProject.dir/FileController.c.i"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/shaileibovich/CLionProjects/FinalProject/FileController.c > CMakeFiles/FinalProject.dir/FileController.c.i
 
-CMakeFiles/FinalProject.dir/main.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/FinalProject.dir/main.c.s"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/shaileibovich/CLionProjects/FinalProject/main.c -o CMakeFiles/FinalProject.dir/main.c.s
+CMakeFiles/FinalProject.dir/FileController.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/FinalProject.dir/FileController.c.s"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/shaileibovich/CLionProjects/FinalProject/FileController.c -o CMakeFiles/FinalProject.dir/FileController.c.s
 
-CMakeFiles/FinalProject.dir/main.c.o.requires:
+CMakeFiles/FinalProject.dir/FileController.c.o.requires:
 
-.PHONY : CMakeFiles/FinalProject.dir/main.c.o.requires
+.PHONY : CMakeFiles/FinalProject.dir/FileController.c.o.requires
 
-CMakeFiles/FinalProject.dir/main.c.o.provides: CMakeFiles/FinalProject.dir/main.c.o.requires
-	$(MAKE) -f CMakeFiles/FinalProject.dir/build.make CMakeFiles/FinalProject.dir/main.c.o.provides.build
-.PHONY : CMakeFiles/FinalProject.dir/main.c.o.provides
+CMakeFiles/FinalProject.dir/FileController.c.o.provides: CMakeFiles/FinalProject.dir/FileController.c.o.requires
+	$(MAKE) -f CMakeFiles/FinalProject.dir/build.make CMakeFiles/FinalProject.dir/FileController.c.o.provides.build
+.PHONY : CMakeFiles/FinalProject.dir/FileController.c.o.provides
 
-CMakeFiles/FinalProject.dir/main.c.o.provides.build: CMakeFiles/FinalProject.dir/main.c.o
-
-
-CMakeFiles/FinalProject.dir/GameBoard.c.o: CMakeFiles/FinalProject.dir/flags.make
-CMakeFiles/FinalProject.dir/GameBoard.c.o: ../GameBoard.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/shaileibovich/CLionProjects/FinalProject/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/FinalProject.dir/GameBoard.c.o"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/FinalProject.dir/GameBoard.c.o   -c /Users/shaileibovich/CLionProjects/FinalProject/GameBoard.c
-
-CMakeFiles/FinalProject.dir/GameBoard.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/FinalProject.dir/GameBoard.c.i"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/shaileibovich/CLionProjects/FinalProject/GameBoard.c > CMakeFiles/FinalProject.dir/GameBoard.c.i
-
-CMakeFiles/FinalProject.dir/GameBoard.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/FinalProject.dir/GameBoard.c.s"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/shaileibovich/CLionProjects/FinalProject/GameBoard.c -o CMakeFiles/FinalProject.dir/GameBoard.c.s
-
-CMakeFiles/FinalProject.dir/GameBoard.c.o.requires:
-
-.PHONY : CMakeFiles/FinalProject.dir/GameBoard.c.o.requires
-
-CMakeFiles/FinalProject.dir/GameBoard.c.o.provides: CMakeFiles/FinalProject.dir/GameBoard.c.o.requires
-	$(MAKE) -f CMakeFiles/FinalProject.dir/build.make CMakeFiles/FinalProject.dir/GameBoard.c.o.provides.build
-.PHONY : CMakeFiles/FinalProject.dir/GameBoard.c.o.provides
-
-CMakeFiles/FinalProject.dir/GameBoard.c.o.provides.build: CMakeFiles/FinalProject.dir/GameBoard.c.o
+CMakeFiles/FinalProject.dir/FileController.c.o.provides.build: CMakeFiles/FinalProject.dir/FileController.c.o
 
 
-CMakeFiles/FinalProject.dir/utils.c.o: CMakeFiles/FinalProject.dir/flags.make
-CMakeFiles/FinalProject.dir/utils.c.o: ../utils.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/shaileibovich/CLionProjects/FinalProject/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/FinalProject.dir/utils.c.o"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/FinalProject.dir/utils.c.o   -c /Users/shaileibovich/CLionProjects/FinalProject/utils.c
+CMakeFiles/FinalProject.dir/GameBoardClass.c.o: CMakeFiles/FinalProject.dir/flags.make
+CMakeFiles/FinalProject.dir/GameBoardClass.c.o: ../GameBoardClass.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/shaileibovich/CLionProjects/FinalProject/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/FinalProject.dir/GameBoardClass.c.o"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/FinalProject.dir/GameBoardClass.c.o   -c /Users/shaileibovich/CLionProjects/FinalProject/GameBoardClass.c
 
-CMakeFiles/FinalProject.dir/utils.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/FinalProject.dir/utils.c.i"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/shaileibovich/CLionProjects/FinalProject/utils.c > CMakeFiles/FinalProject.dir/utils.c.i
+CMakeFiles/FinalProject.dir/GameBoardClass.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/FinalProject.dir/GameBoardClass.c.i"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/shaileibovich/CLionProjects/FinalProject/GameBoardClass.c > CMakeFiles/FinalProject.dir/GameBoardClass.c.i
 
-CMakeFiles/FinalProject.dir/utils.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/FinalProject.dir/utils.c.s"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/shaileibovich/CLionProjects/FinalProject/utils.c -o CMakeFiles/FinalProject.dir/utils.c.s
+CMakeFiles/FinalProject.dir/GameBoardClass.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/FinalProject.dir/GameBoardClass.c.s"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/shaileibovich/CLionProjects/FinalProject/GameBoardClass.c -o CMakeFiles/FinalProject.dir/GameBoardClass.c.s
 
-CMakeFiles/FinalProject.dir/utils.c.o.requires:
+CMakeFiles/FinalProject.dir/GameBoardClass.c.o.requires:
 
-.PHONY : CMakeFiles/FinalProject.dir/utils.c.o.requires
+.PHONY : CMakeFiles/FinalProject.dir/GameBoardClass.c.o.requires
 
-CMakeFiles/FinalProject.dir/utils.c.o.provides: CMakeFiles/FinalProject.dir/utils.c.o.requires
-	$(MAKE) -f CMakeFiles/FinalProject.dir/build.make CMakeFiles/FinalProject.dir/utils.c.o.provides.build
-.PHONY : CMakeFiles/FinalProject.dir/utils.c.o.provides
+CMakeFiles/FinalProject.dir/GameBoardClass.c.o.provides: CMakeFiles/FinalProject.dir/GameBoardClass.c.o.requires
+	$(MAKE) -f CMakeFiles/FinalProject.dir/build.make CMakeFiles/FinalProject.dir/GameBoardClass.c.o.provides.build
+.PHONY : CMakeFiles/FinalProject.dir/GameBoardClass.c.o.provides
 
-CMakeFiles/FinalProject.dir/utils.c.o.provides.build: CMakeFiles/FinalProject.dir/utils.c.o
+CMakeFiles/FinalProject.dir/GameBoardClass.c.o.provides.build: CMakeFiles/FinalProject.dir/GameBoardClass.c.o
 
 
 CMakeFiles/FinalProject.dir/GameManager.c.o: CMakeFiles/FinalProject.dir/flags.make
 CMakeFiles/FinalProject.dir/GameManager.c.o: ../GameManager.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/shaileibovich/CLionProjects/FinalProject/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/FinalProject.dir/GameManager.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/shaileibovich/CLionProjects/FinalProject/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/FinalProject.dir/GameManager.c.o"
 	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/FinalProject.dir/GameManager.c.o   -c /Users/shaileibovich/CLionProjects/FinalProject/GameManager.c
 
 CMakeFiles/FinalProject.dir/GameManager.c.i: cmake_force
@@ -153,23 +129,177 @@ CMakeFiles/FinalProject.dir/GameManager.c.o.provides: CMakeFiles/FinalProject.di
 CMakeFiles/FinalProject.dir/GameManager.c.o.provides.build: CMakeFiles/FinalProject.dir/GameManager.c.o
 
 
+CMakeFiles/FinalProject.dir/InputController.c.o: CMakeFiles/FinalProject.dir/flags.make
+CMakeFiles/FinalProject.dir/InputController.c.o: ../InputController.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/shaileibovich/CLionProjects/FinalProject/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/FinalProject.dir/InputController.c.o"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/FinalProject.dir/InputController.c.o   -c /Users/shaileibovich/CLionProjects/FinalProject/InputController.c
+
+CMakeFiles/FinalProject.dir/InputController.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/FinalProject.dir/InputController.c.i"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/shaileibovich/CLionProjects/FinalProject/InputController.c > CMakeFiles/FinalProject.dir/InputController.c.i
+
+CMakeFiles/FinalProject.dir/InputController.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/FinalProject.dir/InputController.c.s"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/shaileibovich/CLionProjects/FinalProject/InputController.c -o CMakeFiles/FinalProject.dir/InputController.c.s
+
+CMakeFiles/FinalProject.dir/InputController.c.o.requires:
+
+.PHONY : CMakeFiles/FinalProject.dir/InputController.c.o.requires
+
+CMakeFiles/FinalProject.dir/InputController.c.o.provides: CMakeFiles/FinalProject.dir/InputController.c.o.requires
+	$(MAKE) -f CMakeFiles/FinalProject.dir/build.make CMakeFiles/FinalProject.dir/InputController.c.o.provides.build
+.PHONY : CMakeFiles/FinalProject.dir/InputController.c.o.provides
+
+CMakeFiles/FinalProject.dir/InputController.c.o.provides.build: CMakeFiles/FinalProject.dir/InputController.c.o
+
+
+CMakeFiles/FinalProject.dir/main.c.o: CMakeFiles/FinalProject.dir/flags.make
+CMakeFiles/FinalProject.dir/main.c.o: ../main.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/shaileibovich/CLionProjects/FinalProject/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/FinalProject.dir/main.c.o"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/FinalProject.dir/main.c.o   -c /Users/shaileibovich/CLionProjects/FinalProject/main.c
+
+CMakeFiles/FinalProject.dir/main.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/FinalProject.dir/main.c.i"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/shaileibovich/CLionProjects/FinalProject/main.c > CMakeFiles/FinalProject.dir/main.c.i
+
+CMakeFiles/FinalProject.dir/main.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/FinalProject.dir/main.c.s"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/shaileibovich/CLionProjects/FinalProject/main.c -o CMakeFiles/FinalProject.dir/main.c.s
+
+CMakeFiles/FinalProject.dir/main.c.o.requires:
+
+.PHONY : CMakeFiles/FinalProject.dir/main.c.o.requires
+
+CMakeFiles/FinalProject.dir/main.c.o.provides: CMakeFiles/FinalProject.dir/main.c.o.requires
+	$(MAKE) -f CMakeFiles/FinalProject.dir/build.make CMakeFiles/FinalProject.dir/main.c.o.provides.build
+.PHONY : CMakeFiles/FinalProject.dir/main.c.o.provides
+
+CMakeFiles/FinalProject.dir/main.c.o.provides.build: CMakeFiles/FinalProject.dir/main.c.o
+
+
+CMakeFiles/FinalProject.dir/utils.c.o: CMakeFiles/FinalProject.dir/flags.make
+CMakeFiles/FinalProject.dir/utils.c.o: ../utils.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/shaileibovich/CLionProjects/FinalProject/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/FinalProject.dir/utils.c.o"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/FinalProject.dir/utils.c.o   -c /Users/shaileibovich/CLionProjects/FinalProject/utils.c
+
+CMakeFiles/FinalProject.dir/utils.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/FinalProject.dir/utils.c.i"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/shaileibovich/CLionProjects/FinalProject/utils.c > CMakeFiles/FinalProject.dir/utils.c.i
+
+CMakeFiles/FinalProject.dir/utils.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/FinalProject.dir/utils.c.s"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/shaileibovich/CLionProjects/FinalProject/utils.c -o CMakeFiles/FinalProject.dir/utils.c.s
+
+CMakeFiles/FinalProject.dir/utils.c.o.requires:
+
+.PHONY : CMakeFiles/FinalProject.dir/utils.c.o.requires
+
+CMakeFiles/FinalProject.dir/utils.c.o.provides: CMakeFiles/FinalProject.dir/utils.c.o.requires
+	$(MAKE) -f CMakeFiles/FinalProject.dir/build.make CMakeFiles/FinalProject.dir/utils.c.o.provides.build
+.PHONY : CMakeFiles/FinalProject.dir/utils.c.o.provides
+
+CMakeFiles/FinalProject.dir/utils.c.o.provides.build: CMakeFiles/FinalProject.dir/utils.c.o
+
+
+CMakeFiles/FinalProject.dir/LinkedList.c.o: CMakeFiles/FinalProject.dir/flags.make
+CMakeFiles/FinalProject.dir/LinkedList.c.o: ../LinkedList.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/shaileibovich/CLionProjects/FinalProject/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/FinalProject.dir/LinkedList.c.o"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/FinalProject.dir/LinkedList.c.o   -c /Users/shaileibovich/CLionProjects/FinalProject/LinkedList.c
+
+CMakeFiles/FinalProject.dir/LinkedList.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/FinalProject.dir/LinkedList.c.i"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/shaileibovich/CLionProjects/FinalProject/LinkedList.c > CMakeFiles/FinalProject.dir/LinkedList.c.i
+
+CMakeFiles/FinalProject.dir/LinkedList.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/FinalProject.dir/LinkedList.c.s"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/shaileibovich/CLionProjects/FinalProject/LinkedList.c -o CMakeFiles/FinalProject.dir/LinkedList.c.s
+
+CMakeFiles/FinalProject.dir/LinkedList.c.o.requires:
+
+.PHONY : CMakeFiles/FinalProject.dir/LinkedList.c.o.requires
+
+CMakeFiles/FinalProject.dir/LinkedList.c.o.provides: CMakeFiles/FinalProject.dir/LinkedList.c.o.requires
+	$(MAKE) -f CMakeFiles/FinalProject.dir/build.make CMakeFiles/FinalProject.dir/LinkedList.c.o.provides.build
+.PHONY : CMakeFiles/FinalProject.dir/LinkedList.c.o.provides
+
+CMakeFiles/FinalProject.dir/LinkedList.c.o.provides.build: CMakeFiles/FinalProject.dir/LinkedList.c.o
+
+
+CMakeFiles/FinalProject.dir/Stack.c.o: CMakeFiles/FinalProject.dir/flags.make
+CMakeFiles/FinalProject.dir/Stack.c.o: ../Stack.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/shaileibovich/CLionProjects/FinalProject/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/FinalProject.dir/Stack.c.o"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/FinalProject.dir/Stack.c.o   -c /Users/shaileibovich/CLionProjects/FinalProject/Stack.c
+
+CMakeFiles/FinalProject.dir/Stack.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/FinalProject.dir/Stack.c.i"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/shaileibovich/CLionProjects/FinalProject/Stack.c > CMakeFiles/FinalProject.dir/Stack.c.i
+
+CMakeFiles/FinalProject.dir/Stack.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/FinalProject.dir/Stack.c.s"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/shaileibovich/CLionProjects/FinalProject/Stack.c -o CMakeFiles/FinalProject.dir/Stack.c.s
+
+CMakeFiles/FinalProject.dir/Stack.c.o.requires:
+
+.PHONY : CMakeFiles/FinalProject.dir/Stack.c.o.requires
+
+CMakeFiles/FinalProject.dir/Stack.c.o.provides: CMakeFiles/FinalProject.dir/Stack.c.o.requires
+	$(MAKE) -f CMakeFiles/FinalProject.dir/build.make CMakeFiles/FinalProject.dir/Stack.c.o.provides.build
+.PHONY : CMakeFiles/FinalProject.dir/Stack.c.o.provides
+
+CMakeFiles/FinalProject.dir/Stack.c.o.provides.build: CMakeFiles/FinalProject.dir/Stack.c.o
+
+
+CMakeFiles/FinalProject.dir/exhaustive.c.o: CMakeFiles/FinalProject.dir/flags.make
+CMakeFiles/FinalProject.dir/exhaustive.c.o: ../exhaustive.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/shaileibovich/CLionProjects/FinalProject/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building C object CMakeFiles/FinalProject.dir/exhaustive.c.o"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/FinalProject.dir/exhaustive.c.o   -c /Users/shaileibovich/CLionProjects/FinalProject/exhaustive.c
+
+CMakeFiles/FinalProject.dir/exhaustive.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/FinalProject.dir/exhaustive.c.i"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/shaileibovich/CLionProjects/FinalProject/exhaustive.c > CMakeFiles/FinalProject.dir/exhaustive.c.i
+
+CMakeFiles/FinalProject.dir/exhaustive.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/FinalProject.dir/exhaustive.c.s"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/shaileibovich/CLionProjects/FinalProject/exhaustive.c -o CMakeFiles/FinalProject.dir/exhaustive.c.s
+
+CMakeFiles/FinalProject.dir/exhaustive.c.o.requires:
+
+.PHONY : CMakeFiles/FinalProject.dir/exhaustive.c.o.requires
+
+CMakeFiles/FinalProject.dir/exhaustive.c.o.provides: CMakeFiles/FinalProject.dir/exhaustive.c.o.requires
+	$(MAKE) -f CMakeFiles/FinalProject.dir/build.make CMakeFiles/FinalProject.dir/exhaustive.c.o.provides.build
+.PHONY : CMakeFiles/FinalProject.dir/exhaustive.c.o.provides
+
+CMakeFiles/FinalProject.dir/exhaustive.c.o.provides.build: CMakeFiles/FinalProject.dir/exhaustive.c.o
+
+
 # Object files for target FinalProject
 FinalProject_OBJECTS = \
+"CMakeFiles/FinalProject.dir/FileController.c.o" \
+"CMakeFiles/FinalProject.dir/GameBoardClass.c.o" \
+"CMakeFiles/FinalProject.dir/GameManager.c.o" \
+"CMakeFiles/FinalProject.dir/InputController.c.o" \
 "CMakeFiles/FinalProject.dir/main.c.o" \
-"CMakeFiles/FinalProject.dir/GameBoard.c.o" \
 "CMakeFiles/FinalProject.dir/utils.c.o" \
-"CMakeFiles/FinalProject.dir/GameManager.c.o"
+"CMakeFiles/FinalProject.dir/LinkedList.c.o" \
+"CMakeFiles/FinalProject.dir/Stack.c.o" \
+"CMakeFiles/FinalProject.dir/exhaustive.c.o"
 
 # External object files for target FinalProject
 FinalProject_EXTERNAL_OBJECTS =
 
-FinalProject: CMakeFiles/FinalProject.dir/main.c.o
-FinalProject: CMakeFiles/FinalProject.dir/GameBoard.c.o
-FinalProject: CMakeFiles/FinalProject.dir/utils.c.o
+FinalProject: CMakeFiles/FinalProject.dir/FileController.c.o
+FinalProject: CMakeFiles/FinalProject.dir/GameBoardClass.c.o
 FinalProject: CMakeFiles/FinalProject.dir/GameManager.c.o
+FinalProject: CMakeFiles/FinalProject.dir/InputController.c.o
+FinalProject: CMakeFiles/FinalProject.dir/main.c.o
+FinalProject: CMakeFiles/FinalProject.dir/utils.c.o
+FinalProject: CMakeFiles/FinalProject.dir/LinkedList.c.o
+FinalProject: CMakeFiles/FinalProject.dir/Stack.c.o
+FinalProject: CMakeFiles/FinalProject.dir/exhaustive.c.o
 FinalProject: CMakeFiles/FinalProject.dir/build.make
 FinalProject: CMakeFiles/FinalProject.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/shaileibovich/CLionProjects/FinalProject/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking C executable FinalProject"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/shaileibovich/CLionProjects/FinalProject/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Linking C executable FinalProject"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/FinalProject.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -177,10 +307,15 @@ CMakeFiles/FinalProject.dir/build: FinalProject
 
 .PHONY : CMakeFiles/FinalProject.dir/build
 
-CMakeFiles/FinalProject.dir/requires: CMakeFiles/FinalProject.dir/main.c.o.requires
-CMakeFiles/FinalProject.dir/requires: CMakeFiles/FinalProject.dir/GameBoard.c.o.requires
-CMakeFiles/FinalProject.dir/requires: CMakeFiles/FinalProject.dir/utils.c.o.requires
+CMakeFiles/FinalProject.dir/requires: CMakeFiles/FinalProject.dir/FileController.c.o.requires
+CMakeFiles/FinalProject.dir/requires: CMakeFiles/FinalProject.dir/GameBoardClass.c.o.requires
 CMakeFiles/FinalProject.dir/requires: CMakeFiles/FinalProject.dir/GameManager.c.o.requires
+CMakeFiles/FinalProject.dir/requires: CMakeFiles/FinalProject.dir/InputController.c.o.requires
+CMakeFiles/FinalProject.dir/requires: CMakeFiles/FinalProject.dir/main.c.o.requires
+CMakeFiles/FinalProject.dir/requires: CMakeFiles/FinalProject.dir/utils.c.o.requires
+CMakeFiles/FinalProject.dir/requires: CMakeFiles/FinalProject.dir/LinkedList.c.o.requires
+CMakeFiles/FinalProject.dir/requires: CMakeFiles/FinalProject.dir/Stack.c.o.requires
+CMakeFiles/FinalProject.dir/requires: CMakeFiles/FinalProject.dir/exhaustive.c.o.requires
 
 .PHONY : CMakeFiles/FinalProject.dir/requires
 

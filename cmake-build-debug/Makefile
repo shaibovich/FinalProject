@@ -123,32 +123,59 @@ FinalProject/fast:
 	$(MAKE) -f CMakeFiles/FinalProject.dir/build.make CMakeFiles/FinalProject.dir/build
 .PHONY : FinalProject/fast
 
-GameBoard.o: GameBoard.c.o
+FileController.o: FileController.c.o
 
-.PHONY : GameBoard.o
+.PHONY : FileController.o
 
 # target to build an object file
-GameBoard.c.o:
-	$(MAKE) -f CMakeFiles/FinalProject.dir/build.make CMakeFiles/FinalProject.dir/GameBoard.c.o
-.PHONY : GameBoard.c.o
+FileController.c.o:
+	$(MAKE) -f CMakeFiles/FinalProject.dir/build.make CMakeFiles/FinalProject.dir/FileController.c.o
+.PHONY : FileController.c.o
 
-GameBoard.i: GameBoard.c.i
+FileController.i: FileController.c.i
 
-.PHONY : GameBoard.i
+.PHONY : FileController.i
 
 # target to preprocess a source file
-GameBoard.c.i:
-	$(MAKE) -f CMakeFiles/FinalProject.dir/build.make CMakeFiles/FinalProject.dir/GameBoard.c.i
-.PHONY : GameBoard.c.i
+FileController.c.i:
+	$(MAKE) -f CMakeFiles/FinalProject.dir/build.make CMakeFiles/FinalProject.dir/FileController.c.i
+.PHONY : FileController.c.i
 
-GameBoard.s: GameBoard.c.s
+FileController.s: FileController.c.s
 
-.PHONY : GameBoard.s
+.PHONY : FileController.s
 
 # target to generate assembly for a file
-GameBoard.c.s:
-	$(MAKE) -f CMakeFiles/FinalProject.dir/build.make CMakeFiles/FinalProject.dir/GameBoard.c.s
-.PHONY : GameBoard.c.s
+FileController.c.s:
+	$(MAKE) -f CMakeFiles/FinalProject.dir/build.make CMakeFiles/FinalProject.dir/FileController.c.s
+.PHONY : FileController.c.s
+
+GameBoardClass.o: GameBoardClass.c.o
+
+.PHONY : GameBoardClass.o
+
+# target to build an object file
+GameBoardClass.c.o:
+	$(MAKE) -f CMakeFiles/FinalProject.dir/build.make CMakeFiles/FinalProject.dir/GameBoardClass.c.o
+.PHONY : GameBoardClass.c.o
+
+GameBoardClass.i: GameBoardClass.c.i
+
+.PHONY : GameBoardClass.i
+
+# target to preprocess a source file
+GameBoardClass.c.i:
+	$(MAKE) -f CMakeFiles/FinalProject.dir/build.make CMakeFiles/FinalProject.dir/GameBoardClass.c.i
+.PHONY : GameBoardClass.c.i
+
+GameBoardClass.s: GameBoardClass.c.s
+
+.PHONY : GameBoardClass.s
+
+# target to generate assembly for a file
+GameBoardClass.c.s:
+	$(MAKE) -f CMakeFiles/FinalProject.dir/build.make CMakeFiles/FinalProject.dir/GameBoardClass.c.s
+.PHONY : GameBoardClass.c.s
 
 GameManager.o: GameManager.c.o
 
@@ -176,6 +203,114 @@ GameManager.s: GameManager.c.s
 GameManager.c.s:
 	$(MAKE) -f CMakeFiles/FinalProject.dir/build.make CMakeFiles/FinalProject.dir/GameManager.c.s
 .PHONY : GameManager.c.s
+
+InputController.o: InputController.c.o
+
+.PHONY : InputController.o
+
+# target to build an object file
+InputController.c.o:
+	$(MAKE) -f CMakeFiles/FinalProject.dir/build.make CMakeFiles/FinalProject.dir/InputController.c.o
+.PHONY : InputController.c.o
+
+InputController.i: InputController.c.i
+
+.PHONY : InputController.i
+
+# target to preprocess a source file
+InputController.c.i:
+	$(MAKE) -f CMakeFiles/FinalProject.dir/build.make CMakeFiles/FinalProject.dir/InputController.c.i
+.PHONY : InputController.c.i
+
+InputController.s: InputController.c.s
+
+.PHONY : InputController.s
+
+# target to generate assembly for a file
+InputController.c.s:
+	$(MAKE) -f CMakeFiles/FinalProject.dir/build.make CMakeFiles/FinalProject.dir/InputController.c.s
+.PHONY : InputController.c.s
+
+LinkedList.o: LinkedList.c.o
+
+.PHONY : LinkedList.o
+
+# target to build an object file
+LinkedList.c.o:
+	$(MAKE) -f CMakeFiles/FinalProject.dir/build.make CMakeFiles/FinalProject.dir/LinkedList.c.o
+.PHONY : LinkedList.c.o
+
+LinkedList.i: LinkedList.c.i
+
+.PHONY : LinkedList.i
+
+# target to preprocess a source file
+LinkedList.c.i:
+	$(MAKE) -f CMakeFiles/FinalProject.dir/build.make CMakeFiles/FinalProject.dir/LinkedList.c.i
+.PHONY : LinkedList.c.i
+
+LinkedList.s: LinkedList.c.s
+
+.PHONY : LinkedList.s
+
+# target to generate assembly for a file
+LinkedList.c.s:
+	$(MAKE) -f CMakeFiles/FinalProject.dir/build.make CMakeFiles/FinalProject.dir/LinkedList.c.s
+.PHONY : LinkedList.c.s
+
+Stack.o: Stack.c.o
+
+.PHONY : Stack.o
+
+# target to build an object file
+Stack.c.o:
+	$(MAKE) -f CMakeFiles/FinalProject.dir/build.make CMakeFiles/FinalProject.dir/Stack.c.o
+.PHONY : Stack.c.o
+
+Stack.i: Stack.c.i
+
+.PHONY : Stack.i
+
+# target to preprocess a source file
+Stack.c.i:
+	$(MAKE) -f CMakeFiles/FinalProject.dir/build.make CMakeFiles/FinalProject.dir/Stack.c.i
+.PHONY : Stack.c.i
+
+Stack.s: Stack.c.s
+
+.PHONY : Stack.s
+
+# target to generate assembly for a file
+Stack.c.s:
+	$(MAKE) -f CMakeFiles/FinalProject.dir/build.make CMakeFiles/FinalProject.dir/Stack.c.s
+.PHONY : Stack.c.s
+
+exhaustive.o: exhaustive.c.o
+
+.PHONY : exhaustive.o
+
+# target to build an object file
+exhaustive.c.o:
+	$(MAKE) -f CMakeFiles/FinalProject.dir/build.make CMakeFiles/FinalProject.dir/exhaustive.c.o
+.PHONY : exhaustive.c.o
+
+exhaustive.i: exhaustive.c.i
+
+.PHONY : exhaustive.i
+
+# target to preprocess a source file
+exhaustive.c.i:
+	$(MAKE) -f CMakeFiles/FinalProject.dir/build.make CMakeFiles/FinalProject.dir/exhaustive.c.i
+.PHONY : exhaustive.c.i
+
+exhaustive.s: exhaustive.c.s
+
+.PHONY : exhaustive.s
+
+# target to generate assembly for a file
+exhaustive.c.s:
+	$(MAKE) -f CMakeFiles/FinalProject.dir/build.make CMakeFiles/FinalProject.dir/exhaustive.c.s
+.PHONY : exhaustive.c.s
 
 main.o: main.c.o
 
@@ -240,12 +375,27 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... FinalProject"
-	@echo "... GameBoard.o"
-	@echo "... GameBoard.i"
-	@echo "... GameBoard.s"
+	@echo "... FileController.o"
+	@echo "... FileController.i"
+	@echo "... FileController.s"
+	@echo "... GameBoardClass.o"
+	@echo "... GameBoardClass.i"
+	@echo "... GameBoardClass.s"
 	@echo "... GameManager.o"
 	@echo "... GameManager.i"
 	@echo "... GameManager.s"
+	@echo "... InputController.o"
+	@echo "... InputController.i"
+	@echo "... InputController.s"
+	@echo "... LinkedList.o"
+	@echo "... LinkedList.i"
+	@echo "... LinkedList.s"
+	@echo "... Stack.o"
+	@echo "... Stack.i"
+	@echo "... Stack.s"
+	@echo "... exhaustive.o"
+	@echo "... exhaustive.i"
+	@echo "... exhaustive.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

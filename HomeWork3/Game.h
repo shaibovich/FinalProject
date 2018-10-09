@@ -1,4 +1,0 @@
-
-void startGame();
-
-void exitGame();

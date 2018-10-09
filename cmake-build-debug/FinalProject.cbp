@@ -44,6 +44,7 @@
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include/c++/v1"/>
 					<Add directory="/usr/local/include"/>
 					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/9.1.0/include"/>
 					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
@@ -65,6 +66,7 @@
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include/c++/v1"/>
 					<Add directory="/usr/local/include"/>
 					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/9.1.0/include"/>
 					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
@@ -80,19 +82,55 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/Users/shaileibovich/CLionProjects/FinalProject/GameBoard.c">
+		<Unit filename="/Users/shaileibovich/CLionProjects/FinalProject/FileController.c">
 			<Option target="FinalProject"/>
 		</Unit>
-		<Unit filename="/Users/shaileibovich/CLionProjects/FinalProject/GameBoard.h">
+		<Unit filename="/Users/shaileibovich/CLionProjects/FinalProject/FileController.h">
+			<Option target="FinalProject"/>
+		</Unit>
+		<Unit filename="/Users/shaileibovich/CLionProjects/FinalProject/GameBoardClass.c">
+			<Option target="FinalProject"/>
+		</Unit>
+		<Unit filename="/Users/shaileibovich/CLionProjects/FinalProject/GameBoardClass.h">
 			<Option target="FinalProject"/>
 		</Unit>
 		<Unit filename="/Users/shaileibovich/CLionProjects/FinalProject/GameManager.c">
+			<Option target="FinalProject"/>
+		</Unit>
+		<Unit filename="/Users/shaileibovich/CLionProjects/FinalProject/GameManager.h">
+			<Option target="FinalProject"/>
+		</Unit>
+		<Unit filename="/Users/shaileibovich/CLionProjects/FinalProject/InputController.c">
+			<Option target="FinalProject"/>
+		</Unit>
+		<Unit filename="/Users/shaileibovich/CLionProjects/FinalProject/InputController.h">
+			<Option target="FinalProject"/>
+		</Unit>
+		<Unit filename="/Users/shaileibovich/CLionProjects/FinalProject/LinkedList.c">
+			<Option target="FinalProject"/>
+		</Unit>
+		<Unit filename="/Users/shaileibovich/CLionProjects/FinalProject/LinkedList.h">
+			<Option target="FinalProject"/>
+		</Unit>
+		<Unit filename="/Users/shaileibovich/CLionProjects/FinalProject/Stack.c">
+			<Option target="FinalProject"/>
+		</Unit>
+		<Unit filename="/Users/shaileibovich/CLionProjects/FinalProject/Stack.h">
+			<Option target="FinalProject"/>
+		</Unit>
+		<Unit filename="/Users/shaileibovich/CLionProjects/FinalProject/exhaustive.c">
+			<Option target="FinalProject"/>
+		</Unit>
+		<Unit filename="/Users/shaileibovich/CLionProjects/FinalProject/exhaustive.h">
 			<Option target="FinalProject"/>
 		</Unit>
 		<Unit filename="/Users/shaileibovich/CLionProjects/FinalProject/main.c">
 			<Option target="FinalProject"/>
 		</Unit>
 		<Unit filename="/Users/shaileibovich/CLionProjects/FinalProject/utils.c">
+			<Option target="FinalProject"/>
+		</Unit>
+		<Unit filename="/Users/shaileibovich/CLionProjects/FinalProject/utils.h">
 			<Option target="FinalProject"/>
 		</Unit>
 		<Unit filename="/Users/shaileibovich/CLionProjects/FinalProject/CMakeLists.txt">

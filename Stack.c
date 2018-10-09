@@ -65,7 +65,7 @@ StackCell *pop(Stack *stack) {
         if (stack->StackHead == NULL){
             stack->isEmpty = 1;
         } else {
-            free(stack->StackHead->next);
+            deleteStackCell(stack->StackHead->next);
         }
         return stack->StackHead;
     }

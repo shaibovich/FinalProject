@@ -3,6 +3,7 @@
 #include "GameBoardClass.h"
 #include "Stack.h"
 #include "LinkedList.h"
+#include "utils.h"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -49,9 +50,9 @@ int numberOfSolves(GameBoard *gameBoard) {
         return 0;
     }
     push(stack, rowAlgoIndex, columnAlgoIndex);
-    while (!isEmpty(stack)) {
-        if (rowAlgoIndex >getNumberOfColumns(gameBoard)){
-            check =1;
+    while (1) {
+        if (rowAlgoIndex > getNumberOfColumns(gameBoard)){
+            check = 1;
         }
         else if (getCellValue(gameBoard, columnAlgoIndex, rowAlgoIndex) != getNumberOfColumns(gameBoard)){
             setCellValue(gameBoard, columnAlgoIndex, rowAlgoIndex, getCellValue(gameBoard, columnAlgoIndex, rowAlgoIndex)+1);
@@ -63,7 +64,7 @@ int numberOfSolves(GameBoard *gameBoard) {
                 check = 1;
             }
             push(stack, rowAlgoIndex, columnAlgoIndex);
-            if (isBoardFull(gameBoard)){
+            if (!checkBoardErrors(gameBoard) && isBoardFull(gameBoard)){
                 counter++;
                 check = 1;
             } else {
@@ -77,7 +78,6 @@ int numberOfSolves(GameBoard *gameBoard) {
             }
             columnAlgoIndex = getColumn(currentCell);
             rowAlgoIndex = getRow(currentCell);
-            deleteStackCell(currentCell);
             check = 0;
         }
     }
@@ -93,7 +93,7 @@ void fillGameBoard(GameBoard *gameBoard, ListofLists *listArray) {
         for (columnAlgoIndex = 0; columnAlgoIndex < getNumberOfColumns(gameBoard); columnAlgoIndex++) {
             if (!getCellValue(tempBoard, columnAlgoIndex, rowAlgoIndex)) {
                 counter = 0;
-                for (value = 1; value < getNumberOfColumns(gameBoard); value++) {
+                for (value = 1; value < getNumberOfColumns(gameBoard)+1; value++) {
                     if (validateSet(tempBoard, rowAlgoIndex, columnAlgoIndex, value) == 1) {
                         counter += 1;
                         chosenValue = value;
@@ -105,12 +105,12 @@ void fillGameBoard(GameBoard *gameBoard, ListofLists *listArray) {
                 }
                 if (counter == 1) {
                     setCellValue(gameBoard, columnAlgoIndex, rowAlgoIndex, chosenValue);
+                    printSetCell(columnAlgoIndex+1, rowAlgoIndex+1, chosenValue);
                     addMove(gameBoard, movesList, rowAlgoIndex, columnAlgoIndex, 0);
                 }
             }
         }
     }
-
     addMovesFromList(listArray, movesList);
     deleteBoard(tempBoard);
 }

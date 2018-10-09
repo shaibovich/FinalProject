@@ -46,6 +46,8 @@ int getCellValue(GameBoard *gameBoard, int column, int row);
 
 int getCellError(GameBoard *gameBoard, int column, int row);
 
+void updateBoardErrors(GameBoard * gameBoard);
+
 int markCellError(GameBoard *gameBoard, int column, int row);
 
 int markCellUnError(GameBoard *gameBoard, int column, int row);
@@ -55,6 +57,8 @@ int markCellError(GameBoard *gameBoard, int column, int row);
 int setValueToCell(GameBoard *gameBoard, int column, int row, int value);
 
 void markCellsIsError(GameBoard *gameBoard, int row, int column, int value, int isError);
+
+int getNumberOfEmptyCells(GameBoard * gameBoard);
 
 void deleteBoard(GameBoard *gameBoard);
 

@@ -169,14 +169,26 @@ int solveSudoko(GameBoard *gameBoard, GameBoard *solBoard) {
 
     if (!oneEachGrind()) goto QUIT;
 
-    /* Optimize model */
-    error = GRBoptimize(model);
+
     if (error) goto QUIT;
     /* Write model to ’sudoku.lp ’ */
     error = GRBwrite(model, "sudoku.lp");
     if (error) goto QUIT;
+
     /* Capture solution information */
-    error = GRBgetintattr(model, GRB_INT_ATTR_STATUS, &optimstatus);
+/*
+ * error = GRBgetintattr(model, GRB_INT_ATTR_STATUS, &optimstatus);
+ * if (error) goto QUIT;
+*/
+
+    /*error = GRBsetintattr(model, GRB_INT_ATTR_MODELSENSE, GRB_MAXIMIZE);
+    if (error) goto QUIT;
+*/
+    error = GRBupdatemodel(model);
+    if (error) goto QUIT;
+
+    /* Optimize model */
+    error = GRBoptimize(model);
     if (error) goto QUIT;
 
     error = GRBgetdblattr(model, GRB_DBL_ATTR_OBJVAL, &objval);
@@ -196,6 +208,8 @@ int solveSudoko(GameBoard *gameBoard, GameBoard *solBoard) {
         return 0;
 
     }
+    printGameBoard(gameBoard,0);
+    printGameBoard(solBoard,0);
     finish();
     return 1;
 }

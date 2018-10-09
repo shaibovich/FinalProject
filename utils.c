@@ -136,7 +136,7 @@ void printBadPuzzle() {
 }
 
 void printSetCell(int x, int y, int value) {
-    printf("Cell %d,%d set to %d\n", x, y, value);
+    printf("Cell <%d,%d> set to %d\n", x, y, value);
 }
 
 void printBoardReset() {

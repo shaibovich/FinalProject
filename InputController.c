@@ -1,8 +1,16 @@
+/**
+ * Input Controller Source File
+ *
+ * This file implements managing the fetching of commands entered by the user, as well validating and converting the input to the
+ * relevant command structs.
+ *
+ */
+
 
 #include <string.h>
 #include <stdlib.h>
-#include <stdio.h>
 #include <assert.h>
+#include <stdio.h>
 #include "utils.h"
 
 #define NUMBER_OF_CHARS_INPUT 1024
@@ -21,10 +29,11 @@
 #define AUTOFILL_OPTION "autofill"
 #define SOLVE_OPTION "solve"
 #define RESET_OPTION "reset"
-#define REGEX " \n\r\t"
+#define REGEX " \t\r\n"
 
 #include "InputController.h"
 #include "GameManager.h"
+
 
 
 
@@ -34,24 +43,55 @@ char *tempInput, *command, *inputString;
 int cnt = 0, isLastInput;
 
 
+/**
+ * This function returns a boolean which indicate if the game mode is solve
+ *
+ * @param gameMode - int, indicate which gameMode
+ * @return 1 if gameMode == SOLVE_MODE
+ */
 int isSolveMode(int gameMode) {
     return gameMode == SOLVE_MODE;
 }
 
+/**
+ * This function returns a boolean which indicate if the game mode is solve or edit
+ *
+ * @param gameMode - int, indicate which gameMode
+ * @return 1 if gameMode is SOLVE_MODE or EDIT_MODE
+ */
 int isSolveOrEditMode(int gameMode) {
     return gameMode == SOLVE_MODE || gameMode == EDIT_MODE;
 }
 
+
+
+/**
+ * This function returns a boolean which indicate if the game mode is edit
+ *
+ * @param gameMode - int, indicate which gameMode
+ * @return 1 if gameMode == EDIT_MODE
+ */
 int isEditMode(int gameMode) {
     return gameMode == EDIT_MODE;
 }
 
+
+/**
+ * This function empty the string buffer if the input is bigger than 256
+ *
+ */
 void emptyBuffer() {
     int c;
     while ((c = getchar()) != '\n' && c != EOF) {
     }
 }
 
+/**
+ * This function validate the input and filling the commandArray with the command and inputs specified by the user
+ *
+ * @param gameMode - int, indicate which gameMode
+ * @param commandArray - int array - describing the command and the relevant input
+ */
 void validateCommand(int gameMode, int *commandArray) {
     if (!strcmp(command, SET_OPTION) && cnt >= 4 && isSolveOrEditMode(gameMode)) {
         isValidCommand = 1;
@@ -68,7 +108,7 @@ void validateCommand(int gameMode, int *commandArray) {
     } else if (!strcmp(command, EXIT_OPTION) && cnt >= 1) {
         isValidCommand = 1;
         commandArray[0] = EXIT;
-    } else if (!strcmp(command, SOLVE_OPTION) && cnt >= 1) {
+    } else if (!strcmp(command, SOLVE_OPTION) && cnt >= 2) {
         isValidCommand = 1;
         commandArray[0] = SOLVE;
     } else if (!strcmp(command, EDIT_OPTION) && cnt >= 1) {
@@ -103,30 +143,38 @@ void validateCommand(int gameMode, int *commandArray) {
     }
 }
 
+/**
+ * This function fetch an input from the user, validate and filling the commandArray if the input is correct.
+ *
+ * @param gameMode - int, indicate which gameMode
+ * @param commandArray - int array, describing the command and the relevant input
+ * @param pathString - String, for commands save, edit and solve - the pathString indicate for the file location.
+ */
 void getTurnCommand(int gameMode, int *commandArray, char *pathString) {
-    isLastInput = 0;
     strcpy(pathString, "");
     command = (char *) malloc(NUMBER_OF_CHARS_INPUT * sizeof(char));
     inputString = (char *) malloc(NUMBER_OF_CHARS_INPUT * sizeof(char));
     assert(command);
     assert(inputString);
     isValidCommand = 0;
+
     while (!isValidCommand) {
-        printEnterCommand();
         if (feof(stdin)) {
             free(command);
             free(inputString);
             exitGame();
         }
+        printEnterCommand();
         cnt = 0;
-        fgets(inputString, NUMBER_OF_CHARS_INPUT, stdin);
-        if (strlen(inputString) > 256)
+        fgets(inputString, 270, stdin);
+        while (strlen(inputString) > 256) {
             emptyBuffer();
+        }
         tempInput = strtok(inputString, REGEX);
         if (tempInput == NULL) {
             continue;
         } else {
-            while (tempInput != NULL && !isLastInput) {
+            while (tempInput != NULL) {
                 switch (cnt) {
                     case 0:
                         strcpy(command, tempInput);

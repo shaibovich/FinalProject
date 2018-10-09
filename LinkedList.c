@@ -254,9 +254,13 @@ void deleteLinkedListArray(ListofLists *listArray) {
         } else {
             tempLst = listArray->currentLst->nextLst;
             do {
-                listArray->currentLst->nextLst = listArray->currentLst->nextLst->nextLst;
-                deleteLinkedList(tempLst);
-                tempLst = listArray->currentLst->nextLst;
+                if (listArray->currentLst->nextLst->nextLst != NULL) {
+                    listArray->currentLst->nextLst = listArray->currentLst->nextLst->nextLst;
+                    deleteLinkedList(tempLst);
+                } else {
+                    deleteLinkedList(tempLst);
+                    tempLst = NULL;
+                }
             } while (tempLst != NULL);
         }
     }
@@ -292,6 +296,9 @@ void addMovesFromList(ListofLists *listArray, List *moveLst) {
         listArray->isFirst = 0;
         listArray->isLast = 1;
     } else {
+        if (listArray->isLast == 1 && listArray->currentLst == NULL){
+            listArray->currentLst=listArray->headLst;
+        }
         listArray->currentLst->nextLst = moveLst;
         listArray->currentLst->nextLst->prevLst = listArray->currentLst;
         listArray->currentLst = listArray->currentLst->nextLst;
