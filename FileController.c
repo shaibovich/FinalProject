@@ -66,7 +66,7 @@ int saveFile(char *filePath, GameBoard *gameBoard) {
 GameBoard *openGameBoardFromFile(char *filePath, int isSolve) {
     fp = fopen(filePath, "r");
     if (fp == NULL) {
-        printFilNotOpened(isSolve);
+        printFilNotOpened(!isSolve);
         return NULL;
     }
     fscanf(fp, "%d", &column);

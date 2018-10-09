@@ -12,7 +12,7 @@
 #include "FileController.h"
 #include "GameBoardClass.h"
 #include "exhaustive.h"
-//#include "sudokuSolver.h"
+#include "sudokuSolver.h"
 
 int gameMode, counter, check;
 GameBoard *gameBoard, *tempBoard;
@@ -50,7 +50,7 @@ void startNewGame() {
 int validate() {
     check = 0;
     tempBoard = copyGameBoard(gameBoard);
-//    check = solveSudoko(gameBoard, tempBoard);
+    check = solveSudoko(gameBoard, tempBoard);
     deleteBoard(tempBoard);
     tempBoard = NULL;
     return check;
@@ -165,7 +165,9 @@ void set(int column, int row, int value) {
     columnsLst[0] = column;
     rowsLst[0] = row;
     valueLst[0] = oldValue;
-    if (getCellValue(gameBoard, column, row) == value) {
+    if (!validateCellFixed(gameBoard, column, row)){
+        printCellIsFixed();
+    } else if (getCellValue(gameBoard, column, row) == value) {
         printGameBoard(gameBoard, isMark);
     } else if (setValueToCell(gameBoard, column, row, value) != ERROR) {
         addMoves(gameBoard, gameMoves, rowsLst, columnsLst, valueLst, 1);
@@ -281,11 +283,11 @@ void hint(int column, int row) {
         printCellAlreadyContains();
     } else {
         tempBoard = copyGameBoard(gameBoard);
-//        if (solveSudoko(gameBoard, tempBoard)) {
-//            hintCell(getCellValue(tempBoard, column - 1, row - 1));
-//        } else {
-//            printBoardUnsolvedable();
-//        }
+        if (solveSudoko(gameBoard, tempBoard)) {
+            hintCell(getCellValue(tempBoard, column - 1, row - 1));
+        } else {
+            printBoardUnsolvedable();
+        }
         deleteBoard(tempBoard);
     }
 }

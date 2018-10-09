@@ -71,10 +71,10 @@ int validateSet(const GameBoard *gameBoard, int row, int column, int value) {
             return ROW;
         }
     };
-    columnBlock = (row / gameBoard->numberOfColumnBlock) * gameBoard->numberOfColumnBlock;
-    rowBlock = (column / gameBoard->numberOfRowsBlock) * gameBoard->numberOfRowsBlock;
-    for (rowIndex = 0; rowIndex < gameBoard->numberOfRowsBlock; ++rowIndex) {
-        for (columnIndex = 0; columnIndex < gameBoard->numberOfColumnBlock; ++columnIndex) {
+    rowBlock = (row / gameBoard->numberOfColumnBlock) * gameBoard->numberOfColumnBlock;
+    columnBlock = (column / gameBoard->numberOfRowsBlock) * gameBoard->numberOfRowsBlock;
+    for (rowIndex = 0; rowIndex < gameBoard->numberOfColumnBlock; ++rowIndex) {
+        for (columnIndex = 0; columnIndex < gameBoard->numberOfRowsBlock; ++columnIndex) {
             if ((gameBoard->cellList + (rowIndex + rowBlock) * gameBoard->numberOfColumns +
                  (columnIndex + columnBlock))->value == value && (rowIndex + rowBlock) != row &&
                 (columnBlock + columnIndex) != column) {
