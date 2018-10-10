@@ -179,17 +179,20 @@ void getTurnCommand(int gameMode, int *commandArray, char *pathString) {
                         if (!strcmp(command, SAVE_OPTION) || !strcmp(command, EDIT_OPTION) ||
                             !strcmp(command, SOLVE_OPTION)) {
                             strcpy(pathString, tempInput);
-                        } else {
-                            sscanf(tempInput, "%d", &commandArray[1]);
+                        } else if (!sscanf(tempInput, "%d", &commandArray[1])) {
+                            commandArray[1] = -1;
                         }
                         break;
                     case 2:
-                        if (!sscanf(tempInput, "%d", &commandArray[2])){
+                        if (!sscanf(tempInput, "%d", &commandArray[2])) {
                             commandArray[2] = -1;
                         }
                         break;
                     case 3:
-                        sscanf(tempInput, "%d", &commandArray[3]);
+                        if (!sscanf(tempInput, "%d", &commandArray[3])) {
+                            commandArray[3] = -1;
+                        }
+
                     default:
                         break;
                 }
