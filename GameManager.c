@@ -18,7 +18,7 @@
 #include "FileController.h"
 #include "GameBoardClass.h"
 #include "exhaustive.h"
-//#include "sudokuSolver.h"
+#include "sudokuSolver.h"
 
 int gameMode, counter, check;
 GameBoard *gameBoard, *tempBoard;
@@ -71,7 +71,7 @@ void startNewGame() {
 int validate() {
     check = 0;
     tempBoard = copyGameBoard(gameBoard);
-//    check = solveSudoko(gameBoard, tempBoard);
+    check = solveSudoko(gameBoard, tempBoard);
     deleteBoard(tempBoard);
     tempBoard = NULL;
     return check;
@@ -387,11 +387,11 @@ void hint(int column, int row) {
         printCellAlreadyContains();
     } else {
         tempBoard = copyGameBoard(gameBoard);
-/**        if (solveSudoko(gameBoard, tempBoard)) {
+        if (solveSudoko(gameBoard, tempBoard)) {
             hintCell(getCellValue(tempBoard, column - 1, row - 1));
         } else {
             printBoardUnsolvedable();
-        }**/
+        }
         deleteBoard(tempBoard);
         tempBoard = NULL;
     }
