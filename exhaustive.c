@@ -1,4 +1,9 @@
-
+/**
+ * Exhaustive algorithm source File
+ *
+ * This file contains implementations of all functions that use the exhaustive algorithm
+ *
+ */
 
 #include "GameBoardClass.h"
 #include "Stack.h"
@@ -12,10 +17,17 @@ GameBoard *tempBoard;
 Stack *stack;
 StackCell *currentCell;
 Cell *emptyCell;
-int *sit_mat, *innerCounterLst;
 List * movesList;
 
-
+/**
+ * This function returns the next cell that is empty
+ *
+ *
+ * @param- GameBoard- the Board user is currently solving
+ *         currentRow - row parameter of current cell
+ *         currentColumn- like row
+ * @returns- returns value of the next empty cell
+ */
 Cell *getNextEmptyCell(GameBoard *gameBoard, int *currentRow, int *currentColumn) {
     while (*currentRow < getNumberOfRows(gameBoard)) {
         if (!getCellValue(gameBoard, *currentColumn, *currentRow)) {
@@ -32,6 +44,10 @@ Cell *getNextEmptyCell(GameBoard *gameBoard, int *currentRow, int *currentColumn
     return NULL;
 }
 
+/**
+ * This function ends the exhaustive algorithm, deletes resources and frees allocations*
+ */
+
 void finishAlg() {
     if (currentCell != NULL){
         deleteStackCell(currentCell);
@@ -40,7 +56,13 @@ void finishAlg() {
     free(currentCell);
 }
 
+/**
+ * This function counts number of solutions using the exhastive algorithm and returns it as an int
+ *
+ * @param gameBoard
+ * @returns int - number of possible solutions
 
+ */
 int numberOfSolves(GameBoard *gameBoard) {
     counter = 0, rowAlgoIndex = 0, columnAlgoIndex = 0,check =0;
     currentCell = NULL;
@@ -84,6 +106,12 @@ int numberOfSolves(GameBoard *gameBoard) {
     finishAlg();
     return counter;
 }
+
+/**
+ * This function fills the gamBoard for Autofill command according to exhaustive algorithm
+ *
+ * @param gameboard and the linkedlist of moves
+ */
 
 void fillGameBoard(GameBoard *gameBoard, ListofLists *listArray) {
     movesList = createLinkedList();

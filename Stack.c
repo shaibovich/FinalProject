@@ -5,7 +5,7 @@
 
 #include <stdlib.h>
 #include <assert.h>
-#include <printf.h>
+#include <stdio.h>
 #include "Stack.h"
 
 
