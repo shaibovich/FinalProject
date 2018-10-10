@@ -391,7 +391,7 @@ void deleteBoard(GameBoard *gameBoard) {
 
 void getNumberOfRowsString(char *string, GameBoard *gameBoard) {
     gameInput = (char *) malloc(sizeof(char) * gameBoard->numberOfRows);
-    sprintf(gameInput, "%d", gameBoard->numberOfRowsBlock);
+    snprintf(gameInput, sizeof(char) * gameBoard->numberOfRows, "%d", gameBoard->numberOfRowsBlock);
     strcat(string, gameInput);
     free(gameInput);
     gameInput = NULL;
@@ -399,7 +399,7 @@ void getNumberOfRowsString(char *string, GameBoard *gameBoard) {
 
 void getNumberOfBlocksString(char *string, GameBoard *gameBoard) {
     gameInput = (char *) malloc(sizeof(char) * gameBoard->numberOfColumns);
-    sprintf(gameInput, "%d", gameBoard->numberOfColumnBlock);
+    snprintf(gameInput, sizeof(char) * gameBoard->numberOfColumns, "%d", gameBoard->numberOfColumnBlock);
     strcat(string, gameInput);
     free(gameInput);
     gameInput = NULL;
