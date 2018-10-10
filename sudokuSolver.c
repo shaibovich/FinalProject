@@ -1,4 +1,8 @@
-
+/**
+ * SudokuSolver source file
+ * This file will solve a sudoku game according to ILP soultions.
+ * Main function solveSudoko will use Gruobi framework for ILP soultions
+ */
 
 
 #include "sudokuSolver.h"
@@ -7,9 +11,10 @@
 #include <string.h>
 #include <assert.h>
 
-int *ind, error, optimstatus, DIM, rowIndex, columnIndex, value, ig, jg, count, gameColumnBlock, gameRowsBlock;
+int *ind, *ind2, error, optimstatus, DIM, rowIndex, columnIndex, value, ig, jg, count, gameColumnBlock, gameRowsBlock;
+int rowSolver, columnSolver, valueSolver;
 char *vtype;
-double *val, *lb, *sol, objval;
+double *val, *lb, *sol, objval,  *val2;
 GRBmodel *model;
 
 GRBenv *env;
@@ -17,6 +22,10 @@ GRBenv *env;
 void init() {
     ind = (int *) malloc(sizeof(int) * DIM);
     assert(ind);
+    ind2 = (int*) malloc(sizeof(int) * DIM);
+    assert(ind2);
+    val2 = (double *) malloc (sizeof(double) * DIM);
+    assert(val2);
     val = (double *) malloc(sizeof(double) * DIM);
     assert(val);
     lb = (double *) malloc(sizeof(double) * DIM * DIM * DIM);
@@ -32,8 +41,6 @@ void init() {
                 sol[DIM * DIM * rowIndex + DIM * columnIndex + value] = 0.0;
             }
         }
-        val[rowIndex] = 0.0;
-        ind[rowIndex] = 0;
     }
 }
 
@@ -45,15 +52,17 @@ void finish() {
     free(lb);
     free(vtype);
     free(sol);
-    ind = NULL, val = NULL, lb = NULL, vtype = NULL, sol = NULL;
+    free(ind2);
+    free(val2);
+    ind = NULL, val = NULL, lb = NULL, vtype = NULL, sol = NULL, ind2 = NULL, val2 = NULL;
 }
 
 void copySolToGameBoard(GameBoard *gameBoard) {
-    for (rowIndex = 0; rowIndex < DIM; rowIndex++) {
-        for (columnIndex = 0; columnIndex < DIM; columnIndex++) {
-            for (value = 0; value < DIM; value++) {
-                if (sol[DIM * DIM * rowIndex + DIM * columnIndex + value] == 1) {
-                    setCellValue(gameBoard, columnIndex, rowIndex, value + 1);
+    for (rowSolver = 0; rowSolver< DIM; rowSolver++) {
+        for (columnSolver = 0; columnSolver< DIM; columnSolver++) {
+            for (valueSolver = 0; valueSolver< DIM; valueSolver++) {
+                if (sol[DIM * DIM * rowSolver + DIM * columnSolver + valueSolver] == 1) {
+                    setCellValue(gameBoard, columnSolver, rowSolver, valueSolver + 1);
                 }
             }
         }
@@ -83,6 +92,22 @@ int eachCellGetsValue() {
             }
             error = GRBaddconstr(model, DIM, ind, val, GRB_EQUAL, 1.0, NULL);
             if (error) return 0;
+        }
+    }
+    return 1;
+}
+
+
+int setCurrentlyValue(GameBoard * gameBoard){
+    for (rowIndex =0; rowIndex < DIM; rowIndex ++){
+        for (columnIndex = 0; columnIndex <DIM; columnIndex++){
+            if (getCellValue(gameBoard,columnIndex, rowIndex) != 0){
+                ind2[0] = DIM * DIM * rowIndex + DIM* columnIndex + (getCellValue(gameBoard,columnIndex, rowIndex)-1);
+                val2[0] = 1;
+                error = GRBaddconstr(model, 1, ind2, val2, GRB_EQUAL, 1.0, NULL);
+                if (error) return 0;
+            }
+
         }
     }
     return 1;
@@ -122,8 +147,8 @@ int oneEachGrind() {
         for (ig = 0; ig < gameRowsBlock; ig++) {
             for (jg = 0; jg < gameColumnBlock; jg++) {
                 count = 0;
-                for (rowIndex = ig * gameRowsBlock; rowIndex < (ig + 1) * gameRowsBlock; rowIndex++) {
-                    for (columnIndex = jg * gameColumnBlock; columnIndex < (jg + 1) * gameColumnBlock; columnIndex++) {
+                for (rowIndex = ig * gameColumnBlock; rowIndex < (ig + 1) * gameColumnBlock; rowIndex++) {
+                    for (columnIndex= jg * gameRowsBlock; columnIndex < (jg + 1) * gameRowsBlock; columnIndex++) {
                         ind[count] = rowIndex * DIM * DIM + columnIndex * DIM + value;
                         val[count] = 1.0;
                         count++;
@@ -147,69 +172,75 @@ int solveSudoko(GameBoard *gameBoard, GameBoard *solBoard) {
     init();
     error = 0;
 
+
+
+
+
     /* Create an empty model */
     createEmptyModel(gameBoard);
+
 
     /* Create environment */
     error = GRBloadenv(&env, "sudoku.log");
     if (error) goto QUIT;
 
+
     error = GRBsetintparam(env, GRB_INT_PAR_LOGTOCONSOLE, 0);
     if (error) goto QUIT;
+
     /* Create new model */
     error = GRBnewmodel(env, &model, "sudoku", DIM * DIM * DIM, NULL, lb, NULL, vtype, NULL);
-
     if (error) goto QUIT;
 
+
+    /* Each cell in the sudoku gets value */
     if (!eachCellGetsValue()) goto QUIT;
 
+    /* Each cell of the gameBoard that have value will remain in the same value */
+    if (!setCurrentlyValue(gameBoard)) goto QUIT;
+
+    /* Each cell in each row will get unique value */
     if (!oneEachRow()) goto QUIT;
 
+    /* Each cell in each column will get unique value */
     if (!oneEachColumn()) goto QUIT;
 
+    /* Each cell in each subgrind will get unique value */
     if (!oneEachGrind()) goto QUIT;
 
-
+    /* Optimize the ILP */
+    error = GRBoptimize(model);
     if (error) goto QUIT;
-    /* Write model to ’sudoku.lp ’ */
+
+    /* Write date into model */
     error = GRBwrite(model, "sudoku.lp");
     if (error) goto QUIT;
 
     /* Capture solution information */
-/*
- * error = GRBgetintattr(model, GRB_INT_ATTR_STATUS, &optimstatus);
- * if (error) goto QUIT;
-*/
-
-    /*error = GRBsetintattr(model, GRB_INT_ATTR_MODELSENSE, GRB_MAXIMIZE);
-    if (error) goto QUIT;
-*/
-    error = GRBupdatemodel(model);
+    error = GRBgetintattr(model, GRB_INT_ATTR_STATUS, &optimstatus);
     if (error) goto QUIT;
 
-    /* Optimize model */
-    error = GRBoptimize(model);
-    if (error) goto QUIT;
-
+    /* Capture the objval */
     error = GRBgetdblattr(model, GRB_DBL_ATTR_OBJVAL, &objval);
     if (error) goto QUIT;
 
-    if (optimstatus == GRB_OPTIMAL) {
-        error = GRBgetdblattrarray(model, GRB_DBL_ATTR_X, 0, DIM * DIM * DIM, sol);
-        if (error) goto QUIT;
+
+    error = GRBgetdblattrarray (model, GRB_DBL_ATTR_X, 0, DIM * DIM * DIM, sol);
+    if(error) goto QUIT;
+
+    if (optimstatus != 2) {
+        error = 1;
+    } else {
         copySolToGameBoard(solBoard);
         error = 0;
-    } else {
-        error = 1;
     }
+
     QUIT :
     if (error) {
         finish();
         return 0;
 
     }
-    printGameBoard(gameBoard,0);
-    printGameBoard(solBoard,0);
     finish();
     return 1;
 }

@@ -113,4 +113,5 @@ void fillGameBoard(GameBoard *gameBoard, ListofLists *listArray) {
     }
     addMovesFromList(listArray, movesList);
     deleteBoard(tempBoard);
+    tempBoard = NULL;
 }

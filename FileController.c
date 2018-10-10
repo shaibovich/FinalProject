@@ -74,7 +74,6 @@ GameBoard *openGameBoardFromFile(char *filePath, int isSolve) {
     inputString = (char *) malloc(sizeof(char) * (column * rows));
     assert(inputString);
     newBoard = createEmptyBoard(rows, column);
-    newBoard = createEmptyBoard(rows, column);
     for (rowIndexFile = 0; rowIndexFile < getNumberOfRows(newBoard); rowIndexFile++) {
         for (columnIndexFile = 0; columnIndexFile < getNumberOfColumns(newBoard); columnIndexFile++) {
             fscanf(fp, "%s", inputString);

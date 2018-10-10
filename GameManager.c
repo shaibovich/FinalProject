@@ -39,8 +39,10 @@ void startNewGame() {
     gameMode = INIT_MODE;
     if (gameBoard != NULL) {
         deleteBoard(gameBoard);
+        gameBoard = NULL;
     } else {
         deleteArray(gameMoves);
+        gameMoves = NULL;
     }
     free(commandArray);
     free(filePath);
@@ -63,14 +65,17 @@ void solve(char *path) {
     gameMode = SOLVE_MODE;
     if (tempBoard != NULL) {
         deleteBoard(tempBoard);
+        tempBoard = NULL;
     }
     tempBoard = openGameBoardFromFile(path, gameMode);
     if (tempBoard != NULL) {
         if (gameBoard != NULL) {
             deleteBoard(gameBoard);
+            gameBoard = NULL;
         }
         if (gameMoves != NULL) {
             deleteArray(gameMoves);
+            gameMoves = NULL;
         }
         gameBoard = tempBoard;
         updateBoardErrors(gameBoard);
@@ -81,7 +86,6 @@ void solve(char *path) {
     } else {
         gameMode = INIT_MODE;
     }
-    tempBoard = NULL;
 }
 
 void edit(char *path) {
@@ -89,6 +93,7 @@ void edit(char *path) {
     if (!strcmp(path, "")) {
         if (gameBoard != NULL) {
             deleteBoard(gameBoard);
+            gameBoard = NULL;
         }
         gameBoard = createEmptyBoard(3, 3);
     } else {
@@ -99,6 +104,7 @@ void edit(char *path) {
         } else {
             if (gameBoard != NULL) {
                 deleteBoard(gameBoard);
+                gameBoard = NULL;
             }
             gameBoard = tempBoard;
             tempBoard = NULL;
@@ -106,10 +112,10 @@ void edit(char *path) {
         }
         if (gameMoves != NULL) {
             deleteArray(gameMoves);
+            gameMoves = NULL;
         }
     }
     gameMoves = createNewLinkedLists();
-
     isMark = 1;
     printGameBoard(gameBoard, isMark);
 }
@@ -188,9 +194,11 @@ void set(int column, int row, int value) {
 void exitGame() {
     if (gameBoard != NULL) {
         deleteBoard(gameBoard);
+        gameBoard = NULL;
     }
     if (gameMoves != NULL) {
         deleteArray(gameMoves);
+        gameMoves = NULL;
     }
     free(filePath);
     free(commandArray);
@@ -255,7 +263,7 @@ void numSolutions() {
         printNumberOfsolutions(numberOfSols);
         if (numberOfSols == 1) {
             printGoodBoard();
-        } else {
+        } else if (numberOfSols != 0){
             printBadPuzzle();
         }
     }
@@ -277,7 +285,7 @@ void hint(int column, int row) {
         printBoardContainsError();
     } else if (column > getNumberOfColumns(gameBoard) || row > getNumberOfColumns(gameBoard)) {
         printValueNotInRange2(getNumberOfColumns(gameBoard));
-    } else if (isCellFixed(gameBoard, column - 1, row - 1, 0)) {
+    } else if (isCellFixed(gameBoard, column - 1, row - 1, 1)) {
         printCellIsFixed();
     } else if (getCellValue(gameBoard, column - 1, row - 1)) {
         printCellAlreadyContains();
@@ -289,6 +297,7 @@ void hint(int column, int row) {
             printBoardUnsolvedable();
         }
         deleteBoard(tempBoard);
+        tempBoard = NULL;
     }
 }
 

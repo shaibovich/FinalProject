@@ -188,7 +188,9 @@ void getTurnCommand(int gameMode, int *commandArray, char *pathString) {
                         }
                         break;
                     case 2:
-                        sscanf(tempInput, "%d", &commandArray[2]);
+                        if (!sscanf(tempInput, "%d", &commandArray[2])){
+                            commandArray[2] = -1;
+                        }
                         break;
                     case 3:
                         sscanf(tempInput, "%d", &commandArray[3]);
