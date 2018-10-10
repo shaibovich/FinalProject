@@ -13,6 +13,7 @@ struct GameBoards {
     int numberOfColumnBlock;
     int numberOfRowsBlock;
     int numberOfRows;
+    //check
     int numberOfColumns;
     struct GameCell *cellList;
 };
