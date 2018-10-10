@@ -1,4 +1,7 @@
 
+/**
+ * this class indluces all stack structures and get methods
+ */
 
 #ifndef STACK_C
 #define STACK_C

@@ -6,9 +6,41 @@
 
 #IncludeRegexTransform: 
 
+C:/Users/noabe/CProjects/workspace/finalproject/FileController.c
+GameBoardClass.h
+C:/Users/noabe/CProjects/workspace/finalproject/GameBoardClass.h
+utils.h
+C:/Users/noabe/CProjects/workspace/finalproject/utils.h
+GameManager.h
+C:/Users/noabe/CProjects/workspace/finalproject/GameManager.h
+stdio.h
+-
+string.h
+-
+stdlib.h
+-
+assert.h
+-
+
 C:/Users/noabe/CProjects/workspace/finalproject/FileController.h
 GameBoardClass.h
 C:/Users/noabe/CProjects/workspace/finalproject/GameBoardClass.h
+
+C:/Users/noabe/CProjects/workspace/finalproject/GameBoardClass.c
+stdlib.h
+-
+assert.h
+-
+stdio.h
+-
+string.h
+-
+GameBoardClass.h
+C:/Users/noabe/CProjects/workspace/finalproject/GameBoardClass.h
+utils.h
+C:/Users/noabe/CProjects/workspace/finalproject/utils.h
+LinkedList.h
+C:/Users/noabe/CProjects/workspace/finalproject/LinkedList.h
 
 C:/Users/noabe/CProjects/workspace/finalproject/GameBoardClass.h
 LinkedList.h
@@ -35,7 +67,25 @@ GameBoardClass.h
 C:/Users/noabe/CProjects/workspace/finalproject/GameBoardClass.h
 exhaustive.h
 C:/Users/noabe/CProjects/workspace/finalproject/exhaustive.h
+sudokuSolver.h
+C:/Users/noabe/CProjects/workspace/finalproject/sudokuSolver.h
 
+C:/Users/noabe/CProjects/workspace/finalproject/GameManager.h
+
+C:/Users/noabe/CProjects/workspace/finalproject/InputController.c
+string.h
+-
+stdlib.h
+-
+assert.h
+-
+stdio.h
+-
+utils.h
+C:/Users/noabe/CProjects/workspace/finalproject/utils.h
+InputController.h
+C:/Users/noabe/CProjects/workspace/finalproject/InputController.h
+GameManager.h
 C:/Users/noabe/CProjects/workspace/finalproject/GameManager.h
 
 C:/Users/noabe/CProjects/workspace/finalproject/InputController.h
@@ -44,7 +94,27 @@ C:/Users/noabe/CProjects/workspace/finalproject/LinkedList.h
 GameBoardClass.h
 C:/Users/noabe/CProjects/workspace/finalproject/GameBoardClass.h
 
+C:/Users/noabe/CProjects/workspace/finalproject/Stack.h
+
+C:/Users/noabe/CProjects/workspace/finalproject/exhaustive.c
+GameBoardClass.h
+C:/Users/noabe/CProjects/workspace/finalproject/GameBoardClass.h
+Stack.h
+C:/Users/noabe/CProjects/workspace/finalproject/Stack.h
+LinkedList.h
+C:/Users/noabe/CProjects/workspace/finalproject/LinkedList.h
+utils.h
+C:/Users/noabe/CProjects/workspace/finalproject/utils.h
+stdlib.h
+-
+stdio.h
+-
+
 C:/Users/noabe/CProjects/workspace/finalproject/exhaustive.h
+
+C:/Users/noabe/CProjects/workspace/finalproject/sudokuSolver.h
+GameBoardClass.h
+C:/Users/noabe/CProjects/workspace/finalproject/GameBoardClass.h
 
 C:/Users/noabe/CProjects/workspace/finalproject/utils.h
 

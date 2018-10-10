@@ -19,6 +19,7 @@ CMakeFiles/FinalProject.dir/GameManager.c.obj: ../GameManager.h
 CMakeFiles/FinalProject.dir/GameManager.c.obj: ../InputController.h
 CMakeFiles/FinalProject.dir/GameManager.c.obj: ../LinkedList.h
 CMakeFiles/FinalProject.dir/GameManager.c.obj: ../exhaustive.h
+CMakeFiles/FinalProject.dir/GameManager.c.obj: ../sudokuSolver.h
 CMakeFiles/FinalProject.dir/GameManager.c.obj: ../utils.h
 
 CMakeFiles/FinalProject.dir/InputController.c.obj: ../GameManager.h

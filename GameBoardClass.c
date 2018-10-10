@@ -281,12 +281,10 @@ int validateCellFixed(GameBoard *gameBoard, int column, int row) {
 }
 
 /**
- * this function 
+ * this function sets value to cell and makes sure its legal
  * @param gameBoard
- * @param column
- * @param row
- * @param value
- * @return
+ * @param column, row, value of given cell to add the value to
+ * @return 1 if set successfuly
  */
 int setCellValue(GameBoard *gameBoard, int column, int row, int value) {
     if (!validateCellValue(gameBoard, value)) {
@@ -301,6 +299,10 @@ int setCellValue(GameBoard *gameBoard, int column, int row, int value) {
     }
 }
 
+/**
+ *  this function updates IsFixed parametrer of cell
+ */
+
 int setCellFixed(GameBoard *gameBoard, int column, int row, int isFixed) {
     if (!validateCellIndex(gameBoard, column, row)) {
         return ERROR;
@@ -309,6 +311,10 @@ int setCellFixed(GameBoard *gameBoard, int column, int row, int isFixed) {
         return 1;
     }
 }
+
+/**
+ * this function returns 1 if cell is fixed
+ */
 
 int isCellFixed(GameBoard *gameBoard, int column, int row, int isSave) {
     if (!validateCellFixed(gameBoard, column, row)) {
@@ -321,6 +327,10 @@ int isCellFixed(GameBoard *gameBoard, int column, int row, int isSave) {
     }
 }
 
+/**
+ * this function returns the given cell's value or ERROR if validation fails
+ */
+
 int getCellValue(GameBoard *gameBoard, int column, int row) {
     if (!validateCellIndex(gameBoard, column, row)) {
         return ERROR;
@@ -329,6 +339,12 @@ int getCellValue(GameBoard *gameBoard, int column, int row) {
     }
 }
 
+/**
+ *
+ * this function returns 1 if cell is marked as erroneous
+ *
+ */
+
 int getCellError(GameBoard *gameBoard, int column, int row) {
     if (!validateCellIndex(gameBoard, column, row)) {
         return ERROR;
@@ -336,6 +352,10 @@ int getCellError(GameBoard *gameBoard, int column, int row) {
         return (gameBoard->cellList + row * gameBoard->numberOfColumns + column)->isError;
     }
 }
+
+/**
+ * this function marks specified cell as erroneous
+ */
 
 int markCellError(GameBoard *gameBoard, int column, int row) {
     if (!validateCellIndex(gameBoard, column, row)) {
@@ -355,6 +375,9 @@ int markCellUnError(GameBoard *gameBoard, int column, int row) {
     }
 }
 
+/**
+ * this function checks if board is erroneous . returns 1 if erroneous
+ */
 
 int checkBoardErrors(GameBoard *gameBoard) {
     for (rowIndex = 0; rowIndex < gameBoard->numberOfRows; rowIndex++) {
@@ -366,7 +389,11 @@ int checkBoardErrors(GameBoard *gameBoard) {
     }
     return 0;
 }
-
+/**
+ * this function prints the game board. it is used in several functions
+ * @param gameBoard
+ * @param withStars - if this param ==1 then erroneous values appear with astrisks net to it
+ */
 void printGameBoard(GameBoard *gameBoard, int withStars) {
     for (rowIndex = 0; rowIndex < gameBoard->numberOfColumns; ++rowIndex) {
         if (rowIndex % gameBoard->numberOfColumnBlock == 0) {
@@ -406,6 +433,7 @@ void printGameBoard(GameBoard *gameBoard, int withStars) {
     printf("\n");
 }
 
+
 int isInvalidValue(GameBoard *gameBoard, int column, int row, int value) {
     for (rowIndex = 0; rowIndex < gameBoard->numberOfRows; rowIndex++) {
         if ((gameBoard->cellList + rowIndex * gameBoard->numberOfColumns + column)->value == value) {
@@ -419,6 +447,10 @@ int isInvalidValue(GameBoard *gameBoard, int column, int row, int value) {
     }
     return 1;
 }
+
+/**
+ * this funct validates the specified cell and sets the value into it
+ */
 
 int setValueToCell(GameBoard *gameBoard, int column, int row, int value) {
     if (!validateCellIndex(gameBoard, column, row) || !validateCellValue(gameBoard, value)) {
@@ -452,6 +484,10 @@ void deleteBoard(GameBoard *gameBoard) {
     free(gameBoard->cellList);
     free(gameBoard);
 }
+
+/**
+ * the following functions are get functions for dims of the game and structures
+ */
 
 void getNumberOfRowsString(char *string, GameBoard *gameBoard) {
     gameInput = (char *) malloc(sizeof(char) * gameBoard->numberOfRows);

@@ -1,3 +1,7 @@
+/**
+ * this class includes the ctructures of the linked list and get methods
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
