@@ -1,3 +1,9 @@
+/**
+ * Game Board Class Source File
+ *
+ * This file implements gameBoard structures and get functions
+ *
+ */
 
 #ifndef GAMEBOARD_C
 #define GAMEBOARD_C
@@ -13,7 +19,6 @@ struct GameBoards {
     int numberOfColumnBlock;
     int numberOfRowsBlock;
     int numberOfRows;
-    //check
     int numberOfColumns;
     struct GameCell *cellList;
 };
@@ -29,6 +34,9 @@ struct GameBoards {
 #include "utils.h"
 #include "LinkedList.h"
 
+/**
+ * this enum is used for gameboard structure
+ */
 
 enum VALIDATION_ERROR {
     BLOCK = -1,
@@ -40,7 +48,10 @@ int rowIndex, columnIndex, rowBlock, columnBlock, size, randValue, columnRandom,
 char *gameInput;
 Node *tempNode;
 
-
+/**
+ * this function updates the board to print errors where needed
+ * @param gameBoard
+ */
 
 void updateBoardErrors(GameBoard * gameBoard){
     for (updateRow = 0; updateRow < gameBoard->numberOfRows ; updateRow++){
@@ -55,6 +66,15 @@ void updateBoardErrors(GameBoard * gameBoard){
         }
     }
 }
+
+/**
+ * this function checks if value is legal in his row,column and block
+ * @param gameBoard
+ * @param row - of the checked cell
+ * @param column - of the checked cell
+ * @param value -checked value
+ * @return  1 if legal
+ */
 
 
 int validateSet(const GameBoard *gameBoard, int row, int column, int value) {
@@ -86,6 +106,12 @@ int validateSet(const GameBoard *gameBoard, int row, int column, int value) {
     return 1;
 }
 
+/**
+ * this function updates the cells' parameter "isError"
+ * @param gameBoard
+ * @param row , column , value of about-to-be-marked cell
+ * @param isError - this parameter defines the mark of the cell
+ */
 void markCellsIsError(GameBoard *gameBoard, int row, int column, int value, int isError) {
     if (value == 0) return;
 
@@ -138,6 +164,12 @@ int getCellIsFixed(Cell *cell) {
     return cell->isFixed;
 }
 
+/**
+ * this function creates a new and Empty gameBoard
+ * @param rows - how many rows in the new gameboard
+ * @param columns - how many columns
+ * @return - a new gameboard (empty)
+ */
 
 GameBoard *createEmptyBoard(int rows, int columns) {
     GameBoard *newBoard = (GameBoard *) malloc(sizeof(GameBoard));
@@ -161,6 +193,12 @@ GameBoard *createEmptyBoard(int rows, int columns) {
     return newBoard;
 }
 
+/**
+ * this function counts the number of blank cells in the board for other functions' use
+ * @param gameBoard
+ * @return int of blank cells
+ */
+
 int getNumberOfEmptyCells(GameBoard * gameBoard){
     counter =0 ;
     for (rowIndex = 0; rowIndex < gameBoard->numberOfRows; rowIndex++){
@@ -174,6 +212,11 @@ int getNumberOfEmptyCells(GameBoard * gameBoard){
     return counter;
 }
 
+/**
+ * this function copies an existing gameboard into a new one so changes can be made on the copy
+ * @param oldGameBoard
+ * @return copy of the gameboard
+ */
 GameBoard *copyGameBoard(GameBoard *oldGameBoard) {
     GameBoard *newBoard = (GameBoard *) malloc(sizeof(GameBoard));
     assert(newBoard);
@@ -199,14 +242,26 @@ GameBoard *copyGameBoard(GameBoard *oldGameBoard) {
     return newBoard;
 }
 
+/**
+ * this function validates the cell value (between 0 and legal range)
+ * @param gameBoard
+ * @param value
+ * @return 1 if value is legal
+ */
+
 int validateCellValue(GameBoard *gameBoard, int value) {
-    if (value > gameBoard->numberOfRows) {
-        /* printValueOutOfRange(gameBoard->numberOfRows); */
+    if (value > gameBoard->numberOfRows || value <0) {
         return 0;
     }
     return 1;
 }
 
+/**
+ * this function validates the index of the cell (between range)
+ * @param gameBoard
+ * @param column , row of checked cell
+ * @return 1 if index is legal
+ */
 int validateCellIndex(GameBoard *gameBoard, int column, int row) {
     if (column >= gameBoard->numberOfColumns || column < 0 || row < 0 || row >= gameBoard->numberOfRows) {
         return 0;
@@ -214,7 +269,10 @@ int validateCellIndex(GameBoard *gameBoard, int column, int row) {
     return 1;
 }
 
-
+/**
+ * this function checks if the given cell is fixed
+ * @return 1 if cell is not fixed
+ */
 int validateCellFixed(GameBoard *gameBoard, int column, int row) {
     if ((getCellIsFixed((gameBoard->cellList + row * gameBoard->numberOfColumns + column)))) {
         return 0;
@@ -222,6 +280,14 @@ int validateCellFixed(GameBoard *gameBoard, int column, int row) {
     return 1;
 }
 
+/**
+ * this function 
+ * @param gameBoard
+ * @param column
+ * @param row
+ * @param value
+ * @return
+ */
 int setCellValue(GameBoard *gameBoard, int column, int row, int value) {
     if (!validateCellValue(gameBoard, value)) {
         printValueOutOfRange(gameBoard->numberOfRows);
@@ -360,9 +426,6 @@ int setValueToCell(GameBoard *gameBoard, int column, int row, int value) {
         return ERROR;
     } else if (!validateCellFixed(gameBoard, column, row)) {
         printCellIsFixed();
-        return ERROR;
-    } else if (!validateCellIndex(gameBoard, column, row) || !validateCellValue(gameBoard, value)) {
-        printValueOutOfRange(gameBoard->numberOfRows);
         return ERROR;
     } else {
         int res = validateSet(gameBoard, row, column, value);

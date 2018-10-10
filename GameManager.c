@@ -1,3 +1,9 @@
+/**
+ * Game Manager Source File
+ *
+ * This file implements managing the game flow
+ *
+ */
 #define FALSE 0
 #define TRUE 1
 
@@ -12,7 +18,7 @@
 #include "FileController.h"
 #include "GameBoardClass.h"
 #include "exhaustive.h"
-#include "sudokuSolver.h"
+//#include "sudokuSolver.h"
 
 int gameMode, counter, check;
 GameBoard *gameBoard, *tempBoard;
@@ -23,6 +29,10 @@ char *filePath;
 Node *node;
 ListofLists *gameMoves;
 
+/**
+ * this function initiates the game variables and structures for the commands
+ *
+ */
 void initiateGame() {
     gameMode = INIT_MODE;
     isMark = TRUE;
@@ -34,7 +44,10 @@ void initiateGame() {
     gameBoard = NULL;
     tempBoard = NULL;
 }
-
+/**
+ * this function initiates a new gameboard so that gameboard is empty and so does gamemoves list (notice there is another function called "startGame" that handles moves)
+ *
+ */
 void startNewGame() {
     gameMode = INIT_MODE;
     if (gameBoard != NULL) {
@@ -47,10 +60,16 @@ void startNewGame() {
     initiateGame();
 }
 
+/**
+ * This function checks if the Sudoku board is solvable
+ *
+ * @return 1 if board is solvable
+ */
+
 int validate() {
     check = 0;
     tempBoard = copyGameBoard(gameBoard);
-    check = solveSudoko(gameBoard, tempBoard);
+//    check = solveSudoko(gameBoard, tempBoard);
     deleteBoard(tempBoard);
     tempBoard = NULL;
     return check;
@@ -58,6 +77,13 @@ int validate() {
 
 }
 
+/**
+ * This function is called when mode is SOLVE, it prints the opened sudoku board and initiats the list of moves
+ *
+ *
+ * @param path of board to solve
+
+ */
 
 void solve(char *path) {
     gameMode = SOLVE_MODE;
@@ -83,6 +109,13 @@ void solve(char *path) {
     }
     tempBoard = NULL;
 }
+
+/**
+ * This function is called when mode is EDIT
+ *
+ * @param path of board to solve
+
+ */
 
 void edit(char *path) {
     gameMode = EDIT_MODE;
@@ -114,6 +147,11 @@ void edit(char *path) {
     printGameBoard(gameBoard, isMark);
 }
 
+/**
+ * This function validates the isMark parameter (checks that it's 1 or 0)
+ *
+ * @param mark - isMark parameter , changed in the function
+ */
 void markError(int mark) {
     if (mark != 0 && mark != 1) {
         printErrorValidation();
@@ -122,6 +160,11 @@ void markError(int mark) {
     }
 }
 
+/**
+ * This function generates a gameBoard or thorws an Error that generator failed
+ *
+ * @param X- number of cells to randomly fill , Y- number of cells to keep full after generation
+ */
 
 void generate(int x, int y) {
     if (x > getNumberOfRows(gameBoard) || y > getNumberOfRows(gameBoard)) {
@@ -154,18 +197,25 @@ void generate(int x, int y) {
     deleteLinkedList(generateLst);
 }
 
+/**
+ * This function is called by startGame when command is SET
+ * It validates parameters and cell condition (fixed or not) and sets new value into specified cell
+ *
+ * @param column,row - ints between 0-N, decreased by 1 (since array starts in 0 and not 1)
+ *        value - an int between 0-N
+ */
 
 void set(int column, int row, int value) {
-    if (value > getNumberOfRows(gameBoard)) {
-        printValueOutOfRange(getNumberOfRows(gameBoard));
-    }
     column -= 1;
     row -= 1;
     oldValue = getCellValue(gameBoard, column, row);
     columnsLst[0] = column;
     rowsLst[0] = row;
     valueLst[0] = oldValue;
-    if (!validateCellFixed(gameBoard, column, row)){
+    if (value > getNumberOfRows(gameBoard)||value <0||oldValue == ERROR) {
+        printValueOutOfRange(getNumberOfRows(gameBoard));
+    }
+    else if (!validateCellFixed(gameBoard, column, row)){
         printCellIsFixed();
     } else if (getCellValue(gameBoard, column, row) == value) {
         printGameBoard(gameBoard, isMark);
@@ -185,6 +235,12 @@ void set(int column, int row, int value) {
     }
 }
 
+/**
+ * This function is called by startGame when command is EXIT
+ * It deletes gameBoard, list of moves, frees all allocated memory and exits the game
+ *
+ */
+
 void exitGame() {
     if (gameBoard != NULL) {
         deleteBoard(gameBoard);
@@ -198,13 +254,33 @@ void exitGame() {
     exit(1);
 }
 
+/**
+ * This function Undos a move.
+ * It calls the relevant function from LinkedList class
+ *
+ * @param isReset - 1 if was called from RESET
+ * @return 1 if undo succeeded and 0 if no moves to undo
+ */
+
 int doUndo(int isReset) {
     return undoMoves(gameBoard, gameMoves, isReset, isMark);
 }
 
+/**
+ * This function redos a move.
+ * It calls the relevant function from LinkedList class
+ *
+ */
+
 void doRedo() {
     redoMoves(gameBoard, gameMoves, isMark, 0);
 }
+
+/**
+ * This function uses validates and calls saving function for gameboard into a file
+ *
+ * @param path -  destination path for saving
+ */
 
 void save(char *path) {
     if (gameMode == EDIT_MODE) {
@@ -216,17 +292,23 @@ void save(char *path) {
             return;
         }
         setAllFilledFixed(gameBoard);
-        if (saveFile(filePath, gameBoard)) {
+        if (saveFile(path, gameBoard)) {
             printSaveTo(path);
         }
     } else if (gameMode == SOLVE_MODE) {
-        if (saveFile(filePath, gameBoard)) {
+        if (saveFile(path, gameBoard)) {
             printSaveTo(path);
         }
     }
 
 
 }
+
+/**
+ * This function autofills obvious values
+ * in case of a full board - it prints that board is full and in case board or solution is erroneous - is prints so.
+ *
+ */
 
 void autoFill() {
     if (checkBoardErrors(gameBoard)) {
@@ -247,6 +329,11 @@ void autoFill() {
 
 }
 
+/**
+ * This function prints the number of possible solutions for this ganeboard
+ *
+ */
+
 void numSolutions() {
     if (checkBoardErrors(gameBoard)) {
         printBoardContainsError();
@@ -261,6 +348,9 @@ void numSolutions() {
     }
 
 }
+/**
+ * This function Resets the board to its initial state by Undo'ing all of the moves .
+ */
 
 void resetBoard() {
     int value;
@@ -271,6 +361,12 @@ void resetBoard() {
     printBoardReset();
 
 }
+
+/**
+ * This function fills requested cell with solutions value, or if not possible - prints a relevant error
+ *
+ * @param column, row - of the requested cell for hint
+ */
 
 void hint(int column, int row) {
     if (checkBoardErrors(gameBoard)) {
@@ -283,15 +379,19 @@ void hint(int column, int row) {
         printCellAlreadyContains();
     } else {
         tempBoard = copyGameBoard(gameBoard);
-        if (solveSudoko(gameBoard, tempBoard)) {
+/**        if (solveSudoko(gameBoard, tempBoard)) {
             hintCell(getCellValue(tempBoard, column - 1, row - 1));
         } else {
             printBoardUnsolvedable();
-        }
+        }**/
         deleteBoard(tempBoard);
     }
 }
 
+/**
+ * This function manages game flow by referring commands to their relevant functions .
+ *
+ */
 
 void startGame() {
     printStartGame();

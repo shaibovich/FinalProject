@@ -35,8 +35,6 @@
 #include "GameManager.h"
 
 
-
-
 int isValidCommand;
 
 char *tempInput, *command, *inputString;
@@ -62,8 +60,6 @@ int isSolveMode(int gameMode) {
 int isSolveOrEditMode(int gameMode) {
     return gameMode == SOLVE_MODE || gameMode == EDIT_MODE;
 }
-
-
 
 /**
  * This function returns a boolean which indicate if the game mode is edit

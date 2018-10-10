@@ -4,17 +4,17 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "/Users/shaileibovich/CLionProjects/FinalProject/FileController.c" "/Users/shaileibovich/CLionProjects/FinalProject/cmake-build-debug/CMakeFiles/FinalProject.dir/FileController.c.o"
-  "/Users/shaileibovich/CLionProjects/FinalProject/GameBoardClass.c" "/Users/shaileibovich/CLionProjects/FinalProject/cmake-build-debug/CMakeFiles/FinalProject.dir/GameBoardClass.c.o"
-  "/Users/shaileibovich/CLionProjects/FinalProject/GameManager.c" "/Users/shaileibovich/CLionProjects/FinalProject/cmake-build-debug/CMakeFiles/FinalProject.dir/GameManager.c.o"
-  "/Users/shaileibovich/CLionProjects/FinalProject/InputController.c" "/Users/shaileibovich/CLionProjects/FinalProject/cmake-build-debug/CMakeFiles/FinalProject.dir/InputController.c.o"
-  "/Users/shaileibovich/CLionProjects/FinalProject/LinkedList.c" "/Users/shaileibovich/CLionProjects/FinalProject/cmake-build-debug/CMakeFiles/FinalProject.dir/LinkedList.c.o"
-  "/Users/shaileibovich/CLionProjects/FinalProject/Stack.c" "/Users/shaileibovich/CLionProjects/FinalProject/cmake-build-debug/CMakeFiles/FinalProject.dir/Stack.c.o"
-  "/Users/shaileibovich/CLionProjects/FinalProject/exhaustive.c" "/Users/shaileibovich/CLionProjects/FinalProject/cmake-build-debug/CMakeFiles/FinalProject.dir/exhaustive.c.o"
-  "/Users/shaileibovich/CLionProjects/FinalProject/main.c" "/Users/shaileibovich/CLionProjects/FinalProject/cmake-build-debug/CMakeFiles/FinalProject.dir/main.c.o"
-  "/Users/shaileibovich/CLionProjects/FinalProject/utils.c" "/Users/shaileibovich/CLionProjects/FinalProject/cmake-build-debug/CMakeFiles/FinalProject.dir/utils.c.o"
+  "C:/Users/noabe/CProjects/workspace/finalproject/FileController.c" "C:/Users/noabe/CProjects/workspace/finalproject/cmake-build-debug/CMakeFiles/FinalProject.dir/FileController.c.obj"
+  "C:/Users/noabe/CProjects/workspace/finalproject/GameBoardClass.c" "C:/Users/noabe/CProjects/workspace/finalproject/cmake-build-debug/CMakeFiles/FinalProject.dir/GameBoardClass.c.obj"
+  "C:/Users/noabe/CProjects/workspace/finalproject/GameManager.c" "C:/Users/noabe/CProjects/workspace/finalproject/cmake-build-debug/CMakeFiles/FinalProject.dir/GameManager.c.obj"
+  "C:/Users/noabe/CProjects/workspace/finalproject/InputController.c" "C:/Users/noabe/CProjects/workspace/finalproject/cmake-build-debug/CMakeFiles/FinalProject.dir/InputController.c.obj"
+  "C:/Users/noabe/CProjects/workspace/finalproject/LinkedList.c" "C:/Users/noabe/CProjects/workspace/finalproject/cmake-build-debug/CMakeFiles/FinalProject.dir/LinkedList.c.obj"
+  "C:/Users/noabe/CProjects/workspace/finalproject/Stack.c" "C:/Users/noabe/CProjects/workspace/finalproject/cmake-build-debug/CMakeFiles/FinalProject.dir/Stack.c.obj"
+  "C:/Users/noabe/CProjects/workspace/finalproject/exhaustive.c" "C:/Users/noabe/CProjects/workspace/finalproject/cmake-build-debug/CMakeFiles/FinalProject.dir/exhaustive.c.obj"
+  "C:/Users/noabe/CProjects/workspace/finalproject/main.c" "C:/Users/noabe/CProjects/workspace/finalproject/cmake-build-debug/CMakeFiles/FinalProject.dir/main.c.obj"
+  "C:/Users/noabe/CProjects/workspace/finalproject/utils.c" "C:/Users/noabe/CProjects/workspace/finalproject/cmake-build-debug/CMakeFiles/FinalProject.dir/utils.c.obj"
   )
-set(CMAKE_C_COMPILER_ID "AppleClang")
+set(CMAKE_C_COMPILER_ID "GNU")
 
 # The include file search paths:
 set(CMAKE_C_TARGET_INCLUDE_PATH
